@@ -18,9 +18,9 @@
      
      <div class="pull-right">
      <?php if($this->ion_auth->is_admin()){?>
-        <a class="btn btn-sm btn-warning" href="<?=base_url('laporan/laporanexcel')?>"><i class="glyphicon glyphicon-download"></i> Download Excel</a>
+        <a class="btn btn-sm btn-success" href="<?=base_url('laporan/laporanexcel')?>"><i class="fa-file-excel-o"></i> Export Excel</a>
         <a class="btn btn-sm btn-primary" href="<?=base_url('laporan/pdfsk')?>"><i class="glyphicon glyphicon-print"></i> Download SK</a>
-        <a class="btn btn-sm btn-success" href="<?=base_url('laporan/pdfcetak')?>"><i class="glyphicon glyphicon-print"></i> Cetak PDF</a>
+        <a class="btn btn-sm btn-warning" href="<?=base_url('laporan/pdfcetak')?>"><i class="glyphicon glyphicon-print"></i> Cetak PDF</a>
      <?php } ?>
         <button class="btn btn-sm btn-default" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
         

@@ -6,7 +6,7 @@
 <style>
     th, td { white-space: nowrap; } 
     div.dataTables_wrapper {
-        margin: 0 auto;
+        margin: 0 auto; 
     }
     tr { height: 10px;  }
     th, td.dt-center { text-align: center; }

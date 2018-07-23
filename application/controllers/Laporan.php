@@ -53,6 +53,25 @@ class Laporan extends MY_Controller {
         //echo json_encode($data);
     }
 
+    public function rekapexcel()
+    {
+        $totalkosong = ((int)$this->laporan->totaldayatampung()->dayatampung)-((int)$this->laporan->totalterima());
+        $dayatampung = (int)$this->laporan->totaldayatampung()->dayatampung;
+        $persenkosong = round((($totalkosong/$dayatampung)*100),2);
+        $data =array(
+            'prodi' => $this->prodi->get_prodi(),
+            'list'=> $this->laporan->getrekapexcel(),
+            'title' => 'Rekapitulasi Penerimaan Seleksi Jalur Lokal Universitas Papua 2018',
+            'totalpeminat'=> $this->laporan->totalpeminat(), 
+            'totaldayatampung'=> $dayatampung,
+            'totalterima'=>$this->laporan->totalterima(),
+            'totalkosong'=>$totalkosong,
+            'persenkosong'=>$persenkosong,
+        );
+        $this->load->view('laporan/rekapexcel',$data);
+        //echo json_encode($data);
+    }
+
     public function rekapitulasi_list()
     {
         $list = $this->laporan->get_datatables_rekap();
