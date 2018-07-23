@@ -1,0 +1,419 @@
+<!-- Datatable style -->
+
+<link href="<?php echo base_url('public/bootstrap/css/bootstrap.min.css')?>" rel="stylesheet">
+<link href="<?php echo base_url('public/datatables/css/dataTables.bootstrap.css')?>" rel="stylesheet">
+<link rel="stylesheet" href="<?php echo base_url('public/fixedColumns.dataTables.min.css')?>">
+<link rel="stylesheet" href="<?php echo base_url('public/select.dataTables.min.css')?>">
+<link rel="stylesheet" href="<?php echo base_url('public/buttons.dataTables.min.css')?>">
+
+
+<style>
+    th, td { white-space: nowrap; } 
+    div.dataTables_wrapper {
+        margin: 0 auto;
+    }
+    tr { height: 10px;  }
+    table{
+    table-layout: fixed; 
+    word-wrap:break-word;
+    }
+    th.dt-center, td.dt-center { text-align: center; }
+</style>  
+  
+  <div class="box"> 
+    <div class="box-header">
+        <h3 class="box-title">Seleksi Calon Mahasiswa Baru Universitas Papua Jalur Seleksi Lokal TA. <?=$tahunakademik;?></h3>  
+        <div class="pull-right">
+            <button type="submit" name="btnterimakolektif" id="btnterimakolektif" class="btn btn-sm btn-success">Terima Kolektif</button>
+            <button class="btn btn-sm btn-default" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
+                
+        </div>
+   </div>
+   <!-- /.box-header -->
+  
+        <div class="box-body table-responsive">
+        <form action="#" id="form" class="form-horizontal">
+        <div class="form-group">
+        <table border="0" width="100%">
+            <tr>
+                <td width="10%"><label style="font-size:13px;">Pilih Program Studi :</label></td>
+                <td width="1%"></td>
+                <td width="25%"><?php echo form_dropdown('pilihprodi', $dd_prodi, $prodi_selected,'id="pilihprodi" class="form-control select2 input-sm"'); ?></td>
+                <td width="2%"></td>
+                <td width="10%"><label style="font-size:13px;">Daya Tampung :</label></td>
+                <td width="1%"></td>
+                <td width="5%"><input type="text" name="dayatampung" class="form-control" readonly="readonly" style="text-align:center;font-weight:bold;"></td>
+                <td width="41%"></td>
+            </tr>
+        </table>
+        
+        </form>               
+        <table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%" style="font-size:12px;">
+               
+        <thead>
+                <tr>
+                    <th style="width: 20;"></th>
+                    <th style="width: 60;">No. Pendaftaran</th>
+                    <th style="width: 200;">Nama Pendaftar</th>
+                    <th style="width: 20;">Pilihan Ke</th>
+                    <th style="width: 50;">Suku</th>
+                    <th style="width: 50;">Jurusan SLTA</th>
+                    <th style="width: 20;">N.Bhs</th>
+                    <th style="width: 20;">N.IPA</th>
+                    <th style="width: 20;">N.IPS</th>
+                    <th style="width: 20;">N.Ver</th>
+                    <th style="width: 20;">N.Rata</th>
+                    <th style="width: 20;">Thn. Lulus</th>
+                    <th style="width: 100;">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+ 
+           
+        </table>
+        </div>
+   <!-- /.box-body -->
+ </div>
+ <!-- /.box -->
+
+<script src="<?php echo base_url('public/js/jquery-1.11.2.min.js') ?>"></script>
+<script src="<?php echo base_url('public/datatables/js/jquery.dataTables.min.js')?>"></script>
+<script src="<?php echo base_url('public/datatables/js/dataTables.bootstrap.js')?>"></script>
+<script src="<?php echo base_url('public/jquery-3.3.1.js')?>"></script>  
+<script src="<?php echo base_url('public/jquery.dataTables.min.js')?>"></script>  
+<script src="<?php echo base_url('public/plugins/datatables/dataTables.bootstrap.min.js')?>"></script>  
+<script src="<?php echo base_url('public/dataTables.select.min.js')?>"></script> 
+<script src="<?php echo base_url('public/dataTables.fixedColumns.min.js')?>"></script> 
+<script src="<?php echo base_url('public/dataTables.buttons.min.js')?>"></script> 
+<script src="<?php echo base_url('public/buttons.html5.min.js')?>"></script> 
+<script src="<?php echo base_url('public/buttons.print.min.js')?>"></script> 
+
+<script type="text/javascript">
+ 
+var save_method; //for save method string
+var table;
+
+$(document).ready(function() {
+    $("#mnpendaftar").addClass('active');
+    $("body").addClass("sidebar-collapse ");
+    var dataTable = $('#table').DataTable({
+            "language": {
+            "emptyTable": "Tidak ada data yang ditampilkan. Pilih salah satu Program Studi"
+            },
+    });
+
+    function load_data(is_prodi){
+        var dataTable = $('#table').DataTable({
+            
+            "processing":true,
+            "serverSide":true,
+            "order":[],
+            "ajax":{
+                url: "<?php echo site_url('seleksimanual/ajax_list')?>",
+                type:"POST",
+                data:{is_prodi:is_prodi}
+            },
+            
+            scrollX: true,
+            scrollCollapse: true,
+            paging: true,
+            fixedColumns:   {
+                leftColumns: 3,
+            },
+            fixedHeader: true,
+            columnDefs: [
+            { 
+                targets: [-1], //last column
+                orderable: false, //set not orderable
+                width: '100',
+                className: 'dt-center',
+            },
+            {
+                orderable: false,
+                width: '20',
+                targets: 0,
+                className: 'dt-center',
+            },
+            {
+                targets: 1,
+                width: '60',
+                className: 'dt-center',
+            },
+            {
+                targets: 2,
+                width: '200',
+            },
+            {
+                orderable: false,
+                targets: 3,
+                className: 'dt-center',
+            },
+            {
+                targets: 4,
+                width: '50',
+                className: 'dt-center',
+            },
+            {
+                targets: [3,5,6,7,8,9,10,11,12],
+                width: '20',
+                className: 'dt-center',
+            },
+            ],
+        });
+    }
+
+     $(document).on("click","#select-all",function() {   
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+
+    $(document).on("click","#btnterimakolektif",function() {
+        var selectednopendaftar = [];
+        $('input[name="nopendaftar"]:checked').each(function(){
+            selectednopendaftar.push($(this).val());  
+        });
+        //console.log(selectednopendaftar);
+        var prodi = $('#pilihprodi').val();
+        selectednopendaftar = selectednopendaftar.toString(); 
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('seleksimanual/terimakolektif')?>",
+            dataType: 'JSON',
+            data: {nopendaftar:selectednopendaftar, pilihprodi:prodi},
+            success: function(data){
+                $('#table').DataTable().ajax.reload(null, false);
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Gagal Proses');
+            }
+        });
+    });
+    
+
+    $(document).on('change', '#pilihprodi', function(){
+        var prodi = $('#pilihprodi').val();
+        $('#table').DataTable().destroy();
+        if(prodi != '')
+        {
+            getdayatampung(prodi);
+            load_data(prodi);
+        }
+        else
+        {
+            load_data();
+        }
+    });
+
+    function getdayatampung(prodi)
+    {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('seleksimanual/getdayatampungprodi')?>",
+            dataType: 'JSON',
+            data: {pilihprodi:prodi},
+            success: function(data){
+                $('[name="dayatampung"]').val(data.dayatampung);
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Gagal Proses');
+            }
+        });
+    }
+});
+
+ 
+function detail_record(id)
+{ 
+    save_method = 'detail';
+    $('.form-group').removeClass('has-error'); // clear error class
+    $('.help-block').empty(); // clear error string
+
+    //Ajax Load data from ajax
+    $.ajax({
+        url : "<?php echo base_url('pendaftar/ajax_edit/')?>/" + id,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {
+            $('[name="nopendaftar"]').val(data.nopendaftar);
+            $('[name="namapendaftar"]').val(data.namapendaftar);
+            $('[name="ttl"]').val(data.tempatlahir+", "+data.tanggallahir);
+
+            var jk = data.jeniskelamin;
+            var suku = data.suku;
+            if (jk=='L') jk='LAKI-LAKI'; else  jk='PEREMPUAN';
+            if (suku=='P') suku='PAPUA'; else  suku='NON PAPUA';
+            
+            $('[name="jeniskelamin"]').val(jk);
+            $('[name="suku"]').val(suku);
+            $('[name="pilihan1"]').val(data.pilihan1);
+            $('[name="pilihan2"]').val(data.pilihan2);        
+            $('[name="pilihan3"]').val(data.pilihan3);
+            $('[name="jenjangslta"]').val(data.jenjangslta);
+            $('[name="jurusanslta"]').val(data.jurusanslta);        
+            $('[name="asalslta"]').val(data.asalslta);        
+            $('[name="tahunlulus"]').val(data.tahunlulus);
+            $('[name="nbahasa"]').val(data.nbahasa);
+            $('[name="nipa"]').val(data.nipa);
+            $('[name="nips"]').val(data.nips);
+            $('[name="nverbal"]').val(data.nverbal);
+            $('[name="status"]').val(data.status);
+            $('[name="tahunakademik"]').val(data.tahunakademik);
+            $('.modal-title').text('Data Pendaftar'); // Set title to Bootstrap modal title
+            $('#modal_detail').modal('show'); // show bootstrap modal when complete loaded
+ 
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
+
+function terima(id){
+    var prodi = $('#pilihprodi').val();
+    var status = 'T';
+    $.ajax({
+        url : "<?php echo base_url('seleksimanual/terima')?>/"+ id,
+        type: "POST",
+        dataType: "JSON",
+        data: {'pilihprodi': prodi,'status':status},
+        success: function(data)
+        {
+            $('#table').DataTable().ajax.reload(null, false);
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
+
+
+function reload_table(){
+    $('#table').DataTable().ajax.reload(null, false);
+} 
+</script>
+<!-- Bootstrap modal -->
+<div class="modal fade" id="modal_detail" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Data Pendaftar</h4>
+            </div>
+            <div class="modal-body form">
+                <form action="#" id="form" class="form-horizontal" style="font-size:12px">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">No. Pendaftar</label>
+                            <div class="col-md-9">
+                                <input name="nopendaftar"  class="form-control" type="text" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Nama Pedaftar</label>
+                            <div class="col-md-9">
+                                <input name="namapendaftar"  readonly="readonly" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Tempat, Tgl. Lahir</label>
+                            <div class="col-md-9">
+                                <input name="ttl"  readonly="readonly" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Jenis Kelamin</label>
+                            <div class="col-md-9">
+                                <input name="jeniskelamin" id="jeniskelamin" readonly="readonly" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Suku</label>
+                            <div class="col-md-9">
+                                <input name="suku" id="suku" readonly="readonly" class="form-control" type="text">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Pilihan 1</label>
+                            <div class="col-md-9">
+                                <input name="pilihan1" id="pilihan1" readonly="readonly" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Pilihan 2</label>
+                            <div class="col-md-9">
+                                <input name="pilihan2" id="pilihan2" readonly="readonly" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Pilihan 3</label>
+                            <div class="col-md-9">
+                                <input name="pilihan3" id="pilihan3" readonly="readonly" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-6">Jenjang SLTA</label>
+                            <label class="col-md-6">Jurusan SLTA</label>
+                            <div class="col-md-6">
+                                <input name="jenjangslta" id="jenjangslta" readonly="readonly" class="form-control" type="text">
+                            </div>
+                            <div class="col-md-6">
+                            <input name="jurusanslta" id="jurusanslta" readonly="readonly" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-9">Asal SLTA</label>
+                            <label class="col-md-3">Tahun Lulus</label>
+                            <div class="col-md-9">
+                                <input name="asalslta" id="asalslta" readonly="readonly" class="form-control" type="text">
+                                <span class="text-danger" id="error_asalslta"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <input name="tahunlulus" readonly="readonly" class="form-control" type="number">
+                                <span class="text-danger" id="error_tahunlulus"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 text-center">Nilai Bahasa</label>
+                            <label class="col-md-3 text-center">Nilai IPA</label>
+                            <label class="col-md-3 text-center">Nilai IPS</label>
+                            <label class="col-md-3 text-center">Nilai Verbal</label>
+                        
+                            <div class="col-md-3">
+                                <input name="nbahasa" readonly="readonly" class="form-control" type="number">
+                                <span class="text-danger" id="error_nbahasa"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <input name="nipa" readonly="readonly" class="form-control" type="number">
+                                <span class="text-danger" id="error_nipa"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <input name="nips" readonly="readonly" class="form-control" type="number">
+                                <span class="text-danger" id="error_nips"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <input name="nverbal" readonly="readonly" class="form-control" type="number">
+                                <span class="text-danger" id="error_nverbal"></span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <input name="status" type="hidden">
+                    <input name="tahunakademik" type="hidden">
+                                
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Kembali</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- End Bootstrap modal -->
+</body>
+</html>
