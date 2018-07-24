@@ -1,4 +1,4 @@
-# Sistem Admisi Lokal Universitas Papua#
+# Sistem Admisi Lokal Universitas Papua #
 
 ## About : ##
 
