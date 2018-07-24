@@ -135,7 +135,7 @@ function save()
     $("#error_password").html('');
     $('#btnSave').text('saving...'); //change button text
     $('#btnSave').attr('disabled',true); //set button disable 
-    var url;
+    var url; 
  
     if(save_method == 'add') {
         url = "<?php echo site_url('fakultas/ajax_add')?>";

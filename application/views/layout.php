@@ -6,8 +6,10 @@
 		  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		  <!-- Bootstrap 3.3.6 -->
 		  <link rel="stylesheet" href="<?= base_url() ?>public/bootstrap/css/bootstrap.min.css">
-		  <link rel="stylesheet" href="<?= base_url() ?>public/font-awesome.min.css">
-		  <link rel="stylesheet" href="<?= base_url() ?>public/ionicons.min.css">
+		  <!-- Font Awesome -->
+		  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+		  <!-- Ionicons -->
+		  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 		  <link rel="stylesheet" href="<?= base_url() ?>public/font-googleapis.css">
 		  <!-- Theme style -->
 	      <link rel="stylesheet" href="<?= base_url() ?>public/dist/css/AdminLTE.min.css">
@@ -74,7 +76,15 @@
 	  $(".flash-msg").fadeTo(2000, 500).slideUp(500, function(){
 	    $(".flash-msg").slideUp(500);
 	});
-	</script>
+
+	function ubah_password()
+	{ 
+		$('.form-group').removeClass('has-error'); // clear error class
+		$('.help-block').empty(); // clear error string
+		$('#modal_changepassword').modal('show'); // show bootstrap modal when complete loaded
+
+	}
+</script>
 	
-	</body>
+</body>
 </html>

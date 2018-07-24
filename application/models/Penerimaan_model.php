@@ -74,6 +74,14 @@ class Penerimaan_model extends CI_Model {
         $query = $this->db->get();
         return $query->num_rows();
     }
+
+    function count_filter_prodi($prodi)
+    {
+        $this->db->from($this->table);
+        $this->db->where('namaprodi', $prodi);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
  
     public function count_all()
     {

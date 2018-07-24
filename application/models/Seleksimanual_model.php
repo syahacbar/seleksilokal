@@ -21,7 +21,7 @@ class Seleksimanual_model extends CI_Model {
         $this->db->from('v_seleksi');
         $this->db->group_start();
         $this->db->where('tahunakademik',$tahunakademik);
-        if(isset($_POST['is_prodi'])) 
+        if(isset($_POST['is_prodi']) && $_POST['is_prodi'] != "0") 
         {
             if(isset($sesipilihan)){
                 if($sesipilihan=='1'){
@@ -41,7 +41,7 @@ class Seleksimanual_model extends CI_Model {
                     $this->db->group_end();
                 }
             }
-            else {
+            else { 
                     $this->db->group_start();
                     $this->db->where('pilihan1',$_POST['is_prodi']);
                     $this->db->or_where('pilihan2',$_POST['is_prodi']);
@@ -49,7 +49,11 @@ class Seleksimanual_model extends CI_Model {
                     $this->db->group_end();
                 }
            
-             
+        }
+
+        if(isset($_POST['is_suku']) && $_POST['is_suku'] != '0') 
+        {
+            $this->db->where('suku',$_POST['is_suku']);
         }
         $this->db->group_end();
         $this->db->where('status','B');
@@ -102,9 +106,11 @@ class Seleksimanual_model extends CI_Model {
         return $query->num_rows();
     }
  
-    public function count_all()
+    public function count_all($ta)
     {
-        $this->db->from($this->table);
+        $this->db->from('v_seleksi');
+        $this->db->where('status','B');
+        $this->db->where('tahunakademik',$ta);
         return $this->db->count_all_results();
     }
  
@@ -120,11 +126,14 @@ class Seleksimanual_model extends CI_Model {
     
     public function dd_prodi()
     {
+            $dd['x'] = '--PILIH SALAH SATU--';
         if($this->ion_auth->is_admin()){
-            $dd[''] = '--SEMUA PRODI--';
-        } else {
+            $dd['0'] = 'SEMUA PROGRAM STUDI';
+        } 
+        else {
             $this->db->where('idfakultas',$this->ion_auth->get_fakultas()->idfakultas);
-            $dd['0'] = '--PILIH SALAH SATU--';
+        
+            //$dd['x'] = '--PILIH SALAH SATU--';
         }
             $this->db->order_by('namaprodi', 'asc');
             $result = $this->db->get('prodi');
@@ -135,6 +144,14 @@ class Seleksimanual_model extends CI_Model {
             }
         
 		return $dd;
+    }
+
+    public function dd_suku()
+    {
+        $dd['0'] = '--SEMUA SUKU--';
+        $dd['Papua'] = 'PAPUA';
+        $dd['Non Papua'] = 'NON PAPUA';
+        return $dd;
     }
     
     public function save($data)

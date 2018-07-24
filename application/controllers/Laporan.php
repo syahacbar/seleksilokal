@@ -78,6 +78,8 @@ class Laporan extends MY_Controller {
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $result) {
+            $persenkosong = $result->persenkosong*100;
+            $persen = " %";
             $no++;
             $row = array();
             $row[] = $no;
@@ -85,11 +87,8 @@ class Laporan extends MY_Controller {
             $row[] = $result->peminat;
             $row[] = $result->dayatampung;
             $row[] = $result->terima;
-            $row[] = $result->kosong." (".round($result->persenkosong*100,2)."%)";
- 
-            //add html for action
-            $row[] = '<a class="btn btn-xs btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_record('."'".$result->idprodi."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
-                  <a class="btn btn-xs btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_record('."'".$result->idprodi."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>';
+            $row[] = $result->kosong;
+            $row[] = $persenkosong.$persen;
  
             $data[] = $row;
         }
@@ -97,7 +96,7 @@ class Laporan extends MY_Controller {
         $output = array(
                         "draw" => $_POST['draw'],
                         "recordsTotal" => $this->prodi->count_all(),
-                        "recordsFiltered" => $this->prodi->count_filtered(),
+                        "recordsFiltered" => $this->laporan->count_filtered(),
                         "data" => $data,
                 );
         //output to json format

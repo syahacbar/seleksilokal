@@ -17,8 +17,24 @@ class Pengaturan extends MY_Controller {
             'sesipilihan_selected' => $this->input->post('sesipilihan') ? $this->input->post('sesipilihan') : $this->pengaturan->getsesipilihan()->nilai,
             'dd_tahunakademik' =>  $this->pengaturan->dd_tahunakademik(),
             'tahunakademik_selected' => $this->input->post('tahunakademik') ? $this->input->post('tahunakademik') : $this->pengaturan->gettahunakademik()->nilai,
+            'namarektor' => $this->pengaturan->getnamarektor()->nilai,
+            'niprektor' => $this->pengaturan->getniprektor()->nilai,
         );
         $this->load->view('layout',$data);
+    }
+
+    public function pengaturan_list() 
+    {
+        $data = array( 
+            'view' => 'pengaturan/pengaturan_view',
+            'dd_sesipilihan' =>  $this->pengaturan->dd_sesipilihan(),
+            'sesipilihan_selected' => $this->input->post('sesipilihan') ? $this->input->post('sesipilihan') : $this->pengaturan->getsesipilihan()->nilai,
+            'dd_tahunakademik' =>  $this->pengaturan->dd_tahunakademik(),
+            'tahunakademik_selected' => $this->input->post('tahunakademik') ? $this->input->post('tahunakademik') : $this->pengaturan->gettahunakademik()->nilai,
+            'namarektor' => $this->pengaturan->getnamarektor()->nilai,
+            'niprektor' => $this->pengaturan->getniprektor()->nilai,
+        );
+        echo json_encode($data);
     }
 
     public function simpansesipilihan()
@@ -38,6 +54,26 @@ class Pengaturan extends MY_Controller {
             'status' => TRUE,
         );
         $this->pengaturan->updatepengaturan(array('nilai'=>$_POST['tahunakademik']),array('parameter'=>'tahunakademik'));
+        echo json_encode($data);
+    }
+
+    public function simpannamarektor()
+    {
+        $data = array(
+            'hasil' => 'sukses',
+            'status' => TRUE,
+        );
+        $this->pengaturan->updatepengaturan(array('nilai'=>$_POST['namarektor']),array('parameter'=>'namarektor'));
+        echo json_encode($data);
+    }
+
+    public function simpanniprektor()
+    {
+        $data = array(
+            'hasil' => 'sukses',
+            'status' => TRUE,
+        );
+        $this->pengaturan->updatepengaturan(array('nilai'=>$_POST['niprektor']),array('parameter'=>'niprektor'));
         echo json_encode($data);
     }
 }

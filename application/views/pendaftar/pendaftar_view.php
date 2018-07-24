@@ -5,7 +5,20 @@
 <link href="<?php echo base_url('public/plugins/select2/select2.min.css')?>" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo base_url('public/EasyAutocomplete-1.3.5/easy-autocomplete.min.css')?>"> 
 <link rel="stylesheet" href="<?php echo base_url('public/EasyAutocomplete-1.3.5/easy-autocomplete.themes.min.css')?>"> 
-     
+
+<style>
+    th, td { white-space: nowrap; } 
+    div.dataTables_wrapper {
+        margin: 0 auto;
+    }
+    tr { height: 10px;  } 
+    table{
+    table-layout: fixed; 
+    word-wrap:break-word;
+    }
+    th.dt-center, td.dt-center { text-align: center; }
+</style>  
+       
   <div class="box"> 
    <div class="box-header">
      <h3 class="box-title">Data Pendaftar Universitas Papua Jalur Seleksi Lokal TA. <?=$tahunakademik;?></h3>
@@ -14,7 +27,7 @@
         <button class="btn btn-sm btn-success" onclick="add_record()"><i class="glyphicon glyphicon-plus"></i> Tambah Data</button>
         <button class="btn btn-sm btn-primary" onclick="import_excel()"><i class="glyphicon glyphicon-import"></i> Import Excel</button>
          <?php } ?>
-        <button class="btn btn-sm btn-default" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
+        <button id="btnreload" class="btn btn-sm btn-default" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
         
      </div>
    </div>
@@ -71,6 +84,7 @@ var dataTable;
 
 $(document).ready(function() {
     $("#mnpendaftar").addClass('active');
+    $("#btnreload").hide();
     //datatables
     var dataTable = $('#table').DataTable({
             "language": {
@@ -79,7 +93,9 @@ $(document).ready(function() {
     });
 
     function load_data(is_prodi){
+        $("#btnreload").show();
         var dataTable = $('#table').DataTable({
+            "stateSave": true,
             "processing":true,
             "serverSide":true,
             "order":[],
@@ -121,10 +137,12 @@ $(document).ready(function() {
             {
                 targets: [10,12],
                 width: '80',
+                className: 'dt-center',
             },
             {
                 targets: [7,8,9,13],
                 width: '50',
+                className: 'dt-center',
             },
             ],
             select: {
@@ -135,7 +153,7 @@ $(document).ready(function() {
     }
 
     $(document).on('change', '#pilihprodi', function(){
-        var prodi = $(this).val();
+        var prodi = $('#pilihprodi').val();
         $('#table').DataTable().destroy();
         if(prodi != '')
         {
@@ -413,7 +431,7 @@ function save()
 }
 
 function reload_table(){
-    $('#table').DataTable().ajax.reload();
+    $('#table').DataTable().ajax.reload(null, false);
 } 
 
 function delete_record(id)

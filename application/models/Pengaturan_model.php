@@ -41,7 +41,7 @@ class Pengaturan_model extends CI_Model {
     public function gettahunakademik()
     {
         $this->db->select('nilai');
-        $this->db->where('parameter', 'tahunakademik');
+        $this->db->where('parameter', 'tahunakademik'); 
         $query = $this->db->get('pengaturan');
         return $query->row();
     }

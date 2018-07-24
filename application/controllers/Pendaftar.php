@@ -1,4 +1,4 @@
-<?php
+<?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
  
 class Pendaftar extends MY_Controller {
@@ -8,8 +8,6 @@ class Pendaftar extends MY_Controller {
         parent::__construct();
         $this->load->model('Pendaftar_model','pendaftar');
         $this->load->model('Prodi_model','prodi');
-        $this->load->model('Jenjangslta_model','jenjangslta');
-        $this->load->model('Jurusanslta_model','jurusanslta');
         $this->load->model('Seleksimanual_model','seleksimanual');
         $this->load->model('Pengaturan_model','pengaturan');
     }
@@ -22,15 +20,9 @@ class Pendaftar extends MY_Controller {
             'dd_prodi' => $this->prodi->dd_prodi(),
             'dd_prodix' => $dd_prodi,
             'prodi_selected' => $this->input->post('pilihprodi') ? $this->input->post('pilihprodi') : '',
-            'dd_jenjangslta' => $this->jenjangslta->dd_jenjangslta(),
-            'dd_jurusanslta' => $this->jurusanslta->dd_jurusanslta(),
-            'dd_sekolah' => $this->pendaftar->dd_sekolah(),
             'p1_selected' => $this->input->post('prodi1') ? $this->input->post('prodi1') : '',
             'p2_selected' => $this->input->post('prodi2') ? $this->input->post('prodi2') : '',
             'p3_selected' => $this->input->post('prodi3') ? $this->input->post('prodi3') : '',
-            'jenjangslta_selected' => $this->input->post('jenjangslta') ? $this->input->post('jenjangslta') : '',
-            'jurusanslta_selected' => $this->input->post('jurusanslta') ? $this->input->post('jurusanslta') : '',
-            'slta_selected' => $this->input->post('asalslta') ? $this->input->post('asalslta') : '',
             'tahunakademik' => $this->pengaturan->gettahunakademik()->nilai,
         );	
         $this->load->view('layout',$data);
@@ -38,7 +30,8 @@ class Pendaftar extends MY_Controller {
  
     public function ajax_list()
     {
-        $list = $this->pendaftar->get_datatables();
+        $tahunakademik = $this->pengaturan->gettahunakademik()->nilai;
+        $list = $this->pendaftar->get_datatables($tahunakademik);
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $result) {
@@ -52,11 +45,11 @@ class Pendaftar extends MY_Controller {
             $row[] = $result->pilihan3;
             $row[] = $result->tempatlahir;
             $row[] = $result->tanggallahir;
-            $row[] = $result->jeniskelamin;
-            $row[] = $result->suku; 
+            $row[] = $result->jeniskelamin == "L" ? "LAKI-LAKI" : "PEREMPUAN";
+            $row[] = $result->suku == "P" ? "PAPUA" : "NON PAPUA"; 
             $row[] = $result->jenjangslta;
             $row[] = $result->asalslta;
-            $row[] = $result->jurusanslta;
+            $row[] = strtoupper($result->jurusanslta);
             $row[] = $result->tahunlulus;
             //add html for action
             if($this->ion_auth->is_admin()){
@@ -68,8 +61,8 @@ class Pendaftar extends MY_Controller {
  
         $output = array(
                         "draw" => $_POST['draw'],
-                        "recordsTotal" => $this->pendaftar->count_all(),
-                        "recordsFiltered" => $this->pendaftar->count_filtered(),
+                        "recordsTotal" => $this->pendaftar->count_all($tahunakademik),
+                        "recordsFiltered" => $this->pendaftar->count_filtered($tahunakademik),
                         "data" => $data,
                 );
         //output to json format

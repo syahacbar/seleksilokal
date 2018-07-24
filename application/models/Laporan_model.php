@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
  
 class Laporan_model extends CI_Model {
-    var $column_order = array('','namaprodi','peminat','dayatampung','terima','kosong'); //set column field database for datatable orderable
+    var $column_order = array('','namaprodi','peminat','dayatampung','terima','kosong','persenkosong'); //set column field database for datatable orderable
     var $column_search = array('namaprodi'); //set column field database for datatable searchable just firstname , lastname , address are searchable
     var $order = array('idprodi' => 'asc'); // default order 
 
@@ -160,6 +160,7 @@ class Laporan_model extends CI_Model {
         $this->db->from('penerimaan');
         return $this->db->count_all_results();
     }
+
     
     public function getrekapexcel()
     {

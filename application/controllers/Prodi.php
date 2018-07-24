@@ -33,11 +33,11 @@ class Prodi extends MY_Controller {
             $row[] = strtoupper($result->jenjang);
             $row[] = strtoupper($result->namafakultas);
             $row[] = $result->dayatampung;
- 
+           if($this->ion_auth->is_admin()){
             //add html for action
             $row[] = '<a class="btn btn-xs btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_record('."'".$result->idprodi."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
                   <a class="btn btn-xs btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_record('."'".$result->idprodi."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>';
- 
+           }
             $data[] = $row;
         }
  

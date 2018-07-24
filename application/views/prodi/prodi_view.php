@@ -2,13 +2,27 @@
 <link href="<?php echo base_url('public/bootstrap/css/bootstrap.min.css')?>" rel="stylesheet">
     <link href="<?php echo base_url('public/datatables/css/dataTables.bootstrap.css')?>" rel="stylesheet">
     <link href="<?php echo base_url('public/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')?>" rel="stylesheet">
-    
+ 
+<style>
+    th { white-space: nowrap; } 
+    div.dataTables_wrapper {
+        margin: 0 auto;
+    }
+    tr { height: 10px;  }
+    table{
+    table-layout: fixed; 
+    word-wrap:break-word;
+    }
+    th.dt-center, td.dt-center { text-align: center; }
+</style>  
+
+
 <div class="box">
    <div class="box-header">
      <h3 class="box-title">Master Data Program Studi</h3>
      <div class="pull-right">
      <?php  if($this->ion_auth->is_admin()){ ?>
-        <button class="btn btn-sm btn-success" onclick="add_record()"><i class="glyphicon glyphicon-plus"></i> Tambah Data</button>
+        <button id="btnadd" class="btn btn-sm btn-success" onclick="add_record()"><i class="glyphicon glyphicon-plus"></i> Tambah Data</button>
      <?php } ?>
         <button class="btn btn-sm btn-default" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
     
@@ -23,7 +37,9 @@
                     <th>Jenjang</th>
                     <th>Fakultas</th>
                     <th>Daya Tampung</th>
+                    <?php  if($this->ion_auth->is_admin()){ ?>
                     <th style="width:130px;">Aksi</th>
+                    <?php } ?>
                 </tr>
             </thead>
             <tbody>
@@ -58,18 +74,21 @@ $(document).ready(function() {
             "url": "<?php echo site_url('prodi/ajax_list')?>",
             "type": "POST"
         },
- 
         //Set column definition initialisation properties.
         "columnDefs": [
         { 
-            "targets": [0,-1], //last column
-            "orderable": false, //set not orderable
+            "targets": [2,4], 
+            "className": 'dt-center',
+            "width": 100,
         },
         ],
  
     });
  
-    
+    $(document).on("click","#btnadd",function() {
+    /* Single line Reset function executes on click of Reset Button */
+        $("#form")[0].reset();
+    });    
  
 });
  

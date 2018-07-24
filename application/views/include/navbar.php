@@ -2,11 +2,11 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="<?= base_url();?>" class="logo">
+    <a href="<?= base_url('dashboard');?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>Admin</b> LTE</span>
+      <span class="logo-mini"><img src="<?= base_url() ?>public/dist/img/logo.png" width="30" height="30" alt="Sistem Admisi Unipa"></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b> LTE</span>
+      <span class="logo-lg"><img src="<?= base_url() ?>public/dist/img/logo.png" width="45" height="45" alt="Sistem Admisi Unipa"></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -42,7 +42,7 @@
                   <a href="<?= site_url('auth/logout'); ?>" class="btn btn-default btn-flat">Log Out</a>
                 </div>
                 <div class="pull-left">
-                  <a href="<?= site_url('auth/change_pwd'); ?>" class="btn btn-default btn-flat">Ubah Password</a>
+                  <a href="#" onclick="ubah_password()" class="btn btn-default btn-flat">Ubah Password</a>
                 </div>
               </li>
             </ul>
@@ -55,4 +55,28 @@
       </div>
     </nav>
   </header>
+
+  
+<!-- Bootstrap modal -->
+<div class="modal fade" id="modal_changepassword" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Ubah Passowrd</h4>
+            </div>
+            <div class="modal-body form">
+                <form action="#" id="form" class="form-horizontal" style="font-size:12px">
+                    <div class="form-body">
+                     </div>
+                                
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Kembali</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- End Bootstrap modal -->
  

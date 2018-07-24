@@ -30,6 +30,24 @@
                             <button type="button" id="btnsavetahunakademik" onclick="savetahunakademik()" class="btn btn-primary">Simpan</button>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Nama Rektor</label>
+                            <div class="col-md-3">
+                            <input name="namarektor" id="namarektor" class="form-control" type="text">
+                            </div>
+                            <div class="col-md-2">
+                            <button type="button" id="btnsavenamarektor" onclick="savenamarektor()" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">NIP Rektor</label>
+                            <div class="col-md-3">
+                            <input name="niprektor" id="niprektor" class="form-control" type="text">
+                            </div>
+                            <div class="col-md-2">
+                            <button type="button" id="btnsaveniprektor" onclick="saveniprektor()" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -43,7 +61,22 @@
 <script src="<?php echo base_url('public/bootstrap-datepicker/js/bootstrap-datepicker.min.js')?>"></script>
 
 <script type="text/javascript">
- 
+$(document).ready(function() {
+     $("#mnpengaturan").addClass('active');
+    $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('pengaturan/pengaturan_list')?>",
+            dataType: 'JSON',
+            success: function(data){
+                $('[name="namarektor"]').val(data.namarektor);
+                $('[name="niprektor"]').val(data.niprektor);
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Gagal Proses');
+            }
+        });
+}); 
 function savesesipilihan(){
     var sesipilihan = $('#sesipilihan').val();
     $.ajax({
@@ -54,7 +87,7 @@ function savesesipilihan(){
         success: function(data)
         {
             if (data.hasil == "sukses") {
-                alert('Pengaturan Sesi Pilihan berhasil disimpan.');
+                alert('Perubahan Sesi Pilihan berhasil disimpan.');
             }
         }
     });
@@ -70,7 +103,39 @@ function savetahunakademik(){
         success: function(data)
         {
             if (data.hasil == "sukses") {
-                alert('Pengaturan Tahun Akademik berhasil disimpan.');
+                alert('Perubahan Tahun Akademik berhasil disimpan.');
+            }
+        }
+    });
+}
+
+function savenamarektor(){
+    var namarektor = $('#namarektor').val();
+    $.ajax({
+        url : "<?php echo base_url('pengaturan/simpannamarektor')?>",
+        type: "POST",
+        dataType: "JSON",
+        data: {'namarektor': namarektor},
+        success: function(data)
+        {
+            if (data.hasil == "sukses") {
+                alert('Perubahan Nama Rektor berhasil disimpan.');
+            }
+        }
+    });
+}
+
+function saveniprektor(){
+    var niprektor = $('#niprektor').val();
+    $.ajax({
+        url : "<?php echo base_url('pengaturan/simpanniprektor')?>",
+        type: "POST",
+        dataType: "JSON",
+        data: {'niprektor': niprektor},
+        success: function(data)
+        {
+            if (data.hasil == "sukses") {
+                alert('Perubahan NIP Rektor berhasil disimpan.');
             }
         }
     });

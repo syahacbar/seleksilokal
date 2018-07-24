@@ -18,9 +18,11 @@
      
      <div class="pull-right">
      <?php if($this->ion_auth->is_admin()){?>
-        <a class="btn btn-sm btn-warning" href="<?=base_url('laporan/rekapexcel')?>"><i class="glyphicon glyphicon-download"></i> Download Excel</a>
-        <a class="btn btn-sm btn-primary" href="<?=base_url('laporan/rekappdf')?>"><i class="glyphicon glyphicon-download"></i> Download PDF</a>
+        <a target="blank" class="btn btn-sm btn-warning" href="<?=base_url('laporan/rekapexcel')?>"><i class="glyphicon glyphicon-download"></i> Download Excel</a>
+        <a target="blank"  class="btn btn-sm btn-primary" href="<?=base_url('laporan/rekappdf')?>"><i class="glyphicon glyphicon-download"></i> Download PDF</a>
       <?php } ?>
+      <button class="btn btn-sm btn-default" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
+        
         
      </div>
    </div>
@@ -34,6 +36,7 @@
                     <th>Daya Tampung</th>
                     <th>Terima</th>
                     <th>Kosong</th>
+                    <th>% Kosong</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,6 +48,7 @@
                     <th><div id="totaldayatampung"></div></th>
                     <th><div id="totalterima"></div></th>
                     <th><div id="totalkosong"></div></th>
+                    <th><div id="totalpersenkosong"></div></th>
                 </tr>
             </tfoot>
         </table>
@@ -68,7 +72,7 @@
  var table;
  
  $(document).ready(function() {
-     $("#mnfakultas").addClass('active');
+     $("#mnrekapitulasi").addClass('active');
      //datatables
      gettotal();
      table = $('#table').DataTable({ 
@@ -86,12 +90,13 @@
          //Set column definition initialisation properties.
          "columnDefs": [
          { 
-             targets: [1], //last column
+             targets: [1], 
              width: '250',
          },
          {
-            targets: [0,2,3,4,5],
+            targets: [0,2,3,4,5,6],
             className: 'dt-center',
+            orderable: true,
          },
          ],
   
@@ -100,7 +105,9 @@
      
   
  });
-
+ function reload_table(){
+    $('#table').DataTable().ajax.reload(null, false);
+} 
  function gettotal()
     {
         $.ajax({
@@ -111,8 +118,8 @@
                 $("#totalpeminat").append(data.totalpeminat);
                 $("#totaldayatampung").append(data.totaldayatampung);
                 $("#totalterima").append(data.totalterima);
-                var totalkosong = data.totalkosong+" ("+data.persenkosong+"%)";
-                $("#totalkosong").append(totalkosong);
+                $("#totalkosong").append(data.totalkosong);
+                $("#totalpersenkosong").append(data.persenkosong+" %");
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
