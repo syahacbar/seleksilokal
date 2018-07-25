@@ -83,12 +83,7 @@ $(document).ready(function() {
         },
         ],
  
-    });
- 
-    $(document).on("click","#btnadd",function() {
-    /* Single line Reset function executes on click of Reset Button */
-        $("#form")[0].reset();
-    });    
+    }); 
  
 });
  
@@ -97,7 +92,7 @@ $(document).ready(function() {
 function add_record()
 {
     save_method = 'add';
-    $('#form')[0].reset(); 
+    $('#form-prodi')[0].reset(); 
     $('.form-group').removeClass('has-error'); 
     $('.help-block').empty(); 
     $('#modal_form').modal('show'); 
@@ -105,13 +100,13 @@ function add_record()
     $("#error_namaprodi").html('');
     $("#error_jenjang").html('');
     $("#error_dayatampung").html('');
-    $("#error_namafakultas").html('');
+    $("#error_idfakultas").html('');
 }
  
 function edit_record(id)
 {
     save_method = 'update';
-    $('#form')[0].reset(); 
+    $('#form-prodi')[0].reset(); 
     $('.form-group').removeClass('has-error'); 
     $('.help-block').empty(); 
     $("#error_namaprodi").html('');
@@ -128,7 +123,6 @@ function edit_record(id)
         {
             $('[name="idfakultas"]').val(data.idfakultas);
             $('[name="idprodi"]').val(data.idprodi);
-            $('[name="namafakultas"]').val(data.namafakultas);
             $('[name="namaprodi"]').val(data.namaprodi);
             $('[name="jenjang"]').val(data.jenjang);
             $('[name="dayatampung"]').val(data.dayatampung);
@@ -168,7 +162,7 @@ function save()
     $.ajax({
         url : url,
         type: "POST",
-        data: $('#form').serialize(),
+        data: $('#form-prodi').serialize(),
         dataType: "JSON",
         success: function(data)
         {
@@ -236,8 +230,7 @@ function delete_record(id)
                 <h3 class="modal-title">Form Program Studi/h3>
             </div>
             <div class="modal-body form">
-                <form action="#" id="form" class="form-horizontal">
-                    <input type="hidden" value="" name="idfakultas"/> 
+                <form action="#" id="form-prodi" class="form-horizontal">
                     <input type="hidden" value="" name="idprodi"/> 
                     <div class="form-body">
                         <div class="form-group">

@@ -62,6 +62,9 @@ class Prodi extends MY_Controller {
         if ($this->input->post('namaprodi') == '') {
             $res['error']['namaprodi'] = 'Nama Prodi tidak boleh kosong';
         }
+        if ($this->input->post('jenjang') == '') {
+            $res['error']['jenjang'] = 'Jenjang Prodi tidak boleh kosong';
+        }
         if ($this->input->post('dayatampung') == '') {
             $res['error']['dayatampung'] = 'Daya Tampung tidak boleh kosong';
         }    
@@ -94,7 +97,7 @@ class Prodi extends MY_Controller {
             $res['error']['namaprodi'] = 'Nama Prodi tidak boleh kosong';
         }
         if ($this->input->post('jenjang') == '') {
-            $res['error']['jenjang'] = 'Nama Prodi tidak boleh kosong';
+            $res['error']['jenjang'] = 'Jenjang Prodi tidak boleh kosong';
         }
         if ($this->input->post('dayatampung') == '') {
             $res['error']['dayatampung'] = 'Daya Tampung tidak boleh kosong';
@@ -102,7 +105,7 @@ class Prodi extends MY_Controller {
         if ($this->input->post('idfakultas') == '') {
             $res['error']['idfakultas'] = 'Fakultas harus dipilih';
         } 
-            
+             
         if (empty($res['error'])) {
 
             $res['hasil'] = 'sukses';
