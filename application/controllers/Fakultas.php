@@ -52,13 +52,13 @@ class Fakultas extends MY_Controller {
  
     public function ajax_add()
     {
-        if ($this->input->post('namafakultas') == '') {
+        /*if ($this->input->post('namafakultas') == '') {
             $data['error']['namafakultas'] = 'Nama Fakultas tidak boleh kosong';
         }
         if ($this->input->post('namadekan') == '') {
             $data['error']['namadekan'] = 'Nama Dekan tidak boleh kosong';
         }  
-            
+         */   
         if (empty($data['error'])) {
 
             $data['hasil'] = 'sukses';

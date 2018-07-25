@@ -68,8 +68,6 @@ $(document).ready(function() {
  
     });
  
-    
- 
 });
  
  
@@ -77,16 +75,13 @@ $(document).ready(function() {
 function add_record()
 {
     save_method = 'add';
-    $('#form')[0].reset(); // reset form on modals
+    $('#form-fakultas')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
     $('.help-block').empty(); // clear error string
     $('#modal_form').modal('show'); // show bootstrap modal
     $('.modal-title').text('Tambah Data'); // Set Title to Bootstrap modal title
-    $('[name="password"]').attr("placeholder", "Password");
     $("#error_namafakultas").html('');
     $("#error_namadekan").html('');
-    $("#error_username").html('');
-    $("#error_password").html('');
 }
  
 function edit_record(id)
@@ -95,10 +90,8 @@ function edit_record(id)
     $('#form')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
     $('.help-block').empty(); // clear error string
-    $('[name="password"]').attr("placeholder", "Kosongkan bila tidak merubah password");
     $("#error_namafakultas").html('');
     $("#error_namadekan").html('');
-    $("#error_username").html('');
     //Ajax Load data from ajax
     $.ajax({
         url : "<?php echo base_url('fakultas/ajax_edit/')?>/" + id,
@@ -107,10 +100,8 @@ function edit_record(id)
         success: function(data)
         {
             $('[name="idfakultas"]').val(data.idfakultas);
-            $('[name="iduser"]').val(data.id);
             $('[name="namafakultas"]').val(data.namafakultas);
             $('[name="namadekan"]').val(data.namadekan);
-            $('[name="username"]').val(data.email);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
             $('.modal-title').text('Edit Fakultas'); // Set title to Bootstrap modal title
  
@@ -131,8 +122,6 @@ function save()
 {
     $("#error_namafakultas").html('');
     $("#error_namadekan").html('');
-    $("#error_username").html('');
-    $("#error_password").html('');
     $('#btnSave').text('saving...'); //change button text
     $('#btnSave').attr('disabled',true); //set button disable 
     var url; 
@@ -147,19 +136,14 @@ function save()
     $.ajax({
         url : url,
         type: "POST",
-        data: $('#form').serialize(),
+        data : $('#form-fakultas').serialize(),
         dataType: "JSON",
+        
         success: function(data)
         {
-            if (data.hasil !== "sukses") {
+            if (data.hasil != "sukses") {
                 $("#error_namafakultas").html(data.error.namafakultas);
-                $("#error_namadekan").html(data.error.namadekan);
-                $("#error_username").html(data.error.username);
-                if (save_method =='add')
-                {
-                    $("#error_password").html(data.error.password);
-                }
-                
+                $("#error_namadekan").html(data.error.namadekan);             
             }               
  
             if(data.status) //if success close modal and reload ajax table
@@ -179,7 +163,7 @@ function save()
             $('#btnSave').text('Simpan'); //change button text
             $('#btnSave').attr('disabled',false); //set button enable 
  
-        }
+        } 
     });
 }
  
@@ -217,9 +201,8 @@ function delete_record(id)
                 <h3 class="modal-title">Form Fakultas/h3>
             </div>
             <div class="modal-body form">
-                <form action="#" id="form" class="form-horizontal">
+                <form action="#" id="form-fakultas" class="form-horizontal">
                     <input type="hidden" value="" name="idfakultas"/> 
-                    <input type="hidden" value="" name="iduser"/> 
                     <div class="form-body">
                         <div class="form-group">
                             <label class="control-label col-md-4">Nama Fakultas</label>
@@ -233,20 +216,6 @@ function delete_record(id)
                             <div class="col-md-8">
                                 <input name="namadekan" placeholder="Nama Dekan" class="form-control" type="text">
                                 <span class="text-danger" id="error_namadekan"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Username</label>
-                            <div class="col-md-8">
-                                <input name="username" placeholder="Username" class="form-control" type="text">
-                                <span class="text-danger" id="error_username"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Password</label>
-                            <div class="col-md-8">
-                                <input name="password" class="form-control" type="password">
-                                <span class="text-danger" id="error_password"></span>
                             </div>
                         </div>
                     </div>
