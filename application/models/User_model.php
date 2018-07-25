@@ -3,7 +3,7 @@ class User_model extends CI_Model{
 
     var $column_order = array('','username','email','created_on','last_login'); //set column field database for datatable orderable
     var $column_search = array('username','email'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-    var $order = array('id' => 'desc'); // default order 
+    var $order = array('users.id' => 'desc'); // default order 
  
     public function __construct()
     {
@@ -15,6 +15,9 @@ class User_model extends CI_Model{
     {
         $this->db->select('*') ;
         $this->db->from('users');
+        $this->db->join('users_has_fakultas','users_has_fakultas.user_id=users.id');
+        $this->db->join('fakultas','fakultas.idfakultas=users_has_fakultas.fakultas_id');
+
  
         $i = 0;
      

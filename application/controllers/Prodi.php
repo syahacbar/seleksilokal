@@ -10,7 +10,7 @@ class Prodi extends MY_Controller {
         $this->load->model('Prodi_model','prodi');
     }
  
-    public function index() 
+    public function index()  
     {
         $data = array(
             'view' => 'prodi/prodi_view',

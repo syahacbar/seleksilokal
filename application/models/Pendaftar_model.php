@@ -133,10 +133,8 @@ class Pendaftar_model extends CI_Model {
     }
 
     public function get_last_id(){
-        $query = $this->db->get($this->table);
-        $row = $query->last_row();
-        $nopendaftar = $row->nopendaftar;
-        return $nopendaftar+1;
+        $last_row=$this->db->select('nopendaftar')->order_by('nopendaftar',"desc")->limit(1)->get($this->table)->row();
+        return $last_row;
     }
 
     public function dd_sekolah()

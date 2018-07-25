@@ -79,9 +79,9 @@ class Pendaftar extends MY_Controller {
     {
         $thn = date('Y');
         $thnx = date('Y')+1;
-        $nopendaftar = $this->pendaftar->get_last_id();
+        $nopendaftar = $this->pendaftar->get_last_id()->nopendaftar; 
         echo json_encode(array(
-                        'nopendaftar' => $nopendaftar,
+                        'nopendaftar' => $nopendaftar+1,
                         'status' => 'B',
                         'tahunakademik' => $thn.'/'.$thnx,
                     )); 

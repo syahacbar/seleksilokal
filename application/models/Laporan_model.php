@@ -41,7 +41,7 @@ class Laporan_model extends CI_Model {
     function prodi_array($idfakultas=NULL) 
     {
         $this->db->distinct();
-        $this->db->select('namaprodi');
+        $this->db->select('namaprodi,namafakultas');
         if($idfakultas!=NULL){
             $this->db->where('idfakultas',$idfakultas);
         }
@@ -53,8 +53,9 @@ class Laporan_model extends CI_Model {
 
     function fakultas_array() 
     {
-        $this->db->select('*');
-        $this->db->from('fakultas');
+        $this->db->distinct();
+        $this->db->select('namafakultas,idfakultas');
+        $this->db->from('v_penerimaan');
         $this->db->order_by("namafakultas", "asc");
         $query = $this->db->get();
         return $query->result();
@@ -63,7 +64,7 @@ class Laporan_model extends CI_Model {
     public function dd_prodi()
     { 
         $this->db->distinct();
-        $this->db->select('namaprodi');
+        $this->db->select('namaprodi,namafakultas');
         $this->db->from('v_penerimaan');
         $dd['x'] = '--PILIH SALAH SATU--';
         if($this->ion_auth->is_admin()){

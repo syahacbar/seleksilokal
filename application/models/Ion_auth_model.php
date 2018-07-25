@@ -1651,10 +1651,11 @@ class Ion_auth_model extends CI_Model
 
 		// if no id was passed use the current users id
 		$id = isset($id) ? $id : $this->session->userdata('user_id');
-        $this->db->select('fakultas.idfakultas,fakultas.namafakultas,fakultas.namadekan,users.id,users.email,users.password');
+        $this->db->select('*');
         $this->db->from('fakultas');
-        $this->db->join('users','users.id=fakultas.iduser');
-        $this->db->where('fakultas.iduser',$id);
+        $this->db->join('users_has_fakultas','users_has_fakultas.fakultas_id=fakultas.idfakultas');
+        $this->db->join('users','users.id=users_has_fakultas.user_id');
+        $this->db->where('users.id',$id);
         $query = $this->db->get();
  
         return $query->row();
@@ -1675,9 +1676,9 @@ class Ion_auth_model extends CI_Model
 		// if no id was passed use the current users id
 		$id || $id = $this->session->userdata('user_id');
 
-		return $this->db->select($this->tables['users_groups'].'.'.$this->join['groups'].' as id, '.$this->tables['groups'].'.name, '.$this->tables['groups'].'.description')
+		return $this->db->select($this->tables['users_groups'].'.'.$this->join['groups'].' as id, '.$this->tables['groups'].'.namafakultas, '.$this->tables['groups'].'.namadekan')
 		                ->where($this->tables['users_groups'].'.'.$this->join['users'], $id)
-		                ->join($this->tables['groups'], $this->tables['users_groups'].'.'.$this->join['groups'].'='.$this->tables['groups'].'.id')
+		                ->join($this->tables['groups'], $this->tables['users_groups'].'.'.$this->join['groups'].'='.$this->tables['groups'].'.idfakultas')
 		                ->get($this->tables['users_groups']);
 	}
 

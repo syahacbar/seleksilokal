@@ -121,7 +121,6 @@ $(document).ready(function() {
     function load_data(is_prodi,is_suku){
         $("#btnreload").show();
         var dataTable = $('#table').DataTable({
-            "stateSave": true,
             "processing":true,
             "serverSide":true,
             "order":[],

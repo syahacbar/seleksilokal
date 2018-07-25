@@ -95,7 +95,6 @@ $(document).ready(function() {
     function load_data(is_prodi){
         $("#btnreload").show();
         var dataTable = $('#table').DataTable({
-            "stateSave": true,
             "processing":true,
             "serverSide":true,
             "order":[],
@@ -214,7 +213,7 @@ function add_record()
 {
     save_method = 'add';
      
-    $('#form')[0].reset(); // reset form on modals
+    $('#form-pendaftar')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
     $('#modal_form').modal('show'); // show bootstrap modal
     $('.modal-title').text('Tambah Pendaftar'); // Set Title to Bootstrap modal title
@@ -271,7 +270,7 @@ function edit_record(id)
 {
     save_method = 'update';
     
-    $('#form')[0].reset(); // reset form on modals
+    $('#form-pendaftar')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
     $('.help-block').empty(); // clear error string
     //Date picker
@@ -283,8 +282,6 @@ function edit_record(id)
     $('.select2').select2({
         tags: true
     });
-
-   
 
     $("#error_namapendaftar").html('');
     $("#error_tempatlahir").html('');
@@ -386,7 +383,7 @@ function save()
     $.ajax({
         url : url,
         type: "POST",
-        data: $('#form').serialize(),
+        data: $('#form-pendaftar').serialize(),
         dataType: "JSON",
         success: function(data)
         {
@@ -477,7 +474,7 @@ function import_excel()
                 <h3 class="modal-title">Form Pendaftar/h3>
             </div>
             <div class="modal-body form">
-                <form action="#" id="form" class="form-horizontal">
+                <form action="#" id="form-pendaftar" class="form-horizontal">
                     <div class="form-body">
                         <div class="form-group">
                             <label class="control-label col-md-3">No. Pendaftar</label>
@@ -618,7 +615,7 @@ function import_excel()
                 <h3 class="modal-title">Data Pendaftar</h3>
             </div>
             <div class="modal-body form">
-                <form action="#" id="form" class="form-horizontal">
+                <form action="#" id="form-detail" class="form-horizontal">
                     <div class="form-body">
                         <div class="form-group">
                             <label class="control-label col-md-3">No. Pendaftar</label>
