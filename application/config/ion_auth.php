@@ -30,7 +30,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  | Default is empty: uses default group defined in CI's configuration
  | (see application/config/database.php, $active_group variable)
  */
-$config['database_group_name'] = 'default';
+$config['database_group_name'] = '';
 
 /*
 | -------------------------------------------------------------------------
@@ -38,10 +38,10 @@ $config['database_group_name'] = 'default';
 | -------------------------------------------------------------------------
 | Database table names.
 */
-$config['tables']['users']           		= 'users';
-$config['tables']['groups']          		= 'fakultas';
-$config['tables']['users_groups']    	= 'users_has_fakultas';
-$config['tables']['login_attempts']  		= 'login_attempts';
+$config['tables']['users']           = 'users';
+$config['tables']['groups']          = 'groups';
+$config['tables']['users_groups']    = 'users_groups';
+$config['tables']['login_attempts']  = 'login_attempts';
 
 /*
  | Users table column and Group table column you want to join WITH.
@@ -50,7 +50,7 @@ $config['tables']['login_attempts']  		= 'login_attempts';
  | Joins from groups.id
  */
 $config['join']['users']  = 'user_id';
-$config['join']['groups'] = 'fakultas_id';
+$config['join']['groups'] = 'group_id';
 
 /*
  | -------------------------------------------------------------------------
@@ -97,7 +97,7 @@ $config['site_title']                 = "Example.com";       // Site Title, exam
 $config['admin_email']                = "admin@example.com"; // Admin Email, admin@example.com
 $config['default_group']              = 'members';           // Default group, use name
 $config['admin_group']                = 'admin';             // Default administrators group, use name
-$config['identity']                   = 'username';             // You can use any unique column in your table as identity column. The values in this column, alongside password, will be used for login purposes
+$config['identity']                   = 'email';             // You can use any unique column in your table as identity column. The values in this column, alongside password, will be used for login purposes
 $config['min_password_length']        = 8;                   // Minimum Required Length of Password
 $config['max_password_length']        = 20;                  // Maximum Allowed Length of Password
 $config['email_activation']           = FALSE;               // Email Activation for registration
