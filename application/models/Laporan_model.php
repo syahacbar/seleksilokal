@@ -9,6 +9,7 @@ class Laporan_model extends CI_Model {
     function __construct()
     {
         parent::__construct();
+        $this->load->model('Pengaturan_model','pengaturan');
     }
 
     function get_printall()
@@ -146,6 +147,7 @@ class Laporan_model extends CI_Model {
 
     public function totalpeminat()
     {
+        $this->db->where('tahunakademik',$this->pengaturan->gettahunakademik()->nilai);
         $this->db->from('pendaftar');
         return $this->db->count_all_results();
     }

@@ -747,7 +747,7 @@ function import_excel()
               </div>
               <div class="modal-body">
               Download Format Excel Untuk Import Data Disini 
-              <a class="btn btn-xs btn-info" target="blank" href="<?=base_url('assets/format_import_pendaftar.xls')?>"><i class="glyphicon glyphicon-import"></i>Downnload Format Excel</a>
+              <a class="btn btn-xs btn-info" target="blank" href="<?=base_url('public/format_import_pendaftar.xls')?>"><i class="glyphicon glyphicon-import"></i>Downnload Format Excel</a>
               </div>
               <img class="col-md3" src=<?=base_url('public/dist/img/ss_importexcel.png')?> width="100%" align="center">
               <div class="modal-footer">

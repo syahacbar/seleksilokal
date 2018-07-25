@@ -4,9 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Fakultas_model extends CI_Model {
     var $idtable = 'idfakultas';
     var $table = 'fakultas';
-    var $column_order = array('','namafakultas','namadekan','username'); //set column field database for datatable orderable
+    var $column_order = array('','namafakultas','namadekan'); //set column field database for datatable orderable
     var $column_search = array('namafakultas','namadekan'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-    var $order = array('namafakultas' => 'desc'); // default order 
+    var $order = array('idfakultas' => 'desc'); // default order 
  
     public function __construct()
     {
@@ -17,9 +17,8 @@ class Fakultas_model extends CI_Model {
     private function _get_datatables_query()
     {
          
-        $this->db->select('fakultas.idfakultas,fakultas.namafakultas,fakultas.namadekan,user.iduser, user.username, user.password, user.is_admin');
+        $this->db->select('*');
         $this->db->from('fakultas');
-        $this->db->join('user','user.iduser=fakultas.iduser');
  
         $i = 0;
      
@@ -79,9 +78,7 @@ class Fakultas_model extends CI_Model {
  
     public function get_by_id($id)
     {
-        $this->db->select('fakultas.idfakultas,fakultas.namafakultas,fakultas.namadekan,users.id,users.email,users.password');
-        $this->db->from('fakultas');
-        $this->db->join('users','users.id=fakultas.iduser');
+        $$this->db->from($this->table);
         $this->db->where($this->idtable,$id);
         $query = $this->db->get();
  

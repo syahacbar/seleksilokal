@@ -7,7 +7,6 @@ class Fakultas extends MY_Controller {
     {
         parent::__construct();
         $this->load->model('Fakultas_model','fakultas');
-        $this->load->model('User_model','user');
     }
  
     public function index()
@@ -58,32 +57,18 @@ class Fakultas extends MY_Controller {
         }
         if ($this->input->post('namadekan') == '') {
             $data['error']['namadekan'] = 'Nama Dekan tidak boleh kosong';
-        }
-        if ($this->input->post('username') == '') {
-            $data['error']['username'] = 'Username tidak boleh kosong';
-        }
-        if ($this->input->post('password') == '') {
-            $data['error']['password'] = 'Password tidak boleh kosong';
-        }    
+        }  
             
         if (empty($data['error'])) {
 
             $data['hasil'] = 'sukses';
             $data['status'] = TRUE;
-
-            $datau = array(
-                    'username' => $this->input->post('username'),
-                    'password' => $this->input->post('password'),
-                    'is_admin' => '0',
-                );
-            $insert = $this->user->add_user($datau);
             
             $dataf = array(
                     'namafakultas' => $this->input->post('namafakultas'),
                     'namadekan' => $this->input->post('namadekan'),
-                    'iduser' => $this->db->insert_id(),
                 );
-            $insert = $this->fakultas->save($dataf);
+            $insert = $this->fakultas->save($dataf); 
         } else {
             $data['hasil'] = 'gagal';
             $data['status'] = FALSE;
@@ -100,33 +85,18 @@ class Fakultas extends MY_Controller {
         if ($this->input->post('namadekan') == '') {
             $data['error']['namadekan'] = 'Nama Dekan tidak boleh kosong';
         }
-        if ($this->input->post('username') == '') {
-            $data['error']['username'] = 'Username tidak boleh kosong';
-        }
             
         if (empty($data['error'])) {
 
             $data['hasil'] = 'sukses';
             $data['status'] = TRUE;
-        
-            if(empty($this->input->post('password'))){
-                $datau = array(
-                    'username' => $this->input->post('username'),
-                );
-            } else {
-                $datau = array(
-                    'username' => $this->input->post('username'),
-                    'password' =>  password_hash($this->input->post('password'), PASSWORD_BCRYPT),
-                );
-            };
             
             $dataf = array(
                 'namafakultas' => $this->input->post('namafakultas'),
                 'namadekan' => $this->input->post('namadekan'),
             );
             $this->fakultas->update(array('idfakultas' => $this->input->post('idfakultas')), $dataf);
-            $this->user->edit_user($this->input->post('iduser'), $datau);
-        } else {
+          } else {
             $data['hasil'] = 'gagal';
             $data['status'] = FALSE;
         }

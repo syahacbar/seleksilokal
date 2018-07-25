@@ -19,7 +19,6 @@
      <div class="pull-right">
      <?php if($this->ion_auth->is_admin()){?>
         <a target="blank" class="btn btn-sm btn-warning" href="<?=base_url('laporan/rekapexcel')?>"><i class="glyphicon glyphicon-download"></i> Download Excel</a>
-        <a target="blank"  class="btn btn-sm btn-primary" href="<?=base_url('laporan/rekappdf')?>"><i class="glyphicon glyphicon-download"></i> Download PDF</a>
       <?php } ?>
       <button class="btn btn-sm btn-default" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
         
