@@ -71,4 +71,15 @@ class Penerimaan extends MY_Controller {
         //output to json format
         echo json_encode($output);
     }
+
+    public function batalkansemua()
+    {
+        $dataupdate = array(
+            "status" => $this->input->post('status'),
+        );
+        $this->penerimaan->update($dataupdate,array("status"=>"T"));
+        $this->penerimaan->deleteall();
+        echo json_encode($dataupdate);
+        //redirect('penerimaan');
+    }
 }

@@ -18,6 +18,7 @@
      
      <div class="pull-right">
      <?php if($this->ion_auth->is_admin()){?>
+        <a target="blank" class="btn btn-sm btn-danger" onclick="batalkansemua()"><i class="fa fa-remove"></i> Batalkan Semua</a>
         <a target="blank" class="btn btn-sm btn-success" href="<?=base_url('laporan/laporanexcel')?>"><i class="fa fa-file-excel-o"></i> Export Excel</a>
         <a target="blank" class="btn btn-sm btn-primary" href="<?=base_url('laporan/pdfsk')?>"><i class="fa fa-file-pdf-o"></i> Cetak SK</a>
         <a target="blank" class="btn btn-sm btn-warning" href="<?=base_url('laporan/pdfcetak')?>"><i class="fa fa-file-pdf-o"></i> Cetak Hasil</a>
@@ -147,6 +148,23 @@ function batalkan(id){
     });
 }
 
+function batalkansemua(){
+    var status = 'B';
+    $.ajax({
+        url : "<?php echo base_url('penerimaan/batalkansemua')?>",
+        type: "POST",
+        dataType: "JSON",
+        data: {'status':status},
+        success: function(data)
+        {
+            location.reload();
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
 </script>
 <!-- End Bootstrap modal -->
 

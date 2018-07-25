@@ -126,14 +126,12 @@ class Seleksimanual_model extends CI_Model {
     
     public function dd_prodi()
     {
-            $dd['x'] = '--PILIH SALAH SATU--';
+        $dd['x'] = '--PILIH SALAH SATU--';
         if($this->ion_auth->is_admin()){
             $dd['0'] = 'SEMUA PROGRAM STUDI';
         } 
         else {
             $this->db->where('idfakultas',$this->ion_auth->get_fakultas()->idfakultas);
-        
-            //$dd['x'] = '--PILIH SALAH SATU--';
         }
             $this->db->order_by('namaprodi', 'asc');
             $result = $this->db->get('prodi');

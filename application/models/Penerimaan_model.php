@@ -18,7 +18,7 @@ class Penerimaan_model extends CI_Model {
         $this->db->select('*');
         $this->db->from($this->table);
  
-        if(isset($_POST['is_prodi'])) 
+        if(isset($_POST['is_prodi']) && $_POST['is_prodi'] != "0") 
         {
             $this->db->group_start();
             $this->db->where('namaprodi',$_POST['is_prodi']);
@@ -99,6 +99,12 @@ class Penerimaan_model extends CI_Model {
     {
         $this->db->where('nopendaftar', $id);
         $this->db->delete('penerimaan');
+    }
+
+    public function deleteall()
+    {
+        $query = $this->db->query('DELETE FROM penerimaan');
+        return $query;
     }
 
     

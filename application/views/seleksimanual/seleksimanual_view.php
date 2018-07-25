@@ -7,16 +7,18 @@
 <link rel="stylesheet" href="<?php echo base_url('public/buttons.dataTables.min.css')?>">
 
 <style>
-    th, td { white-space: nowrap; } 
+    th, td { white-space: normal; } 
     div.dataTables_wrapper {
         margin: 0 auto;
     }
     tr { height: 10px;  } 
     table{
     table-layout: fixed; 
-    word-wrap:break-word;
     }
     th.dt-center, td.dt-center { text-align: center; }
+    td..color-blue { background-color: Blue; }
+
+    
 </style>  
   
   <div class="box"> 
@@ -39,9 +41,9 @@
                 <td width="1%"></td>
                 <td width="25%"><?php echo form_dropdown('pilihprodi', $dd_prodi, $prodi_selected,'id="pilihprodi" class="form-control select2 input-sm"'); ?></td>
                 <td width="2%"></td>
-                <td width="10%"><label style="font-size:13px;">Sisa Kuota Prodi:</label></td>
+                <td width="10%"><label style="font-size:13px;">Daya Tampung Prodi:</label></td>
                 <td width="1%"></td>
-                <td width="5%"><input type="text" name="sisakuota" class="form-control" readonly="readonly" style="text-align:center;font-weight:bold;"></td>
+                <td width="5%"><input type="text" name="dayatampung" class="form-control" readonly="readonly" style="text-align:center;font-weight:bold;"></td>
                 <td width="41%"></td>
             </tr>
             <tr>
@@ -49,9 +51,9 @@
                 <td width="1%"></td>
                 <td width="25%"><?php echo form_dropdown('pilihsuku', $dd_suku, $suku_selected,'id="pilihsuku" class="form-control select2 input-sm"'); ?></td>
                 <td width="2%"></td>
-                <td width="10%"><label style="font-size:13px;">Daya Tampung Prodi:</label></td>
+                <td width="10%"><label style="font-size:13px;">Sisa Kuota Prodi:</label></td>
                 <td width="1%"></td>
-                <td width="5%"><input type="text" name="dayatampung" class="form-control" readonly="readonly" style="text-align:center;font-weight:bold;"></td>
+                <td width="5%"><input type="text" name="sisakuota" class="form-control" readonly="readonly" style="text-align:center;font-weight:bold;"></td>
                 <td width="41%"></td>
             </tr>
         </table>
@@ -63,10 +65,10 @@
                 <tr>
                     <th style="width: 10;"></th>
                     <th style="width: 60;">No. Pendaftaran</th>
-                    <th style="width: 200;">Nama Pendaftar</th>
-                    <th style="width: 10;">Pil. Ke</th>
+                    <th style="width: 180;">Nama Pendaftar</th>
+                    <th style="width: 30;">Pil. Ke</th>
                     <th style="width: 50;">Suku</th>
-                    <th style="width: 50;">Jur. SLTA</th>
+                    <th style="width: 80;">Jur. SLTA</th>
                     <th style="width: 20;">N.Bhs</th>
                     <th style="width: 20;">N.IPA</th>
                     <th style="width: 20;">N.IPS</th>
@@ -107,6 +109,7 @@ $(document).ready(function() {
     $("#mnpendaftar").addClass('active');
     $("body").addClass("sidebar-collapse ");
     $("#btnreload").hide();
+    $("#btnterimakolektif").hide();
     getdayatampung();
     var dataTable = $('#table').DataTable({
         
@@ -158,7 +161,7 @@ $(document).ready(function() {
             {
                 orderable: false,
                 targets: 3,
-                width: '10',
+                width: '30',
                 className: 'dt-center',
             },
             {
@@ -167,11 +170,21 @@ $(document).ready(function() {
                 width: '50',
                 className: 'dt-center',
             },
+            {
+                targets: 5,
+                width: '80',
+                className: 'dt-center',
+            },
             
             {
-                targets: [5,6,7,8,9,10,11,12],
+                targets: [6,7,8,9,11,12],
                 width: '20',
                 className: 'dt-center',
+            },
+            {
+                targets: 10,
+                width: '20',
+                className: 'dt-center color-blue',
             },
             ],
             select: {
@@ -186,6 +199,27 @@ $(document).ready(function() {
                     }
                 }
          
+        });
+        
+        dataTable.search('').draw(); //required after
+
+        dataTable.on("click", "th.select-checkbox", function() {
+            if ($("th.select-checkbox").hasClass("selected")) {
+                dataTable.rows().deselect();
+                $("th.select-checkbox").removeClass("selected");
+            } else {
+                dataTable.rows().select();
+                $("th.select-checkbox").addClass("selected");
+            }
+        }).on("select deselect", function() {
+            ("Some selection or deselection going on")
+            if (dataTable.rows({
+                    selected: true
+                }).count() !== dataTable.rows().count()) {
+                $("th.select-checkbox").removeClass("selected");
+            } else {
+                $("th.select-checkbox").addClass("selected");
+            }
         });
     }
 
@@ -207,6 +241,7 @@ $(document).ready(function() {
             data: {nopendaftar:selectednopendaftar, pilihprodi:prodi},
             success: function(data){
                 $('#table').DataTable().ajax.reload(null, false);
+                dataTable.search('').draw(); //required after
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -217,13 +252,20 @@ $(document).ready(function() {
     
 
     $(document).on('change', '#pilihprodi', function(){
+        var dataTable = $('#table').DataTable();
         var prodi = $('#pilihprodi').val();
         var suku = $('#pilihsuku').val();
         $('#table').DataTable().destroy();
         if(prodi != '')
         {
+            if(prodi == 'x' || prodi == '0'){
+                $("#btnterimakolektif").hide();
+            } else {
+                $("#btnterimakolektif").show();
+            }
             getdayatampung(prodi);
             load_data(prodi,suku);
+            dataTable.search('').draw(); //required after
         }
         else
         {
@@ -322,27 +364,33 @@ function detail_record(id)
 }
 
 function terima(id){
+    var dataTable = $('#table').DataTable();
     var prodi = $('#pilihprodi').val();
     var status = 'T';
-    $.ajax({
-        url : "<?php echo base_url('seleksimanual/terima')?>/"+ id,
-        type: "POST",
-        dataType: "JSON",
-        data: {'pilihprodi': prodi,'status':status},
-        success: function(data)
-        {
-            if(data.statusterima){
-                $('#table').DataTable().ajax.reload(null, false);
-                getdayatampung(prodi);
-            } else {
-                alert("Kuota Program Studi penuh !");
+    if(prodi == '0' || prodi == 'x'){
+        alert("Pilih program studi terlebih dahulu");
+    } else {
+        $.ajax({
+            url : "<?php echo base_url('seleksimanual/terima')?>/"+ id,
+            type: "POST",
+            dataType: "JSON",
+            data: {'pilihprodi': prodi,'status':status},
+            success: function(data)
+            {
+                if(data.statusterima){
+                    $('#table').DataTable().ajax.reload(null, false);
+                    getdayatampung(prodi);
+                    dataTable.search('').draw(); //required after
+                } else {
+                    alert("Kuota Program Studi penuh !");
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
             }
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
+        });
+    }
 }
 
 

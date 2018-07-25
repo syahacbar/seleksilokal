@@ -62,14 +62,14 @@ class Seleksimanual extends MY_Controller {
                 }
             }
             $row = array(); 
-            $jurslta = explode(" ", $result->jurusanslta);
-            $jurusanslta = $jurslta[1];
+            //$jurslta = explode(" ", $result->jurusanslta);
+            //$jurusanslta = $jurslta[1];
                 $row[] = '';
                 $row[] = $result->nopendaftar;
                 $row[] = $result->namapendaftar;
                 $row[] = "<center><strong>".$prodipilihan."</strong></center>";
                 $row[] = $result->suku;
-                $row[] = $jurusanslta;
+                $row[] = $result->jurusanslta;
                 $row[] = $result->nbahasa;
                 $row[] = $result->nipa;
                 $row[] = $result->nips;
@@ -107,7 +107,7 @@ class Seleksimanual extends MY_Controller {
         $dataupdate = array(
             'status' => $this->input->post('status'),
         );
-        
+         
         $data = array('dayatampung'=>$dayatampung, 'sisakuota'=>$sisakuota);
 
             if($sisakuota == $dayatampung){
@@ -142,7 +142,7 @@ class Seleksimanual extends MY_Controller {
                 $data['statusterima'] = FALSE;            
             } else {
                 $insert = $this->seleksimanual->save($datainput);
-                $insert = $this->seleksimanual->update($dataupdate,array('nopendaftar'=>$id));
+                $insert = $this->seleksimanual->update($dataupdate,array('nopendaftar'=>$nopendaftar));
                 $data['statusterima'] = TRUE;
             }
         } 
