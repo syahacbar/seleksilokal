@@ -17,7 +17,7 @@
                 $html='
                 <table border=0 width="100%">
                     <tr>
-                        <td><font size="12"><strong>SELEKSI LOKAL UNIVERSITAS PAPUA TAHUN 2018</strong></font><hr></td>
+                        <td><font size="12"><strong>SELEKSI LOKAL UNIVERSITAS PAPUA TAHUN '.$tahun.'</strong></font><hr></td>
                     </tr>
                     <tr>
                         <td><font size="14">'.strtoupper($this->prodi->get_fakultasname_by_prodiname($prodi_list->namaprodi)->namafakultas).'</font></td>
@@ -94,6 +94,6 @@
                 $pdf->writeHTML($html, true, false, true, false, '');
             };
 
-			$pdf->Output('Peserta Lulus Seleksi Lokal '.date('Y').'.pdf', 'I');
+			$pdf->Output('LAMPIRAN SK PESERTA LULUS SELEKSI JALUR LOKAL UNIPA TAHUN '.$tahun.'.pdf', 'I');
 ?>
                         

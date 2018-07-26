@@ -56,6 +56,14 @@
     </form>
   </div>
   <!-- /.login-box-body -->
+  
+<?php if($this->session->flashdata('message') != ''): ?>
+			    <div class="alert alert-warning flash-msg alert-dismissible">
+			      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			      <h4> Perhatian!</h4>
+			      <?= $this->session->flashdata('message'); ?> 
+			    </div>
+			  <?php endif; ?> 
 </div>
 <!-- /.login-box -->
 

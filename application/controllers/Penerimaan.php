@@ -18,11 +18,14 @@ class Penerimaan extends MY_Controller {
     public function index()
     {
         $this->ion_auth->is_admin() ? $dd_prodi = $this->laporan->dd_prodi() : $dd_prodi = $this->laporan->dd_prodi();
+        $tahunakademik = $this->pengaturan->gettahunakademik()->nilai;
+        $tahun = substr($tahunakademik,0,4);
         $data = array(
             'view' => 'penerimaan/penerimaan_view',
 			'dd_prodi' => $dd_prodi,
             'prodi_selected' => $this->input->post('pilihprodi') ? $this->input->post('pilihprodi') : '',
-            'tahunakademik' => $this->pengaturan->gettahunakademik()->nilai,
+            'tahunakademik' => $tahunakademik,
+            'tahun' => $tahun,
             
         );	
         $this->load->view('layout',$data);
@@ -46,7 +49,7 @@ class Penerimaan extends MY_Controller {
            
             $data[] = $row;
         }
- 
+  
         $output = array(
                         "draw" => $_POST['draw'],
                         "recordsTotal" => $this->penerimaan->count_all(),

@@ -11,17 +11,16 @@ class Laporan extends MY_Controller {
         $this->load->model('Prodi_model','prodi');
     }
 
-	public function index()
-	{
-        
-    }
-    
     public function laporanexcel()
 	{
+        $tahunakademik = $this->pengaturan->gettahunakademik()->nilai;
+        $tahun = substr($tahunakademik,0,4);
+        $title = 'PESERTA LULUS SELEKSI JALUR LOKAL UNIPA TAHUN '.$tahun;
 		$data = array(
             'list' => $this->laporan->get_printall(),
             'tahunakademik' => $this->pengaturan->gettahunakademik()->nilai,
-            'title' => 'PESERTA LULUS SELEKSI JALUR LOKAL UNIPA TAHUN 2018',
+            'title' => $title,
+            'tahun' => $tahun,
         );
 		$this->load->view('laporan/laporanexcel',$data);
 		
@@ -29,25 +28,34 @@ class Laporan extends MY_Controller {
     
     public function pdfsk()
     {
+        $tahunakademik = $this->pengaturan->gettahunakademik()->nilai;
+        $tahun = substr($tahunakademik,0,4);
         $data =array(
             'fakultas' => $this->laporan->fakultas_array(),
+            'tahun' => $tahun,
         );
 		$this->load->view('laporan/skpdf', $data);
     }
 
     public function pdfcetak()
     { 
+        $tahunakademik = $this->pengaturan->gettahunakademik()->nilai;
+        $tahun = substr($tahunakademik,0,4);
         $data =array(
             'prodi' => $this->laporan->prodi_array(),
+            'tahun' => $tahun,
         );
 		$this->load->view('laporan/cetakpdf', $data);
     }
 
     public function rekapitulasi()
     {
+        $tahunakademik = $this->pengaturan->gettahunakademik()->nilai;
+        $tahun = substr($tahunakademik,0,4);
         $data =array(
             'prodi' => $this->prodi->get_prodi(),
             'view' => 'laporan/rekapitulasi',
+            'tahun' => $tahun,
         );
         $this->load->view('layout',$data);
         //echo json_encode($data);
@@ -55,6 +63,8 @@ class Laporan extends MY_Controller {
 
     public function rekapexcel()
     {
+        $tahunakademik = $this->pengaturan->gettahunakademik()->nilai;
+        $tahun = substr($tahunakademik,0,4);
         $totalkosong = ((int)$this->laporan->totaldayatampung()->dayatampung)-((int)$this->laporan->totalterima());
         $dayatampung = (int)$this->laporan->totaldayatampung()->dayatampung;
         $persenkosong = round((($totalkosong/$dayatampung)*100),2);
@@ -67,6 +77,7 @@ class Laporan extends MY_Controller {
             'totalterima'=>$this->laporan->totalterima(),
             'totalkosong'=>$totalkosong,
             'persenkosong'=>$persenkosong,
+            'tahun' => $tahun,
         );
         $this->load->view('laporan/rekapexcel',$data);
         //echo json_encode($data);

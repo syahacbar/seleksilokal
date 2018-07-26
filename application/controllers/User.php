@@ -172,24 +172,41 @@ class User extends MY_Controller {
 
     public function changepassword()
     {
-        if ($this->input->post('password') == '') {
-            $res['error']['password'] = 'Password tidak boleh kosong';
+        if ($this->input->post('old') == '') {
+            $res['error']['old'] = 'Password lama tidak boleh kosong';
         } 
-        if ($this->input->post('password_confirm') == '') {
-            $res['error']['confirmpassword'] = 'Konfirmasi Password tidak boleh kosong';
+        if ($this->input->post('new') == '') {
+            $res['error']['new'] = 'Password baru tidak boleh kosong';
+        } 
+        if ($this->input->post('new_confirm') == '') {
+            $res['error']['new_confirm'] = 'Konfirmasi Password baru tidak boleh kosong';
         }
-        if ($this->input->post('password') != $this->input->post('password_confirm')) {
-            $res['error']['cekpassword'] = 'Konfirmasi Password harus sama dengan Password';
+        if ($this->input->post('new') != $this->input->post('new_confirm')) {
+            $res['error']['cekpass'] = 'Konfirmasi Password harus sama dengan Password';
         } 
 
         if (empty($res['error'])) {
 
             $res['hasil'] = 'sukses';
             $res['status'] = TRUE;
-            $user = $this->ion_auth->user()->row();
-            $data['password'] = $this->input->post('password');
+            $identity = $this->session->userdata('identity');
 
             //$this->ion_auth->update($user->id, $data);
+            $change = $this->ion_auth->change_password($identity, $this->input->post('old'), $this->input->post('new'));
+
+            if ($change)
+			{
+				//if the password was successfully changed
+				$this->session->set_flashdata('message', $this->ion_auth->messages());
+				
+			}
+			else
+			{
+				$this->session->set_flashdata('message', $this->ion_auth->errors());
+                $res['error']['old'] = 'Password Lama Salah';
+                $res['hasil'] = 'gagal';
+                $res['status'] = FALSE;
+			}
 
         } else {
             $res['hasil'] = 'gagal';
