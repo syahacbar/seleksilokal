@@ -33,7 +33,7 @@
    <!-- /.box-header -->
   
         <div class="box-body table-responsive">
-        <form action="#" id="form" class="form-horizontal">
+        <form action="#" id="form-filter" class="form-horizontal">
         <div class="form-group">
         <table border="0" width="100%">
             <tr>
@@ -63,7 +63,7 @@
                
         <thead>
                 <tr>
-                    <th style="width: 10;"></th>
+                    <th style="width: 10; text-align:center;"><input type="checkbox" id="selectall"></th>
                     <th style="width: 60;">No. Pendaftaran</th>
                     <th style="width: 180;">Nama Pendaftar</th>
                     <th style="width: 30;">Pil. Ke</th>
@@ -201,26 +201,28 @@ $(document).ready(function() {
         });
         
         dataTable.search('').draw(); //required after
-
-        dataTable.on("click", "th.select-checkbox", function() {
-            if ($("th.select-checkbox").hasClass("selected")) {
+        
+        dataTable.on("click", "#selectall", function() {
+            if ($("#selectall").hasClass("selected")) {
                 dataTable.rows().deselect();
-                $("th.select-checkbox").removeClass("selected");
+                $("#selectall").removeClass("selected");
             } else {
                 dataTable.rows().select();
-                $("th.select-checkbox").addClass("selected");
+                $("#selectall").addClass("selected");
             }
         }).on("select deselect", function() {
             ("Some selection or deselection going on")
             if (dataTable.rows({
                     selected: true
                 }).count() !== dataTable.rows().count()) {
-                $("th.select-checkbox").removeClass("selected");
+                $("#selectall").removeClass("selected");
             } else {
-                $("th.select-checkbox").addClass("selected");
+                $("#selectall").addClass("selected");
             }
         });
-    }
+        
+
+}
 
 
     $(document).on("click","#btnterimakolektif",function() {
