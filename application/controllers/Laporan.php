@@ -36,7 +36,7 @@ class Laporan extends MY_Controller {
     }
 
     public function pdfcetak()
-    {
+    { 
         $data =array(
             'prodi' => $this->laporan->prodi_array(),
         );

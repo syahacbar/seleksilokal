@@ -313,12 +313,12 @@ function edit_record(id)
             $('[name="tanggallahir"]').val(data.tanggallahir);
             $("#datepicker").datepicker( "setDate" , data.tanggallahir );
             
-            if (data.jeniskelamin == 'L')
+            if (data.jeniskelamin == 'LAKI-LAKI')
                 $("#jeniskelaminL").prop("checked",true);
             else 
                 $("#jeniskelaminP").prop("checked",true);
             
-            if (data.suku == 'P') 
+            if (data.suku == 'PAPUA') 
                 $("#sukuP").prop("checked",true);
             else 
                 $("#sukuNP").prop("checked",true);
@@ -509,16 +509,16 @@ function import_excel()
                         <div class="form-group">
                             <label class="control-label col-md-3">Jenis Kelamin</label>
                             <div class="col-md-9">
-                            <input type="radio" name="jeniskelamin" class="minimal" value="L" id="jeniskelaminL"> LAKI-LAKI
-                            <input type="radio" name="jeniskelamin" class="minimal" value="P" id="jeniskelaminP"> PEREMPUAN
+                            <input type="radio" name="jeniskelamin" class="minimal" value="LAKI-LAKI" id="jeniskelaminL"> LAKI-LAKI
+                            <input type="radio" name="jeniskelamin" class="minimal" value="PEREMPUAN" id="jeniskelaminP"> PEREMPUAN
                             <span class="text-danger" id="error_jeniskelamin"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Suku</label>
                             <div class="col-md-9">
-                                <input type="radio" name="suku" class="minimal" value="P" id="sukuP"> PAPUA
-                                <input type="radio" name="suku" class="minimal" value="NP" id="sukuNP"> NON PAPUA
+                                <input type="radio" name="suku" class="minimal" value="PAPUA" id="sukuP"> PAPUA
+                                <input type="radio" name="suku" class="minimal" value="NON PAPUA" id="sukuNP"> NON PAPUA
                                 <span class="text-danger" id="error_suku"></span>
                             </div>
                         </div> 

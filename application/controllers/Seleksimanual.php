@@ -67,7 +67,7 @@ class Seleksimanual extends MY_Controller {
                 $row[] = '';
                 $row[] = $result->nopendaftar;
                 $row[] = $result->namapendaftar;
-                $row[] = "<center><strong>".$prodipilihan."</strong></center>";
+                $row[] = $prodipilihan;
                 $row[] = $result->suku;
                 $row[] = $result->jurusanslta;
                 $row[] = $result->nbahasa;

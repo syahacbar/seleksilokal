@@ -331,13 +331,8 @@ function detail_record(id)
             $('[name="namapendaftar"]').val(data.namapendaftar);
             $('[name="ttl"]').val(data.tempatlahir+", "+data.tanggallahir);
 
-            var jk = data.jeniskelamin;
-            var suku = data.suku;
-            if (jk=='L') jk='LAKI-LAKI'; else  jk='PEREMPUAN';
-            if (suku=='P') suku='PAPUA'; else  suku='NON PAPUA';
-            
-            $('[name="jeniskelamin"]').val(jk);
-            $('[name="suku"]').val(suku);
+            $('[name="jeniskelamin"]').val(data.jeniskelamin);
+            $('[name="suku"]').val(data.suku);
             $('[name="pilihan1"]').val(data.pilihan1);
             $('[name="pilihan2"]').val(data.pilihan2);        
             $('[name="pilihan3"]').val(data.pilihan3);

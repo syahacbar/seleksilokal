@@ -25,6 +25,9 @@
                     <tr>
                         <td><font size="14">PROGRAM STUDI '.strtoupper($prodi_list->namaprodi).'</font></td>
                     </tr>
+                    <tr>
+                        <td><font size="14">JENJANG '.strtoupper($prodi_list->jenjang).'</font></td>
+                    </tr>
                 </table>
                 <div></div>
                         <table cellspacing="1" bgcolor="#666666" cellpadding="2">
@@ -32,7 +35,7 @@
                                 <th width="5%" align="center"><strong>NO</strong></th>
                                 <th width="20%" align="center"><strong>NO. PESERTA</strong></th>
                                 <th width="55%" align="center"><strong>NAMA</strong></th>
-                                <th width="20%" align="center"><strong>JENJANG</strong></th>
+                                <th width="20%" align="center"><strong>SUKU</strong></th>
                             </tr>';
                 foreach ($this->laporan->skpdf($prodi_list->namaprodi) as $row) 
                     {
@@ -42,14 +45,14 @@
                                 <td align="center">'.$no.'</td>
                                 <td align="center">'.$row->nopendaftar.'</td>
                                 <td>'.strtoupper($row->namapendaftar).'</td>
-                                <td align="center">'.strtoupper($row->jenjang).'</td>
+                                <td align="center">'.strtoupper($row->suku).'</td>
                             </tr>';
                         } else {
                             $html.='<tr bgcolor="#c3bfbf">
                                 <td align="center">'.$no.'</td>
                                 <td align="center">'.$row->nopendaftar.'</td>
                                 <td>'.strtoupper($row->namapendaftar).'</td>
-                                <td align="center">'.strtoupper($row->jenjang).'</td>
+                                <td align="center">'.strtoupper($row->suku).'</td>
                             </tr>';
                         }
                     }

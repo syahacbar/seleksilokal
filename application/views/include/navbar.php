@@ -42,7 +42,7 @@
                   <a href="<?= site_url('auth/logout'); ?>" class="btn btn-default btn-flat">Log Out</a>
                 </div>
                 <div class="pull-left">
-                  <a href="#" onclick="ubah_password()" class="btn btn-default btn-flat">Ubah Password</a>
+                  <a href="#" onclick="edit_record(<?=$this->ion_auth->user()->row()->id;?>)" class="btn btn-default btn-flat">Ubah Password</a>
                 </div>
               </li>
             </ul>
@@ -57,29 +57,55 @@
   </header>
 
 <script type="text/javascript">
-
-function changepassword()
+function edit_record(id)
 {
-    $('#form-changepassword')[0].reset(); 
+    save_method = 'update';
+    $('#form-ubahpassword')[0].reset(); 
     $('.form-group').removeClass('has-error'); 
     $('.help-block').empty(); 
-    $("#error_password").html('');
-    $("#error_confirmpassword").html('');
-    $('#btnSave').text('saving...');
-    $('#btnSave').attr('disabled',true); 
+    $("#error_pass").html('');
+    $("#error_confirmpass").html('');
+ 
+    //Ajax Load data from ajax  
+    $.ajax({
+        url : "<?php echo base_url('user/ajax_edit/')?>/" + id,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {
+            $('[name="iduser"]').val(data.id);
+            $('#modal_changepassword').modal('show'); // show bootstrap modal when complete loaded
+            $('.modal-title').text('Edit Program Studi'); // Set title to Bootstrap modal title
+ 
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
+function changepassword()
+{
+    $('#form-ubahpassword')[0].reset(); 
+    $('.form-group').removeClass('has-error'); 
+    $('.help-block').empty(); 
+    $("#error_pass").html('');
+    $("#error_confirmpass").html('');
+    $('#btnSaveubahpass').text('saving...');
+    $('#btnSaveubahpass').attr('disabled',true); 
 
     $.ajax({
         url : "<?php echo site_url('user/changepassword')?>",
         type: "POST",
-        data: $('#form-changepassword').serialize(),
+        data: $('#form-ubahpassword').serialize(),
         dataType: "JSON",
         success: function(data)
         {
             
             if (data.hasil !== "sukses") {
-                $("#error_password").html(data.error.password);
-                $("#error_confirmpassword").html(data.error.confirmpassword);
-                $("#error_cekpassword").html(data.error.cekpassword);
+                $("#error_pass").html(data.error.password);
+                $("#error_confirmpass").html(data.error.confirmpassword);
+                $("#error_cekpass").html(data.error.cekpassword);
             }
  
             if(data.status) //if success close modal and reload ajax table
@@ -88,16 +114,16 @@ function changepassword()
                 reload_table();
             }
  
-            $('#btnSave').text('Simpan'); //change button text
-            $('#btnSave').attr('disabled',false); //set button enable 
+            $('#btnSaveubahpass').text('Simpan'); //change button text
+            $('#btnSaveubahpass').attr('disabled',false); //set button enable 
  
  
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
             alert('Error adding / update data');
-            $('#btnSave').text('Simpan'); //change button text
-            $('#btnSave').attr('disabled',false); //set button enable 
+            $('#btnSaveubahpass').text('Simpan'); //change button text
+            $('#btnSaveubahpass').attr('disabled',false); //set button enable 
  
         }
     });
@@ -113,28 +139,28 @@ function changepassword()
                 <h4 class="modal-title">Form Ubah Passowrd </h4>
             </div>
             <div class="modal-body form">
-                <form action="#" id="form-changepassword" class="form-horizontal" style="font-size:12px">
-                    <input type="hidden" name="id"/> 
+                <form id="form-ubahpassword" class="form-horizontal" style="font-size:12px">
+                    <input type="hidden" value="" name="iduser" /> 
                     <div class="form-body">
-                        <div class="form-group" id="div_password">
+                        <div class="form-group">
                             <label class="control-label col-md-4">Username</label>
                             <div class="col-md-8">
-                                <input readonly="readonly" id="username" name="username" class="form-control" type="text" value="<?= $this->session->userdata('identity'); ?>">
-                                <span class="text-danger" id="error_username"></span>
+                                <input readonly="readonly" id="user" name="user" class="form-control" type="text" value="<?= $this->session->userdata('identity'); ?>">
+                                <span class="text-danger" id="error_user"></span>
                             </div>
                         </div>
-                        <div class="form-group" id="div_password">
+                        <div class="form-group">
                             <label class="control-label col-md-4">Password</label>
                             <div class="col-md-8">
-                                <input id="password" name="password" placeholder="Password" class="form-control" type="password">
-                                <span class="text-danger" id="error_password"></span>
+                                <input id="pass" name="pass" placeholder="Password" class="form-control" type="password">
+                                <span class="text-danger" id="error_pass"></span>
                             </div>
                         </div>
-                        <div class="form-group"  id="div_password_confirm">
+                        <div class="form-group">
                             <label class="control-label col-md-4">Konfirmasi Password</label>
                             <div class="col-md-8">
-                                <input id="password_confirm" name="password_confirm" placeholder="Konfirmasi Password" class="form-control" type="password">
-                                <span class="text-danger" id="error_confirmpassword"></span><br><span class="text-danger" id="error_cekpassword"></span>
+                                <input id="pass_confirm" name="pass_confirm" placeholder="Konfirmasi Password" class="form-control" type="password">
+                                <span class="text-danger" id="error_confirmpass"></span><br><span class="text-danger" id="error_cekpassword"></span>
                             </div>
                         </div>
                     </div>
@@ -142,7 +168,7 @@ function changepassword()
                 </form>
             </div>
             <div class="modal-footer">
-              <button type="button" id="btnSave" onclick="changepassword()" class="btn btn-primary">Simpan</button>
+              <button type="button" id="btnSaveubahpass" onclick="changepassword()" class="btn btn-primary">Simpan</button>
               <button type="button" class="btn btn-danger" data-dismiss="modal">Kembali</button>
             </div>
         </div><!-- /.modal-content -->

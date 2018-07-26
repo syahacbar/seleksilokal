@@ -187,11 +187,9 @@ class User extends MY_Controller {
             $res['hasil'] = 'sukses';
             $res['status'] = TRUE;
             $user = $this->ion_auth->user()->row();
-            $data = array(
-                'password' => $this->input->post('password'),
-            );
+            $data['password'] = $this->input->post('password');
 
-            $this->ion_auth->update($user->id, $data);
+            //$this->ion_auth->update($user->id, $data);
 
         } else {
             $res['hasil'] = 'gagal';

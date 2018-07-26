@@ -45,8 +45,8 @@ class Pendaftar extends MY_Controller {
             $row[] = $result->pilihan3;
             $row[] = $result->tempatlahir;
             $row[] = $result->tanggallahir;
-            $row[] = $result->jeniskelamin == "L" ? "LAKI-LAKI" : "PEREMPUAN";
-            $row[] = $result->suku == "P" ? "PAPUA" : "NON PAPUA"; 
+            $row[] = $result->jeniskelamin;
+            $row[] = $result->suku;
             $row[] = $result->jenjangslta;
             $row[] = $result->asalslta;
             $row[] = strtoupper($result->jurusanslta);

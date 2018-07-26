@@ -41,7 +41,7 @@ class Laporan_model extends CI_Model {
     function prodi_array($idfakultas=NULL) 
     {
         $this->db->distinct();
-        $this->db->select('namaprodi,namafakultas');
+        $this->db->select('namaprodi,namafakultas,jenjang');
         if($idfakultas!=NULL){
             $this->db->where('idfakultas',$idfakultas);
         }
