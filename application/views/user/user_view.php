@@ -4,14 +4,13 @@
     <link href="<?php echo base_url('public/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')?>" rel="stylesheet">
 
 <style>
-    th, td { white-space: nowrap; } 
-    div.dataTables_wrapper {
+    th, td { white-space: normal; } 
+    div.dataTables_wrapper { 
         margin: 0 auto;
     }
     tr { height: 10px;  }
     table{
     table-layout: fixed; 
-    word-wrap:break-word;
     }
     th.dt-center, td.dt-center { text-align: center; }
 </style>      
@@ -32,8 +31,10 @@
                     <th width="20px">No</th>
                     <th>Username</th>
                     <th>Email</th>
-                    <th>Created On</th>
                     <th>Last Login</th>
+                    <th>IP Address</th>
+                    <th>Fakultas</th>
+                    <th>Status</th>
                     <th style="width:130px;">Aksi</th>
                 </tr>
             </thead>
@@ -75,9 +76,17 @@ $(document).ready(function() {
         //Set column definition initialisation properties.
         "columnDefs": [
         { 
-            "targets": [0,-1], //last column
-            "orderable": false, //set not orderable
-                "className": 'dt-center',
+            "targets": [0,-1,6], 
+            "orderable": false, 
+            "className": 'dt-center',
+        },
+        { 
+            "targets": [5], 
+            "width": 200,
+        },
+        { 
+            "targets": [6], 
+            "width": 20,
         },
         ],
  
@@ -96,9 +105,15 @@ $(document).ready(function() {
     $('.help-block').empty(); 
     $('#modal_form').modal('show'); 
     $('.modal-title').text('Tambah User'); 
-    $("#error_username").html('');
-    $("#error_password").html('');
+    $("#error_firstname").html('');
+    $("#error_lastname").html('');
     $("#error_idfakultas").html('');
+    $("#error_username").html('');
+    $("#error_email").html('');
+    $("#error_password").html('');
+    $("#error_confirmpassword").html('');
+    $("#div_password").show();
+    $("#div_password_confirm").show();
 } 
 
 function edit_record(id)
@@ -107,9 +122,15 @@ function edit_record(id)
     $('#form-user')[0].reset(); 
     $('.form-group').removeClass('has-error'); 
     $('.help-block').empty(); 
-    $("#error_username").html('');
-    $("#error_password").html('');
+    $("#error_firstname").html('');
+    $("#error_lastname").html('');
     $("#error_idfakultas").html('');
+    $("#error_username").html('');
+    $("#error_email").html('');
+    $("#error_password").html('');
+    $("#error_confirmpassword").html('');
+    $("#div_password").hide();
+    $("#div_password_confirm").hide();
  
     //Ajax Load data from ajax  
     $.ajax({
@@ -118,9 +139,12 @@ function edit_record(id)
         dataType: "JSON",
         success: function(data)
         {
+            $('[name="id"]').val(data.id);
+            $('[name="first_name"]').val(data.first_name);
+            $('[name="last_name"]').val(data.last_name);
             $('[name="idfakultas"]').val(data.idfakultas);
             $('[name="username"]').val(data.username);
-            $('[name="password"]').val(data.password);
+            $('[name="email"]').val(data.email);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
             $('.modal-title').text('Edit Program Studi'); // Set title to Bootstrap modal title
  
@@ -140,9 +164,13 @@ function reload_table()
 
 function save()
 {
-    $("#error_username").html('');
-    $("#error_password").html('');
+    $("#error_firstname").html('');
+    $("#error_lastname").html('');
     $("#error_idfakultas").html('');
+    $("#error_username").html('');
+    $("#error_email").html('');
+    $("#error_password").html('');
+    $("#error_confirmpassword").html('');
     $('#btnSave').text('saving...');
     $('#btnSave').attr('disabled',true); 
     var url;
@@ -163,9 +191,14 @@ function save()
         {
             
             if (data.hasil !== "sukses") {
-                $("#error_username").html(data.error.username);
-                $("#error_password").html(data.error.password);
+                $("#error_firstname").html(data.error.firstname);
+                $("#error_lastname").html(data.error.lastname);
                 $("#error_idfakultas").html(data.error.idfakultas);
+                $("#error_username").html(data.error.username);
+                $("#error_email").html(data.error.email);
+                $("#error_password").html(data.error.password);
+                $("#error_confirmpassword").html(data.error.confirmpassword);
+                $("#error_cekpassword").html(data.error.cekpassword);
             }
  
             if(data.status) //if success close modal and reload ajax table
@@ -187,6 +220,7 @@ function save()
  
         }
     });
+    
 }
  
 function delete_record(id)
@@ -225,8 +259,29 @@ function delete_record(id)
             </div>
             <div class="modal-body form">
                 <form action="#" id="form-user" class="form-horizontal">
-                    <input type="hidden" value="" name="user_id"/> 
+                    <input type="hidden" value="" name="id"/> 
                     <div class="form-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Nama Depan</label>
+                            <div class="col-md-8">
+                                <input name="first_name" placeholder="Nama Depan" class="form-control" type="text">
+                                <span class="text-danger" id="error_firstname"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Nama Belakang</label>
+                            <div class="col-md-8">
+                                <input name="last_name" placeholder="Nama Belakang" class="form-control" type="text">
+                                <span class="text-danger" id="error_lastname"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Fakultas</label>
+                            <div class="col-md-8">
+                            <?php echo form_dropdown('idfakultas', $dd_fakultas, $fakultas_selected,'class="form-control select2"'); ?>
+                                <span class="text-danger" id="error_idfakultas"></span>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="control-label col-md-4">Username</label>
                             <div class="col-md-8">
@@ -235,17 +290,24 @@ function delete_record(id)
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="control-label col-md-4">Email</label>
+                            <div class="col-md-8">
+                                <input name="email" placeholder="Email" class="form-control" type="text">
+                                <span class="text-danger" id="error_email"></span>
+                            </div>
+                        </div>
+                        <div class="form-group" id="div_password">
                             <label class="control-label col-md-4">Password</label>
                             <div class="col-md-8">
-                                <input name="password" placeholder="Password" class="form-control" type="text">
+                                <input id="password" name="password" placeholder="Password" class="form-control" type="password">
                                 <span class="text-danger" id="error_password"></span>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Fakultas</label>
+                        <div class="form-group"  id="div_password_confirm">
+                            <label class="control-label col-md-4">Konfirmasi Password</label>
                             <div class="col-md-8">
-                            <?php echo form_dropdown('idfakultas', $dd_fakultas, $fakultas_selected,'class="form-control select2"'); ?>
-                                <span class="text-danger" id="error_idfakultas"></span>
+                                <input id="password_confirm" name="password_confirm" placeholder="Konfirmasi Password" class="form-control" type="password">
+                                <span class="text-danger" id="error_confirmpassword"></span><br><span class="text-danger" id="error_cekpassword"></span>
                             </div>
                         </div>
                     </div>

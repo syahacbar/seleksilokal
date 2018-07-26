@@ -26,13 +26,15 @@ class User extends MY_Controller {
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $result) {
-            $no++;
+            $no++; 
             $row = array();
             $row[] = $no;
             $row[] = $result->username;
             $row[] = $result->email;
-            $row[] = $result->created_on;
-            $row[] = $result->last_login;
+            $row[] = unix_to_human($result->last_login);
+            $row[] = $result->ip_address;
+            $row[] = $result->namafakultas;
+            $row[] = $result->active;
  
             //add html for action
             $row[] = '<a class="btn btn-xs btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_record('."'".$result->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
@@ -54,34 +56,63 @@ class User extends MY_Controller {
      
     public function ajax_edit($id)
     {
-        $data = $this->user->get_by_id($id);
+        $data = $this->user->get_user_by_id($id);
         echo json_encode($data);
     }
  
     public function ajax_add()
     {
+        if ($this->input->post('first_name') == '') {
+            $res['error']['firstname'] = 'Nama Depan tidak boleh kosong';
+        }
+        if ($this->input->post('last_name') == '') {
+            $res['error']['lastname'] = 'Nama Belakang tidak boleh kosong';
+        }
         if ($this->input->post('username') == '') {
             $res['error']['username'] = 'Username tidak boleh kosong';
+        }
+        if ($this->input->post('email') == '') {
+            $res['error']['email'] = 'Email tidak boleh kosong';
         }
         if ($this->input->post('password') == '') {
             $res['error']['password'] = 'Password tidak boleh kosong';
         } 
+        if ($this->input->post('password_confirm') == '') {
+            $res['error']['confirmpassword'] = 'Konfirmasi Password tidak boleh kosong';
+        }
         if ($this->input->post('idfakultas') == '') {
             $res['error']['idfakultas'] = 'Fakultas harus dipilih';
+        } 
+        if ($this->input->post('password') != $this->input->post('password_confirm')) {
+            $res['error']['cekpassword'] = 'Konfirmasi Password harus sama dengan Password';
         } 
             
         if (empty($res['error'])) {
 
             $res['hasil'] = 'sukses';
             $res['status'] = TRUE;
- 
-            $data = array(
-                    'username' => $this->input->post('username'),
-                    'password' => $this->input->post('password'),
-                    'dayatampung' => $this->input->post('dayatampung'),
-                    'idfakultas' => $this->input->post('idfakultas'),
-                );
-            $insert = $this->prodi->save($data);
+			$email = $this->input->post('email');
+			$username = $this->input->post('username');
+            $password = $this->input->post('password');
+            $last_userid = $this->db->select('id')->order_by('id',"desc")->limit(1)->get('users')->row()->id;
+            $last_userid = $last_userid+1; 
+            $additional_data = array(
+                'id' => $last_userid,
+				'first_name' => $this->input->post('first_name'),
+                'last_name' => $this->input->post('last_name'),
+                'ip_address' => $this->input->ip_address(),
+                'company' => 'UNIPA',
+                'phone' => '0',
+            );
+            
+            $this->ion_auth->register($username, $password, $email, $additional_data);
+
+            $dataf = array(
+                'fakultas_id' => $this->input->post('idfakultas'),
+                'user_id' => $last_userid,
+            );
+            $insertf = $this->user->saveusershasfakultas($dataf);
+            
         } else {
             $res['hasil'] = 'gagal';
             $res['status'] = FALSE;
@@ -91,15 +122,18 @@ class User extends MY_Controller {
   
     public function ajax_update()
     {
-        if ($this->input->post('namaprodi') == '') {
-            $res['error']['namaprodi'] = 'Nama Prodi tidak boleh kosong';
+        if ($this->input->post('first_name') == '') {
+            $res['error']['firstname'] = 'Nama Depan tidak boleh kosong';
         }
-        if ($this->input->post('jenjang') == '') {
-            $res['error']['jenjang'] = 'Jenjang Prodi tidak boleh kosong';
+        if ($this->input->post('last_name') == '') {
+            $res['error']['lastname'] = 'Nama Belakang tidak boleh kosong';
         }
-        if ($this->input->post('dayatampung') == '') {
-            $res['error']['dayatampung'] = 'Daya Tampung tidak boleh kosong';
-        }    
+        if ($this->input->post('username') == '') {
+            $res['error']['username'] = 'Username tidak boleh kosong';
+        }
+        if ($this->input->post('email') == '') {
+            $res['error']['email'] = 'Email tidak boleh kosong';
+        }
         if ($this->input->post('idfakultas') == '') {
             $res['error']['idfakultas'] = 'Fakultas harus dipilih';
         } 
@@ -108,26 +142,63 @@ class User extends MY_Controller {
 
             $res['hasil'] = 'sukses';
             $res['status'] = TRUE;
-
-            $data = array(
-                'namaprodi' => $this->input->post('namaprodi'),
-                'jenjang' => $this->input->post('jenjang'),
-                'dayatampung' => $this->input->post('dayatampung'),
-                'idfakultas' => $this->input->post('idfakultas'),
+            $user = $this->ion_auth->user($this->input->post('id'))->row();
+            $datau = array(
+                'first_name' => $this->input->post('first_name'),
+                'last_name' => $this->input->post('last_name'),
+                'username' => $this->input->post('username'),
+                'email' => $this->input->post('email'),
             );
-            $this->prodi->update(array('idprodi' => $this->input->post('idprodi')), $data);
-       
+
+            $this->ion_auth->update($user->id, $datau);
+
+            $datauf = array('fakultas_id' => $this->input->post('idfakultas'));
+            $this->user->editusershasfakultas(array('id' => $this->input->post('id')), $datauf);
+
         } else {
             $res['hasil'] = 'gagal';
             $res['status'] = FALSE;
         }
+
         echo json_encode($res);
     }
  
     public function ajax_delete($id)
     {
-        $this->prodi->delete_by_id($id);
+        $this->user->delete_userfakultas_by_id($id);
+        $this->user->delete_user_by_id($id);
         echo json_encode(array("status" => TRUE));
+    }
+
+    public function changepassword()
+    {
+        if ($this->input->post('password') == '') {
+            $res['error']['password'] = 'Password tidak boleh kosong';
+        } 
+        if ($this->input->post('password_confirm') == '') {
+            $res['error']['confirmpassword'] = 'Konfirmasi Password tidak boleh kosong';
+        }
+        if ($this->input->post('password') != $this->input->post('password_confirm')) {
+            $res['error']['cekpassword'] = 'Konfirmasi Password harus sama dengan Password';
+        } 
+
+        if (empty($res['error'])) {
+
+            $res['hasil'] = 'sukses';
+            $res['status'] = TRUE;
+            $user = $this->ion_auth->user()->row();
+            $data = array(
+                'password' => $this->input->post('password'),
+            );
+
+            $this->ion_auth->update($user->id, $data);
+
+        } else {
+            $res['hasil'] = 'gagal';
+            $res['status'] = FALSE;
+        }
+
+        echo json_encode($res);
     }
  
 }

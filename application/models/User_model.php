@@ -1,9 +1,9 @@
 <?php
 class User_model extends CI_Model{
-
+    
     var $column_order = array('','username','email','created_on','last_login'); //set column field database for datatable orderable
     var $column_search = array('username','email'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-    var $order = array('users.id' => 'desc'); // default order 
+    var $order = array('u.id' => 'desc'); // default order 
  
     public function __construct()
     {
@@ -11,12 +11,12 @@ class User_model extends CI_Model{
         $this->load->database();
     }
  
-    private function _get_datatables_query()
+    private function _get_datatables_query() 
     {
-        $this->db->select('*') ;
-        $this->db->from('users');
-        $this->db->join('users_has_fakultas','users_has_fakultas.user_id=users.id');
-        $this->db->join('fakultas','fakultas.idfakultas=users_has_fakultas.fakultas_id');
+        $this->db->select('u.*, uf.id AS ufid, f.*') ;
+        $this->db->from('users u');
+        $this->db->join('users_has_fakultas uf','uf.user_id=u.id');
+        $this->db->join('fakultas f','f.idfakultas=uf.fakultas_id');
 
  
         $i = 0;
@@ -72,24 +72,56 @@ class User_model extends CI_Model{
     public function count_all()
     {
         $this->db->from('users');
+		$this->db->where_not_in('company', 'ADMIN');
         return $this->db->count_all_results();
     }
-		public function add_user($data){
-			$this->db->insert('user', $data);
-			return true; 
-		}
-		public function get_all_users(){
-			$query = $this->db->get('user');
-			return $result = $query->result_array();
-		}
-		public function get_user_by_id($id){
-			$query = $this->db->get_where('user', array('iduser' => $id));
-			return $result = $query->row_array();
-		}
-		public function edit_user($id,$data ){
-			$this->db->where('iduser', $id);
-			$this->db->update('user', $data);
-			return true;
-		}
+	public function add_user($data){
+		$this->db->insert('users', $data);
+		return true; 
+	}
+	public function get_all_users(){
+		$query = $this->db->get('users');
+		return $result = $query->result_array();
+	}
+	public function get_user_by_id($id){
+		//$query = $this->db->get_where('users', array('id' => $id));
+        $this->db->select('u.*, uf.id AS ufid, f.*') ;
+        $this->db->from('users u');
+        $this->db->join('users_has_fakultas uf','uf.user_id=u.id');
+        $this->db->join('fakultas f','f.idfakultas=uf.fakultas_id');
+		$this->db->where('u.id', $id);
+        $query = $this->db->get();
+        return $result = $query->row_array();
+	}
+
+    public function edit_user($where, $data)
+    {
+        $this->db->update('users', $data, $where);
+        return $this->db->affected_rows();
+    }
+
+    public function saveusershasfakultas($data)
+    {
+        $this->db->insert('users_has_fakultas', $data);
+        return $this->db->insert_id();
+    }
+
+    public function editusershasfakultas($where, $data)
+    {
+        $this->db->update('users_has_fakultas', $data, $where);
+        return $this->db->affected_rows();
+    }
+
+    public function delete_userfakultas_by_id($id)
+    {
+        $this->db->where('user_id', $id);
+        $this->db->delete('users_has_fakultas');
+    }
+
+    public function delete_user_by_id($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('users');
+    }
 }
 ?>

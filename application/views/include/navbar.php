@@ -29,10 +29,10 @@
               <li class="user-header">
                 <img src="<?= base_url() ?>public/dist/img/dosen.png" class="img-circle" alt="User Image">
                 <?php
-                  if($this->ion_auth->user()->row()->id=='1'){
+                  if($this->ion_auth->user()->row()->company=='ADMIN'){
                     echo '<p>ADMINISTRATOR</p>';
                   } else {
-                    echo '<p class="font-size:10px;">'.$this->ion_auth->get_fakultas()->namadekan.'</p><li class="user-body"><center>'.$this->ion_auth->get_fakultas()->namafakultas.'</center></li>';
+                    echo '<p class="font-size:10px;">'.$this->ion_auth->get_fakultas()->namafakultas.'</p>';
                   }
                 ?>              
               </li>
@@ -53,27 +53,97 @@
           </li>
         </ul>
       </div>
-    </nav>
+    </nav> 
   </header>
 
-  
+<script type="text/javascript">
+
+function changepassword()
+{
+    $('#form-changepassword')[0].reset(); 
+    $('.form-group').removeClass('has-error'); 
+    $('.help-block').empty(); 
+    $("#error_password").html('');
+    $("#error_confirmpassword").html('');
+    $('#btnSave').text('saving...');
+    $('#btnSave').attr('disabled',true); 
+
+    $.ajax({
+        url : "<?php echo site_url('user/changepassword')?>",
+        type: "POST",
+        data: $('#form-changepassword').serialize(),
+        dataType: "JSON",
+        success: function(data)
+        {
+            
+            if (data.hasil !== "sukses") {
+                $("#error_password").html(data.error.password);
+                $("#error_confirmpassword").html(data.error.confirmpassword);
+                $("#error_cekpassword").html(data.error.cekpassword);
+            }
+ 
+            if(data.status) //if success close modal and reload ajax table
+            {
+                $('#modal_changepassword').modal('hide');
+                reload_table();
+            }
+ 
+            $('#btnSave').text('Simpan'); //change button text
+            $('#btnSave').attr('disabled',false); //set button enable 
+ 
+ 
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error adding / update data');
+            $('#btnSave').text('Simpan'); //change button text
+            $('#btnSave').attr('disabled',false); //set button enable 
+ 
+        }
+    });
+    
+}
+</script>
 <!-- Bootstrap modal -->
 <div class="modal fade" id="modal_changepassword" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Ubah Passowrd</h4>
+                <h4 class="modal-title">Form Ubah Passowrd </h4>
             </div>
             <div class="modal-body form">
-                <form action="#" id="form" class="form-horizontal" style="font-size:12px">
+                <form action="#" id="form-changepassword" class="form-horizontal" style="font-size:12px">
+                    <input type="hidden" name="id"/> 
                     <div class="form-body">
-                     </div>
+                        <div class="form-group" id="div_password">
+                            <label class="control-label col-md-4">Username</label>
+                            <div class="col-md-8">
+                                <input readonly="readonly" id="username" name="username" class="form-control" type="text" value="<?= $this->session->userdata('identity'); ?>">
+                                <span class="text-danger" id="error_username"></span>
+                            </div>
+                        </div>
+                        <div class="form-group" id="div_password">
+                            <label class="control-label col-md-4">Password</label>
+                            <div class="col-md-8">
+                                <input id="password" name="password" placeholder="Password" class="form-control" type="password">
+                                <span class="text-danger" id="error_password"></span>
+                            </div>
+                        </div>
+                        <div class="form-group"  id="div_password_confirm">
+                            <label class="control-label col-md-4">Konfirmasi Password</label>
+                            <div class="col-md-8">
+                                <input id="password_confirm" name="password_confirm" placeholder="Konfirmasi Password" class="form-control" type="password">
+                                <span class="text-danger" id="error_confirmpassword"></span><br><span class="text-danger" id="error_cekpassword"></span>
+                            </div>
+                        </div>
+                    </div>
                                 
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Kembali</button>
+              <button type="button" id="btnSave" onclick="changepassword()" class="btn btn-primary">Simpan</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Kembali</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
