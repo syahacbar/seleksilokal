@@ -266,21 +266,6 @@ class Pendaftar extends MY_Controller {
         echo json_encode(array("status" => TRUE));
     }
 
-    public function asalslta()
-    {
-        echo json_encode($this->pendaftar->asalslta());
-    }
-
-    public function jenjangslta()
-    {
-        echo json_encode($this->pendaftar->jenjangslta());
-    }
-
-    public function jurusanslta()
-    {
-        echo json_encode($this->pendaftar->jurusanslta());
-    }
-
     public function importexcel()
     {
 		$this->load->library(array('PHPExcel','PHPExcel/IOFactory'));

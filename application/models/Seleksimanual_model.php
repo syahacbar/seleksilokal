@@ -49,7 +49,7 @@ class Seleksimanual_model extends CI_Model {
                     $this->db->group_end();
                 }
            
-        }
+        } 
 
         if(isset($_POST['is_suku']) && $_POST['is_suku'] != '0') 
         {
@@ -147,8 +147,8 @@ class Seleksimanual_model extends CI_Model {
     public function dd_suku()
     {
         $dd['0'] = '--SEMUA SUKU--';
-        $dd['Papua'] = 'PAPUA';
-        $dd['Non Papua'] = 'NON PAPUA';
+        $dd['PAPUA'] = 'PAPUA';
+        $dd['NON PAPUA'] = 'NON PAPUA';
         return $dd;
     }
     

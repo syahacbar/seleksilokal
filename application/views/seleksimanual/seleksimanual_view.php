@@ -63,7 +63,7 @@
                
         <thead>
                 <tr>
-                    <th style="width: 10; text-align:center;"><input type="checkbox" id="selectall"></th>
+                    <th style="width: 10; text-align:center;"></th>
                     <th style="width: 60;">No. Pendaftaran</th>
                     <th style="width: 180;">Nama Pendaftar</th>
                     <th style="width: 30;">Pil. Ke</th>
@@ -130,10 +130,6 @@ $(document).ready(function() {
                 data:{is_prodi:is_prodi,is_suku:is_suku}
             },
             
-            paging: true,
-            fixedColumns:   {
-                leftColumns: 3,
-            },
             fixedHeader: true,
             columnDefs: [
             { 
@@ -202,25 +198,7 @@ $(document).ready(function() {
         
         dataTable.search('').draw(); //required after
         
-        dataTable.on("click", "#selectall", function() {
-            if ($("#selectall").hasClass("selected")) {
-                dataTable.rows().deselect();
-                $("#selectall").removeClass("selected");
-            } else {
-                dataTable.rows().select();
-                $("#selectall").addClass("selected");
-            }
-        }).on("select deselect", function() {
-            ("Some selection or deselection going on")
-            if (dataTable.rows({
-                    selected: true
-                }).count() !== dataTable.rows().count()) {
-                $("#selectall").removeClass("selected");
-            } else {
-                $("#selectall").addClass("selected");
-            }
-        });
-        
+       
 
 }
 

@@ -62,8 +62,6 @@ class Seleksimanual extends MY_Controller {
                 }
             }
             $row = array(); 
-            //$jurslta = explode(" ", $result->jurusanslta);
-            //$jurusanslta = $jurslta[1];
                 $row[] = '';
                 $row[] = $result->nopendaftar;
                 $row[] = $result->namapendaftar;

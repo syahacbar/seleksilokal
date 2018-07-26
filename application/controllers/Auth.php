@@ -13,6 +13,7 @@ class Auth extends CI_Controller
 		$this->load->database();
 		$this->load->library(array('ion_auth', 'form_validation'));
 		$this->load->helper(array('url', 'language'));
+		$this->load->model('User_model','usermodel');
 
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
@@ -69,11 +70,15 @@ class Auth extends CI_Controller
 			// check to see if the user is logging in
 			// check for "remember me"
 			$remember = (bool)$this->input->post('remember');
+			$session_id = $this->usermodel->get_session_id();
 
 			if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember))
 			{
 				//if the login is successful
 				//redirect them back to the home page
+				$uniqueId = uniqid(rand(), TRUE);
+				$datasession = array('session_id'=> $uniqueId);
+				$this->usermodel->update_session_id($datasession);
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
 				redirect('dashboard', 'refresh');
 			}
@@ -111,6 +116,9 @@ class Auth extends CI_Controller
 	public function logout()
 	{
 		$this->data['title'] = "Logout";
+		
+		$datasession = array('session_id'=> NULL);
+		$this->usermodel->update_session_id($datasession);
 
 		// log the user out
 		$logout = $this->ion_auth->logout();

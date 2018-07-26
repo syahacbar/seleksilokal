@@ -151,29 +151,5 @@ class Pendaftar_model extends CI_Model {
 		return $dd;
     }
 
-    public function asalslta(){
-        $this->db->distinct();
-        $this->db->select('asalslta');
-        $this->db->from('pendaftar');
-        $query = $this->db->get();
-		return  $query->result_array();
-    }
-
-    public function jenjangslta(){
-        $this->db->distinct();
-        $this->db->select('jenjangslta');
-        $this->db->from('pendaftar');
-        $query = $this->db->get();
-		return  $query->result_array();
-    }
-
-    public function jurusanslta(){
-        $this->db->distinct();
-        $this->db->select('jurusanslta');
-        $this->db->from('pendaftar');
-        $query = $this->db->get();
-		return  $query->result_array();
-    }
- 
  
 }

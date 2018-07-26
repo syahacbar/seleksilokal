@@ -34,7 +34,7 @@ class User extends MY_Controller {
             $row[] = unix_to_human($result->last_login);
             $row[] = $result->ip_address;
             $row[] = $result->namafakultas;
-            $row[] = $result->active;
+            $row[] = $result->active=='1' ? 'Aktif' : 'Non Aktif';
  
             //add html for action
             $row[] = '<a class="btn btn-xs btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_record('."'".$result->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
@@ -215,5 +215,6 @@ class User extends MY_Controller {
 
         echo json_encode($res);
     }
- 
+
+    
 }

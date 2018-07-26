@@ -8,7 +8,7 @@ class Pengaturan extends MY_Controller {
         parent::__construct();
         $this->load->model('Pengaturan_model','pengaturan');
     }
- 
+  
     public function index() 
     {
         $data = array( 

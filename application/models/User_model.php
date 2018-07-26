@@ -4,7 +4,7 @@ class User_model extends CI_Model{
     var $column_order = array('','username','email','created_on','last_login'); //set column field database for datatable orderable
     var $column_search = array('username','email'); //set column field database for datatable searchable just firstname , lastname , address are searchable
     var $order = array('u.id' => 'desc'); // default order 
- 
+
     public function __construct()
     {
         parent::__construct();
@@ -123,5 +123,22 @@ class User_model extends CI_Model{
         $this->db->where('id', $id);
         $this->db->delete('users');
     }
+
+    public function update_session_id($data)
+    {
+        $this->db->update('users_has_fakultas', $data, array('user_id'=>$this->ion_auth->user()->row()->id));
+        return $this->db->affected_rows();
+    }
+
+    public function get_session_id()
+    {
+        $user_id = $this->ion_auth->user()->row()->id;
+        $this->db->from('users_has_fakultas');
+        $this->db->where('user_id');
+        $query = $this->db->get();
+ 
+        return $query->row();
+    }
+
 }
 ?>

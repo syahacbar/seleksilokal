@@ -149,21 +149,24 @@ function batalkan(id){
 }
 
 function batalkansemua(){
-    var status = 'B';
-    $.ajax({
-        url : "<?php echo base_url('penerimaan/batalkansemua')?>",
-        type: "POST",
-        dataType: "JSON",
-        data: {'status':status},
-        success: function(data)
-        {
-            location.reload();
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            alert('Error get data from ajax');
-        }
-    });
+    if(confirm('Apakah anda yakin akan membatalkan semua peserta yang diterima?'))
+    {
+        var status = 'B';
+        $.ajax({
+            url : "<?php echo base_url('penerimaan/batalkansemua')?>",
+            type: "POST",
+            dataType: "JSON",
+            data: {'status':status},
+            success: function(data)
+            {
+                location.reload();
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
+            }
+        });
+    }
 }
 </script>
 <!-- End Bootstrap modal -->
