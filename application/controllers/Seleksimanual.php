@@ -123,8 +123,9 @@ class Seleksimanual extends MY_Controller {
     {
         $prodi = $this->input->post('pilihprodi');
         $dayatampung = $this->prodi->get_by_prodiname($prodi)->dayatampung;
-        $sisakuota = $this->penerimaan->count_filter_prodi($prodi);
-
+        $jumlahditerimaprodi = $this->penerimaan->count_filter_prodi($prodi);
+        $sisakuota = $dayatampung-$jumlahditerimaprodi;
+        $data = [];
         $arrnopendaftar = explode(',',$this->input->post('nopendaftar'));
 
         foreach ($arrnopendaftar as $nopendaftar){
@@ -136,16 +137,21 @@ class Seleksimanual extends MY_Controller {
                 'status' => $this->input->post('status'),
             );
 
-            if($sisakuota == $dayatampung){
+            if($sisakuota == 0){
                 $data['statusterima'] = FALSE;            
             } else {
+                $sisakuota--;
                 $insert = $this->seleksimanual->save($datainput);
                 $insert = $this->seleksimanual->update($dataupdate,array('nopendaftar'=>$nopendaftar));
+                if($sisakuota == 0){
+                    $data['statusterima'] = FALSE;  
+                }
                 $data['statusterima'] = TRUE;
             }
         } 
-        $data = array('dayatampung'=>$dayatampung, 'sisakuota'=>$sisakuota);
-        echo json_encode($arrnopendaftar);
+        $data['dayatampung'] = $dayatampung;
+        $data['sisakuota'] = $sisakuota;
+        echo json_encode($data);
     }
     
     public function getdayatampungprodi()

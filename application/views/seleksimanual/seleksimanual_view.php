@@ -219,8 +219,18 @@ $(document).ready(function() {
             dataType: 'JSON',
             data: {nopendaftar:selectednopendaftar, pilihprodi:prodi},
             success: function(data){
-                $('#table').DataTable().ajax.reload(null, false);
-                dataTable.search('').draw(); //required after
+                //$('#table').DataTable().ajax.reload(null, false);
+                //dataTable.search('').draw(); //required after
+                if(data.statusterima){
+                    $('#table').DataTable().ajax.reload(null, false);
+                    getdayatampung(prodi);
+                    dataTable.search('').draw(); //required after
+                } else {
+                    alert("Kuota Program Studi penuh !");
+                    $('#table').DataTable().ajax.reload(null, false);
+                    getdayatampung(prodi);
+                    dataTable.search('').draw(); //required after
+                }
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -354,9 +364,12 @@ function terima(id){
                 if(data.statusterima){
                     $('#table').DataTable().ajax.reload(null, false);
                     getdayatampung(prodi);
-                    dataTable.search('').draw(); //required after
+                    dataTable.search('').draw();
                 } else {
                     alert("Kuota Program Studi penuh !");
+                    $('#table').DataTable().ajax.reload(null, false);
+                    getdayatampung(prodi);
+                    dataTable.search('').draw();
                 }
             },
             error: function (jqXHR, textStatus, errorThrown)
