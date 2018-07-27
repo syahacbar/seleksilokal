@@ -26,7 +26,13 @@ class Pengaturan_model extends CI_Model {
 
     public function dd_sesipilihan()
     {
-        $dd  = array('0' => 'Semua Prodi', '1' => 'Prodi Pilihan 1','2' => 'Prodi Pilihan 2','3' => 'Prodi Pilihan 3',);        
+        $dd  = array('0' => 'Semua Prodi', '1' => 'Prodi Pilihan 1','2' => 'Prodi Pilihan 2','3' => 'Prodi Pilihan 3');        
+		return $dd;
+    }
+
+    public function dd_statususer()
+    {
+        $dd  = array('1' => 'Aktifkan Semua User', '0' => 'Non Aktifkan Semua User');        
 		return $dd;
     }
 
@@ -68,6 +74,12 @@ class Pengaturan_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
-    
+    public function getstatususer()
+    {
+        $this->db->select('nilai');
+        $this->db->where('parameter', 'statususer');
+        $query = $this->db->get('pengaturan');
+        return $query->row();
+    }  
 
 }

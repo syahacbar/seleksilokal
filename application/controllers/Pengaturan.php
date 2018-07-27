@@ -7,6 +7,7 @@ class Pengaturan extends MY_Controller {
     {
         parent::__construct();
         $this->load->model('Pengaturan_model','pengaturan');
+        $this->load->model('User_model','usermodel');
     }
   
     public function index() 
@@ -17,6 +18,8 @@ class Pengaturan extends MY_Controller {
             'sesipilihan_selected' => $this->input->post('sesipilihan') ? $this->input->post('sesipilihan') : $this->pengaturan->getsesipilihan()->nilai,
             'dd_tahunakademik' =>  $this->pengaturan->dd_tahunakademik(),
             'tahunakademik_selected' => $this->input->post('tahunakademik') ? $this->input->post('tahunakademik') : $this->pengaturan->gettahunakademik()->nilai,
+            'dd_statususer' =>  $this->pengaturan->dd_statususer(),
+            'statususer_selected' => $this->input->post('statususer') ? $this->input->post('statususer') : $this->pengaturan->getstatususer()->nilai,
             'namarektor' => $this->pengaturan->getnamarektor()->nilai,
             'niprektor' => $this->pengaturan->getniprektor()->nilai,
         );
@@ -74,6 +77,31 @@ class Pengaturan extends MY_Controller {
             'status' => TRUE,
         );
         $this->pengaturan->updatepengaturan(array('nilai'=>$_POST['niprektor']),array('parameter'=>'niprektor'));
+        echo json_encode($data);
+    }
+
+    public function simpanstatususer()
+    {
+        $data = array(
+            'hasil' => 'sukses',
+            'status' => TRUE,
+        );
+        
+        $datau = $this->usermodel->get_all_users();
+        if($this->input->post('statususer')=='0'){
+            foreach ($datau as $iduser)
+            {
+                $this->ion_auth->deactivate($iduser->id);
+            }
+        } else {
+            foreach ($datau as $iduser)
+            {
+                $this->ion_auth->activate($iduser->id);
+            }
+        }
+
+        $this->pengaturan->updatepengaturan(array('nilai'=>$_POST['statususer']),array('parameter'=>'statususer'));
+        
         echo json_encode($data);
     }
 }

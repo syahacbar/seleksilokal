@@ -48,6 +48,16 @@
                             <button type="button" id="btnsaveniprektor" onclick="saveniprektor()" class="btn btn-primary">Simpan</button>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Status User</label>
+                            <div class="col-md-3">
+                            <?php echo form_dropdown('statususer', $dd_statususer, $statususer_selected,'id="statususer" class="form-control select2"'); ?>
+                            </div>
+                            <div class="col-md-2">
+                            <button type="button" id="btnsavestatususer" onclick="savestatususer()" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -77,6 +87,7 @@ $(document).ready(function() {
             }
         });
 }); 
+
 function savesesipilihan(){
     var sesipilihan = $('#sesipilihan').val();
     $.ajax({
@@ -136,6 +147,23 @@ function saveniprektor(){
         {
             if (data.hasil == "sukses") {
                 alert('Perubahan NIP Rektor berhasil disimpan.');
+            }
+        }
+    });
+}
+
+
+function savestatususer(){
+    var statususer = $('#statususer').val();
+    $.ajax({
+        url : "<?php echo base_url('pengaturan/simpanstatususer')?>",
+        type: "POST",
+        dataType: "JSON",
+        data: {'statususer': statususer},
+        success: function(data)
+        {
+            if (data.hasil == "sukses") {
+                alert('Perubahan Status User berhasil disimpan.');
             }
         }
     });

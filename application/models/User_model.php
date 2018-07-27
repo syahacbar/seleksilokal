@@ -80,8 +80,9 @@ class User_model extends CI_Model{
 		return true; 
 	}
 	public function get_all_users(){
+		$this->db->where_not_in('company', 'ADMIN');
 		$query = $this->db->get('users');
-		return $result = $query->result_array();
+		return $result = $query->result();
 	}
 	public function get_user_by_id($id){
 		//$query = $this->db->get_where('users', array('id' => $id));
@@ -130,14 +131,22 @@ class User_model extends CI_Model{
         return $this->db->affected_rows();
     }
 
-    public function get_session_id()
+    public function get_session_id($username)
     {
-        $user_id = $this->ion_auth->user()->row()->id;
-        $this->db->from('users_has_fakultas');
-        $this->db->where('user_id');
-        $query = $this->db->get();
- 
-        return $query->row();
+        if($username!='admin'){
+            $this->db->select('uf.session_id') ;
+            $this->db->from('users_has_fakultas uf');
+            $this->db->join('users u','uf.user_id=u.id');
+            $this->db->where('u.username', $username);
+            $query = $this->db->get();
+            return $query->row()->session_id;
+        }
+    }
+
+    public function edit_statususer($where, $data)
+    {
+        $this->db->update('users', $data, $where);
+        return $this->db->affected_rows();
     }
 
 }

@@ -70,23 +70,29 @@ class Auth extends CI_Controller
 			// check to see if the user is logging in
 			// check for "remember me"
 			$remember = (bool)$this->input->post('remember');
-			$session_id = $this->usermodel->get_session_id();
+			$session_id = $this->usermodel->get_session_id($this->input->post('identity'));
+			if($session_id != NULL){
+				$this->session->set_flashdata('message', 'Akun anda sedang login di komputer/browser lain. Silahkan logout terlebih dahulu !');
+				redirect('auth/login', 'refresh');
+			}
 
 			if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember))
 			{
-				//if the login is successful
-				//redirect them back to the home page
-				$uniqueId = uniqid(rand(), TRUE);
-				$datasession = array('session_id'=> $uniqueId);
-				$this->usermodel->update_session_id($datasession);
-				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect('dashboard', 'refresh');
+					//if the login is successful
+					//redirect them back to the home page
+					$uniqueId = uniqid(rand(), TRUE);
+					$datasession = array('session_id'=> $uniqueId);
+					$this->usermodel->update_session_id($datasession);
+					$this->session->set_flashdata('message', $this->ion_auth->messages());
+					redirect('dashboard', 'refresh');
+		
+				
 			}
 			else
 			{
 				// if the login was un-successful
 				// redirect them back to the login page
-				$this->session->set_flashdata('message', $this->ion_auth->errors());
+				$this->session->set_flashdata('message', 'Gagal Login ! Username/Password salah');
 				redirect('auth/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
 			}
 		}
