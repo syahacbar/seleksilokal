@@ -42,7 +42,7 @@
                   <a href="<?= site_url('auth/logout'); ?>" class="btn btn-default btn-flat">Log Out</a>
                 </div>
                 <div class="pull-left">
-                  <a href="#" onclick="edit_record(<?=$this->ion_auth->user()->row()->id;?>)" class="btn btn-default btn-flat">Ubah Password</a>
+                  <a href="#" onclick="edit_password(<?=$this->ion_auth->user()->row()->id;?>)" class="btn btn-default btn-flat">Ubah Password</a>
                 </div>
               </li>
             </ul>

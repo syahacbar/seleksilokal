@@ -77,7 +77,7 @@
 	    $(".flash-msg").slideUp(500);
 	});
 
-function edit_record(id)
+function edit_password(id)
 {
     save_method = 'update';
     $('#form-ubahpassword')[0].reset(); 
