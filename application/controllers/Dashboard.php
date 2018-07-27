@@ -22,6 +22,8 @@ class Dashboard extends MY_Controller {
 		$list = $this->grafik->get_penerimaan();
 		$jumlahsuku = $this->grafik->get_jumlah_suku();
 		$jumlahtahunlulus = $this->grafik->get_jumlah_tahunlulus();
+		$jumlahjenjangslta = $this->grafik->get_jumlah_jenjangslta();
+		$jumlahjurusanslta = $this->grafik->get_jumlah_jurusanslta();
 		
 		$data = array(
 			'view' => 'grafik/g_rekap',
@@ -32,6 +34,8 @@ class Dashboard extends MY_Controller {
 			'list' => $list,
 			'jumlahsuku' => $jumlahsuku,
 			'jumlahtahunlulus' => $jumlahtahunlulus,
+			'jumlahjenjangslta' => $jumlahjenjangslta,
+			'jumlahjurusanslta' => $jumlahjurusanslta,
 		);
 
 		$this->load->view('layout',$data);

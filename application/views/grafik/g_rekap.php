@@ -69,7 +69,7 @@
               </div>
             </div>
             <div class="box-body">
-              <div id ="mygraph"></div>
+              <div id ="mygraph1"></div>
             </div>
             <!-- /.box-body-->
           </div>
@@ -120,6 +120,49 @@
         </div>
 </div>
 
+ <div class="row">
+      <div class="col-md-6">
+        <!-- Donut chart -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+
+              <h3 class="box-title">Peminatan Berdasarkan Jenjang SLTA</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div id ="mygraph2"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+        </div>
+
+        <div class="col-md-6">
+        <!-- Donut chart -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+
+              <h3 class="box-title">Peminatan Berdasarkan Jurusan SLTA</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div id ="mygraph3"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+        </div>
+</div>
 
 
 <!-- jQuery 3 -->
@@ -137,20 +180,23 @@
 <!-- page script -->
 <script>
 
-/* GRAFIK PEMINATAN PER PRODI */
- var chart; 
+
+ var chart1; 
+ var chart2;
+ var chart3;
         $(document).ready(function() {
-              chart = new Highcharts.Chart(
+          /* GRAFIK PEMINATAN PER PRODI */
+              chart1 = new Highcharts.Chart(
               {
                   
                  chart: {
-                    renderTo: 'mygraph',
+                    renderTo: 'mygraph1',
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
                     plotShadow: false
                  },   
                  title: {
-                    text: 'Peminatan Per Program Studi '
+                    text: 'Peminatan Berdasarkan Pilihan Program Studi'
                  },
                  tooltip: {
                     formatter: function() {
@@ -187,6 +233,119 @@
                           ?>
                             [ 
                                 '<?php echo $prodiname ?>', <?php echo $peminat; ?>
+                            ],
+                            <?php
+                        }
+                        ?>
+             
+                    ]
+                }]
+              });
+            /* GRAFIK PEMINATAN BERDASARKAN JENJANG SLTA */
+              chart2 = new Highcharts.Chart(
+              {
+                  
+                 chart: {
+                    renderTo: 'mygraph2',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                 },   
+                 title: {
+                    text: 'Peminatan Berdasarkan Jenjang SLTA '
+                 },
+                 tooltip: {
+                    formatter: function() {
+                        return '<b>'+
+                        this.point.name +'</b>: '+ Highcharts.numberFormat(this.percentage, 2) +' % ';
+                    }
+                 },
+                 
+                
+                 plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: 'green',
+                            formatter: function() 
+                            {
+                                return '<b>' + this.point.name + '</b>: ' + Highcharts.numberFormat(this.percentage, 2) +' % ';
+                            }
+                        }
+                    }
+                 },
+       
+                    series: [{
+                    type: 'pie',
+                    name: 'Browser share',
+                    data: [
+                    <?php
+                        foreach($jumlahjenjangslta as $row) {
+                          $jenjangslta = $row->jenjangslta;
+                          $jumlah = $row->jumlah;
+                          ?>
+                            [ 
+                                '<?php echo $jenjangslta ?>', <?php echo $jumlah; ?>
+                            ],
+                            <?php
+                        }
+                        ?>
+             
+                    ]
+                }]
+              });
+
+              /* GRAFIK PEMINATAN BERDASARKAN JURUSAN SLTA */
+              chart3 = new Highcharts.Chart(
+              {
+                  
+                 chart: {
+                    renderTo: 'mygraph3',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                 },   
+                 title: {
+                    text: 'Peminatan Berdasarkan Jurusan SLTA'
+                 },
+                 tooltip: {
+                    formatter: function() {
+                        return '<b>'+
+                        this.point.name +'</b>: '+ Highcharts.numberFormat(this.percentage, 2) +' % ';
+                    }
+                 },
+                 
+                
+                 plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: 'green',
+                            formatter: function() 
+                            {
+                                return '<b>' + this.point.name + '</b>: ' + Highcharts.numberFormat(this.percentage, 2) +' % ';
+                            }
+                        }
+                    }
+                 },
+       
+                    series: [{
+                    type: 'pie',
+                    name: 'Browser share',
+                    data: [
+                    <?php
+                        foreach($jumlahjurusanslta as $row) {
+                          $jurusanslta = $row->jurusanslta;
+                          $jumlah = $row->jumlah;
+                          ?>
+                            [ 
+                                '<?php echo $jurusanslta ?>', <?php echo $jumlah; ?>
                             ],
                             <?php
                         }

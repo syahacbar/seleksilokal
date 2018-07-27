@@ -30,4 +30,18 @@ class Grafik_model extends CI_Model {
         FROM pendaftar p'); 
         return $query->result();
     }
+
+    public function get_jumlah_jenjangslta()
+    {
+        $query = $this->db->query('SELECT DISTINCT p.jenjangslta, (SELECT COUNT(pd.jenjangslta) FROM pendaftar pd WHERE pd.jenjangslta=p.jenjangslta) AS jumlah
+        FROM pendaftar p'); 
+        return $query->result();
+    }
+
+    public function get_jumlah_jurusanslta()
+    {
+        $query = $this->db->query('SELECT DISTINCT p.jurusanslta, (SELECT COUNT(pd.jurusanslta) FROM pendaftar pd WHERE pd.jurusanslta=p.jurusanslta) AS jumlah
+        FROM pendaftar p'); 
+        return $query->result();
+    }
 }
