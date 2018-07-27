@@ -219,14 +219,12 @@ $(document).ready(function() {
             dataType: 'JSON',
             data: {nopendaftar:selectednopendaftar, pilihprodi:prodi},
             success: function(data){
-                //$('#table').DataTable().ajax.reload(null, false);
-                //dataTable.search('').draw(); //required after
                 if(data.statusterima){
                     $('#table').DataTable().ajax.reload(null, false);
                     getdayatampung(prodi);
                     dataTable.search('').draw(); //required after
                 } else {
-                    alert("Kuota Program Studi penuh !");
+                    alert("Jumlah peserta yang dipilih melebihi sisa kuota !");
                     $('#table').DataTable().ajax.reload(null, false);
                     getdayatampung(prodi);
                     dataTable.search('').draw(); //required after

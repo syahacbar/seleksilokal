@@ -80,7 +80,7 @@ class Penerimaan extends MY_Controller {
         $dataupdate = array(
             "status" => $this->input->post('status'),
         );
-        $this->penerimaan->update($dataupdate,array("status"=>"T"));
+        $this->penerimaan->update(array("status"=>"B"),array("status"=>"T"));
         $this->penerimaan->deleteall();
         echo json_encode($dataupdate);
         //redirect('penerimaan');
