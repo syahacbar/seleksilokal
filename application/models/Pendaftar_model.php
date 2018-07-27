@@ -150,6 +150,5 @@ class Pendaftar_model extends CI_Model {
 		}
 		return $dd;
     }
-
  
 }

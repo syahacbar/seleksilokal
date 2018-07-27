@@ -20,6 +20,8 @@ class Dashboard extends MY_Controller {
 		$kuotapenerimaan = $this->laporan->totaldayatampung();
 		$totalpendaftar = $this->pendaftar->count_all($this->pengaturan->gettahunakademik()->nilai);
 		$list = $this->grafik->get_penerimaan();
+		$jumlahsuku = $this->grafik->get_jumlah_suku();
+		$jumlahtahunlulus = $this->grafik->get_jumlah_tahunlulus();
 		
 		$data = array(
 			'view' => 'grafik/g_rekap',
@@ -28,6 +30,8 @@ class Dashboard extends MY_Controller {
 			'kuotapenerimaan' => $kuotapenerimaan->dayatampung,
 			'totalpendaftar' => $totalpendaftar,
 			'list' => $list,
+			'jumlahsuku' => $jumlahsuku,
+			'jumlahtahunlulus' => $jumlahtahunlulus,
 		);
 
 		$this->load->view('layout',$data);

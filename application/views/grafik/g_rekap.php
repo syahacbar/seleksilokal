@@ -76,6 +76,49 @@
         </div>
 </div>
 
+    <div class="row">
+      <div class="col-md-6">
+        <!-- Donut chart -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+
+              <h3 class="box-title">Presentasi Jumlah Peminat Berdasarkan Suku</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div id="piechart1"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+        </div>
+
+        <div class="col-md-6">
+        <!-- Donut chart -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <i class="fa fa-bar-chart-o"></i>
+
+              <h3 class="box-title">Presentasi Jumlah Peminat Berdasarkan Tahun Lulus</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div id="piechart2"></div>
+            </div>
+            <!-- /.box-body-->
+          </div>
+        </div>
+</div>
 
 
 
@@ -87,18 +130,10 @@
 <script src="<?php echo base_url('public/dist/js/adminlte.min.js');?>"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url('public/dist/js/demo.js');?>"></script>
-<!-- FLOT CHARTS -->
-<script src="<?php echo base_url('public/bower_components/Flot/jquery.flot.js');?>"></script>
-<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
-<script src="<?php echo base_url('public/bower_components/Flot/jquery.flot.resize.js');?>"></script>
-<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
-<script src="<?php echo base_url('public/bower_components/Flot/jquery.flot.pie.js');?>"></script>
-<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
-<script src="<?php echo base_url('public/bower_components/Flot/jquery.flot.categories.js');?>"></script>
-<!-- ChartJS -->
-<script src="<?php echo base_url('public/bower_components/chart.js/Chart.js');?>"></script>
 <!-- highcharts -->
 <script src="<?php echo base_url('public/chart/highcharts.js');?>"></script>
+<!-- Google Charts -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <!-- page script -->
 <script>
 
@@ -161,4 +196,53 @@
                 }]
               });
         }); 
+
+        /* GRAFIK PEMINATAN BERDASARKAN SUKU */
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data1 = google.visualization.arrayToDataTable([
+              ['Language', 'Rating'],
+              <?php
+              
+                  foreach($jumlahsuku as $row){
+                    echo "['".$row->suku."', ".$row->jumlah."],";
+                  }
+              
+              ?>
+            ]);
+            
+            var data2 = google.visualization.arrayToDataTable([
+              ['Language', 'Rating'],
+              <?php
+              
+                  foreach($jumlahtahunlulus as $row){
+                    echo "['".$row->tahunlulus."', ".$row->jumlah."],";
+                  }
+              
+              ?>
+            ]);
+
+
+            var options1 = {
+                title: 'Presentasi Jumlah Peminat Berdasarkan Suku',
+                width: 480,
+                height: 300,
+                is3D: true,
+            };
+
+            var options2 = {
+                title: 'Presentasi Jumlah Peminat Berdasarkan Tahun Lulus',
+                width: 480,
+                height: 300,
+                is3D: true,
+            };
+            
+            var chart1 = new google.visualization.PieChart(document.getElementById('piechart1'));
+            chart1.draw(data1, options1);
+
+            var chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
+            chart2.draw(data2, options2);
+        }
+
 </script>
