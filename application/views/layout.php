@@ -21,7 +21,7 @@
  		  <link rel="stylesheet" href="<?= base_url() ?>public/dist/css/bootstrap-datepicker.min.css">-->
 		  <!-- jQuery 2.2.3 -->
 		  <script src="<?= base_url() ?>public/plugins/jQuery/jquery-2.2.3.min.js"></script>
-		  <!-- jQuery UI 1.11.4 -->
+		  <!-- jQuery UI 1.11.4 --> 
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
 		<div class="wrapper" style="height: auto;">

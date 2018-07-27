@@ -10,21 +10,24 @@ class Dashboard extends MY_Controller {
         $this->load->model('Prodi_model','prodi');
         $this->load->model('User_model','user');
         $this->load->model('Pendaftar_model','pendaftar');
+        $this->load->model('Grafik_model','grafik');
 	}
 	
 	public function index()
 	{
 		$totalkosong = ((int)$this->laporan->totaldayatampung()->dayatampung)-((int)$this->laporan->totalterima());
 		$totalterima = (int)$this->laporan->totalterima();
-		$totaluser = $this->user->count_all();
+		$kuotapenerimaan = $this->laporan->totaldayatampung();
 		$totalpendaftar = $this->pendaftar->count_all($this->pengaturan->gettahunakademik()->nilai);
+		$list = $this->grafik->get_penerimaan();
 		
 		$data = array(
 			'view' => 'grafik/g_rekap',
 			'totalkosong' => $totalkosong,
 			'totalterima' => $totalterima,
-			'totaluser' => $totaluser,
+			'kuotapenerimaan' => $kuotapenerimaan->dayatampung,
 			'totalpendaftar' => $totalpendaftar,
+			'list' => $list,
 		);
 
 		$this->load->view('layout',$data);
