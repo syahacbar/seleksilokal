@@ -15,15 +15,15 @@
             <table border=0 width="100%">
                 <tr>
                     <td width="15%"><font size="12">LAMPIRAN</font></td>
-                    <td width="85%"><font size="12">: SURAT KEPUTUSAN REKTOR UNIVERSITAS PAPUA</font></td>
+                    <td width="85%"><font size="12">: '.$lampiransk.'</font></td>
                 </tr>
                 <tr>
                     <td><font size="12">NOMOR</font></td>
-                    <td><font size="12">: SP-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/UN42/EP/'.$tahun.'</font></td>
+                    <td><font size="12">: '.$nomorsk.'</font></td>
                 </tr>
                 <tr>
                     <td><font size="12">TENTANG</font></td>
-                    <td><font size="12">: PESERTA LULUS SELEKSI JALUR LOKAL UNIPA TAHUN '.$tahun.'</font></td>
+                    <td><font size="12">: '.$tentangsk.'</font></td>
                 </tr>
             </table>';
             $pdf->writeHTML($html, true, false, true, false, '');
@@ -43,6 +43,7 @@
                         <tr>
                             <td><font size="12">JENJANG '.strtoupper($prodi_list->jenjang).'</font></td>
                         </tr>
+                        <tr><td></td></tr>
                     </table>
                             <table cellspacing="1" bgcolor="#666666" cellpadding="2">
                                 <tr bgcolor="##a4a1a1">
@@ -108,6 +109,6 @@
             </table>';
             
             $pdf->writeHTML($html, true, false, true, false, '');
-			$pdf->Output('PESERTA LULUS SELEKSI JALUR LOKAL UNIPA TAHUN '.$tahun.'.pdf', 'I');
+			$pdf->Output('LAMPIRAN SK '.$tentangsk.'.pdf', 'I');
 ?>
                         

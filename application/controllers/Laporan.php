@@ -32,7 +32,9 @@ class Laporan extends MY_Controller {
         $tahun = substr($tahunakademik,0,4);
         $data =array(
             'fakultas' => $this->laporan->fakultas_array(),
-            'tahun' => $tahun,
+            'lampiransk' => $this->pengaturan->getlampiransk()->nilai,
+            'nomorsk' => $this->pengaturan->getnomorsk()->nilai,
+            'tentangsk' => $this->pengaturan->gettentangsk()->nilai,
         );
 		$this->load->view('laporan/skpdf', $data);
     }
@@ -43,7 +45,7 @@ class Laporan extends MY_Controller {
         $tahun = substr($tahunakademik,0,4);
         $data =array(
             'prodi' => $this->laporan->prodi_array(),
-            'tahun' => $tahun,
+            'tentangsk' => $this->pengaturan->gettentangsk()->nilai,
         );
 		$this->load->view('laporan/cetakpdf', $data);
     }

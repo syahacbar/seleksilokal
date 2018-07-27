@@ -82,4 +82,28 @@ class Pengaturan_model extends CI_Model {
         return $query->row();
     }  
 
+    public function getlampiransk()
+    {
+        $this->db->select('nilai');
+        $this->db->where('parameter', 'lampiransk');
+        $query = $this->db->get('pengaturan');
+        return $query->row();
+    }
+
+    public function getnomorsk()
+    {
+        $this->db->select('nilai');
+        $this->db->where('parameter', 'nomorsk');
+        $query = $this->db->get('pengaturan');
+        return $query->row();
+    }
+
+    public function gettentangsk()
+    {
+        $this->db->select('nilai');
+        $this->db->where('parameter', 'tentangsk');
+        $query = $this->db->get('pengaturan');
+        return $query->row();
+    }
+
 }

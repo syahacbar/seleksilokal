@@ -36,6 +36,9 @@ class Pengaturan extends MY_Controller {
             'tahunakademik_selected' => $this->input->post('tahunakademik') ? $this->input->post('tahunakademik') : $this->pengaturan->gettahunakademik()->nilai,
             'namarektor' => $this->pengaturan->getnamarektor()->nilai,
             'niprektor' => $this->pengaturan->getniprektor()->nilai,
+            'lampiransk' => $this->pengaturan->getlampiransk()->nilai,
+            'nomorsk' => $this->pengaturan->getnomorsk()->nilai,
+            'tentangsk' => $this->pengaturan->gettentangsk()->nilai,
         );
         echo json_encode($data);
     }
@@ -102,6 +105,38 @@ class Pengaturan extends MY_Controller {
 
         $this->pengaturan->updatepengaturan(array('nilai'=>$_POST['statususer']),array('parameter'=>'statususer'));
         
+        echo json_encode($data);
+    }
+
+    public function simpanlampiransk()
+    {
+        $data = array(
+            'hasil' => 'sukses',
+            'status' => TRUE,
+        );
+        $this->pengaturan->updatepengaturan(array('nilai'=>$_POST['lampiransk']),array('parameter'=>'lampiransk'));
+        echo json_encode($data);
+    }
+
+
+    public function simpannomorsk()
+    {
+        $data = array(
+            'hasil' => 'sukses',
+            'status' => TRUE,
+        );
+        $this->pengaturan->updatepengaturan(array('nilai'=>$_POST['nomorsk']),array('parameter'=>'nomorsk'));
+        echo json_encode($data);
+    }
+
+    
+    public function simpantentangsk()
+    {
+        $data = array(
+            'hasil' => 'sukses',
+            'status' => TRUE,
+        );
+        $this->pengaturan->updatepengaturan(array('nilai'=>$_POST['tentangsk']),array('parameter'=>'tentangsk'));
         echo json_encode($data);
     }
 }
