@@ -76,6 +76,7 @@
         </div>
 </div>
 
+
     <div class="row">
       <div class="col-md-6">
         <!-- Donut chart -->
@@ -177,6 +178,8 @@
 <script src="<?php echo base_url('public/chart/highcharts.js');?>"></script>
 <!-- Google Charts -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/drilldown.js"></script>
 <!-- page script -->
 <script>
 
@@ -241,6 +244,9 @@
                     ]
                 }]
               });
+
+
+
             /* GRAFIK PEMINATAN BERDASARKAN JENJANG SLTA */
               chart2 = new Highcharts.Chart(
               {
@@ -402,6 +408,6 @@
 
             var chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
             chart2.draw(data2, options2);
-        }
+        };
 
 </script>

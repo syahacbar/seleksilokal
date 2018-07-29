@@ -63,7 +63,7 @@
                
         <thead>
                 <tr>
-                    <th style="width: 10; text-align:center;"></th>
+                    <th style="width: 20; text-align:center;"><input type="checkbox" id="selectall">Select All</th>
                     <th style="width: 60;">No. Pendaftaran</th>
                     <th style="width: 180;">Nama Pendaftar</th>
                     <th style="width: 30;">Pil. Ke</th>
@@ -131,6 +131,9 @@ $(document).ready(function() {
             },
             
             fixedHeader: true,
+
+            select: true,
+
             columnDefs: [
             { 
                 targets: [-1], //last column
@@ -140,7 +143,7 @@ $(document).ready(function() {
             },
             {
                 orderable: false,
-                width: '10',
+                width: '20',
                 targets: 0,
                 className: 'dt-center select-checkbox',
             },
@@ -202,6 +205,14 @@ $(document).ready(function() {
 
 }
 
+    $(document).on("click","#selectall",function() {
+        var dataTable = $('#table').DataTable();
+        if(this.checked) { // check select status
+            dataTable.rows().select();
+        }else{
+            dataTable.rows().deselect();
+        }
+    });
 
     $(document).on("click","#btnterimakolektif",function() {
         var dataTable = $('#table').DataTable();

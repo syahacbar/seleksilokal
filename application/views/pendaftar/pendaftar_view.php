@@ -109,7 +109,8 @@ $(document).ready(function() {
             paging: true,
             fixedColumns:   {
                 leftColumns: 3,
-            },
+            }, 
+
             columnDefs: [
             { 
                 targets: [-1], //last column
