@@ -150,5 +150,13 @@ class Pendaftar_model extends CI_Model {
 		}
 		return $dd;
     }
+
+    function trimed($txt){
+        $txt = trim($txt);
+        while( strpos($txt, '  ') ){
+        $txt = str_replace('  ', ' ', $txt);
+        }
+        return $txt;
+    }
  
 }

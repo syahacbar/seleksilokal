@@ -27,7 +27,7 @@ class Grafik_model extends CI_Model {
     public function get_jumlah_tahunlulus()
     {
         $query = $this->db->query('SELECT DISTINCT p.tahunlulus, (SELECT COUNT(pd.tahunlulus) FROM pendaftar pd WHERE pd.tahunlulus=p.tahunlulus) AS jumlah
-        FROM pendaftar p'); 
+        FROM pendaftar p ORDER BY p.tahunlulus DESC'); 
         return $query->result();
     }
 

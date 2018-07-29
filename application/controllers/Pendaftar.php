@@ -311,7 +311,7 @@ class Pendaftar extends MY_Controller {
                     "tempatlahir"=> strtoupper($rowData[0][2]),
                     "tanggallahir"=> date("d-m-Y",($rowData[0][3]-25569) * 86400),
                     "jeniskelamin"=> strtoupper($rowData[0][4]),
-                    "suku"=> strtoupper($rowData[0][5]),
+                    "suku"=> $this->pendaftar->trimed(strtoupper($rowData[0][5])),
                     "pilihan1"=> strtoupper($rowData[0][6]),
                     "pilihan2"=> strtoupper($rowData[0][7]),
                     "pilihan3"=> strtoupper($rowData[0][8]),
