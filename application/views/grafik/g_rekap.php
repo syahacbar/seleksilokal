@@ -93,7 +93,7 @@
               </div>
             </div>
             <div class="box-body">
-              <div id="piechart1"></div>
+              <div id="mygraph4"></div>
             </div>
             <!-- /.box-body-->
           </div>
@@ -114,7 +114,7 @@
               </div>
             </div>
             <div class="box-body">
-              <div id="piechart2"></div>
+              <div id="mygraph5"></div>
             </div>
             <!-- /.box-body-->
           </div>
@@ -360,54 +360,121 @@
                     ]
                 }]
               });
+
+              /* GRAFIK PEMINATAN BERDASARKAN SUKU */
+              chart4 = new Highcharts.Chart(
+              {
+                  
+                 chart: {
+                    renderTo: 'mygraph4',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                 },   
+                 title: {
+                    text: 'Presentasi Jumlah Peminat Berdasarkan Suku'
+                 },
+                 tooltip: {
+                    formatter: function() {
+                        return '<b>'+
+                        this.point.name +'</b>: '+ Highcharts.numberFormat(this.percentage, 2) +' % ';
+                    }
+                 },
+                 
+                
+                 plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: 'green',
+                            formatter: function() 
+                            {
+                                return '<b>' + this.point.name + '</b>: ' + Highcharts.numberFormat(this.percentage, 2) +' % ';
+                            }
+                        }
+                    }
+                 },
+       
+                    series: [{
+                    type: 'pie',
+                    name: 'Browser share',
+                    data: [
+                    <?php
+                        foreach($jumlahsuku as $row) {
+                          $suku = $row->suku;
+                          $jumlah = $row->jumlah;
+                          ?>
+                            [ 
+                                '<?php echo $suku ?>', <?php echo $jumlah; ?>
+                            ],
+                            <?php
+                        }
+                        ?>
+             
+                    ]
+                }]
+              });
+
+              /* GRAFIK PEMINATAN BERDASARKAN TAHUN LULUS */
+              chart5 = new Highcharts.Chart(
+              {
+                  
+                 chart: {
+                    renderTo: 'mygraph5',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                 },   
+                 title: {
+                    text: 'Presentasi Jumlah Peminat Berdasarkan Tahun Lulus'
+                 },
+                 tooltip: {
+                    formatter: function() {
+                        return '<b>'+
+                        this.point.name +'</b>: '+ Highcharts.numberFormat(this.percentage, 2) +' % ';
+                    }
+                 },
+                 
+                
+                 plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: 'green',
+                            formatter: function() 
+                            {
+                                return '<b>' + this.point.name + '</b>: ' + Highcharts.numberFormat(this.percentage, 2) +' % ';
+                            }
+                        }
+                    }
+                 },
+       
+                    series: [{
+                    type: 'pie',
+                    name: 'Browser share',
+                    data: [
+                    <?php
+                        foreach($jumlahtahunlulus as $row) {
+                          $tahunlulus = $row->tahunlulus;
+                          $jumlah = $row->jumlah;
+                          ?>
+                            [ 
+                                '<?php echo $tahunlulus ?>', <?php echo $jumlah; ?>
+                            ],
+                            <?php
+                        }
+                        ?>
+             
+                    ]
+                }]
+              });
         }); 
 
-        /* GRAFIK PEMINATAN BERDASARKAN SUKU */
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
-        function drawChart() {
-            var data1 = google.visualization.arrayToDataTable([
-              ['Language', 'Rating'],
-              <?php
-              
-                  foreach($jumlahsuku as $row){
-                    echo "['".$row->suku."', ".$row->jumlah."],";
-                  }
-              
-              ?>
-            ]);
-            
-            var data2 = google.visualization.arrayToDataTable([
-              ['Language', 'Rating'],
-              <?php
-              
-                  foreach($jumlahtahunlulus as $row){
-                    echo "['".$row->tahunlulus."', ".$row->jumlah."],";
-                  }
-              
-              ?>
-            ]);
-
-
-            var options1 = {
-                title: 'Presentasi Jumlah Peminat Berdasarkan Suku',
-                width: 480,
-                height: 300,
-                is3D: true,
-            };
-
-            var options2 = {
-                title: 'Presentasi Jumlah Peminat Berdasarkan Tahun Lulus',
-                width: 480,
-                height: 300,
-                is3D: true,
-            };
-            
-            var chart1 = new google.visualization.PieChart(document.getElementById('piechart1'));
-            chart1.draw(data1, options1);
-
-            var chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
-            chart2.draw(data2, options2);
-        };
 
 </script>
