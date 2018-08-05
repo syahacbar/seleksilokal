@@ -270,17 +270,17 @@ class Pendaftar extends MY_Controller {
     {
 		$this->load->library(array('PHPExcel','PHPExcel/IOFactory'));
 
-        $fileName = time().$_FILES['file']['name'];
+        $fileName = time().$_FILES["datafile"]["name"];
          
         $config['upload_path'] = './assets/'; //buat folder dengan nama assets di root folder
         $config['file_name'] = $fileName;
         $config['allowed_types'] = 'xls|xlsx|csv';
-        $config['max_size'] = 10000;
+        //$config['max_size'] = 10000;
          
         $this->load->library('upload');
         $this->upload->initialize($config);
          
-        if(! $this->upload->do_upload('file') )
+        if(! $this->upload->do_upload('datafile') )
         $this->upload->display_errors();
              
         $media = $this->upload->data('');
@@ -334,7 +334,7 @@ class Pendaftar extends MY_Controller {
                     $insert = $this->db->insert("pendaftar",$data);       
                 }
 			}
-			delete_files($media['file_path']);
+			//delete_files($media['file_path']);
         redirect('pendaftar');
     }
  

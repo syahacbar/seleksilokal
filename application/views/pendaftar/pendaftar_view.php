@@ -463,6 +463,34 @@ function import_excel()
     $('.modal-title').text('Import Data Pendaftar Dari File Excel'); // Set Title to Bootstrap modal title
 }
 
+function upload_file()
+{
+        $.ajax({
+            beforeSend:function()
+            {
+                $("#modimport").css("display","none");
+                $("#loading").css("display","block");
+                $('#btnUpload').text('Menyimpan...'); 
+                $('#btnUpload').attr('disabled',true); 
+                uploadFile();
+            },
+            success:function()
+            {    
+                $('#modal_import').modal('hide');
+                location.reload();
+            }
+        });
+}
+
+function uploadFile() {
+    var file = document.getElementById("fileku").files[0];
+    var formdata = new FormData();
+    formdata.append("datafile", file);
+    var ajax = new XMLHttpRequest();
+    ajax.open("POST", "<?php echo base_url('pendaftar/importexcel')?>", true);
+    ajax.send(formdata);
+    
+}
 
 </script>
  
@@ -606,34 +634,61 @@ function import_excel()
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- End Bootstrap modal -->
-
+ 
 <!-- Modal Import Excel-->
-        <div class="modal fade" id="modal_import">
-          <div class="modal-dialog">
-            <div class="modal-content">
-            <?php echo form_open_multipart('pendaftar/importexcel'); ?>
-              <div class="modal-header">
+<div class="modal fade" id="modal_import">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="upload_form" enctype="multipart/form-data">
+            <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Default Modal</h4>
-              </div>
-              <div class="modal-body">
-              <?php echo form_upload('file'); ?>
-              </div>
-              <div class="modal-body">
-              Download Format Excel Untuk Import Data Disini 
-              <a class="btn btn-xs btn-info" target="blank" href="<?=base_url('public/format_import_pendaftar.xls')?>"><i class="glyphicon glyphicon-import"></i>Downnload Format Excel</a>
-              </div>
-              <img class="col-md3" src=<?=base_url('public/dist/img/ss_importexcel.png')?> width="100%" align="center">
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
-                <?php echo form_submit('submit','Upload File','class="btn btn-primary"');  ?>
-              </div>
-              <?php echo form_close(); ?>
             </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
+            <div id="modimport">
+                <div class="row">
+                    <div class="modal-body">
+                        <div class="col-md-6">
+                            <input type="file" name="datafile" id="fileku">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            Download Format Excel Untuk Import Data Disini 
+                            <a class="btn btn-xs btn-info" target="blank" href="<?=base_url('public/format_import_pendaftar.xls')?>"><i class="glyphicon glyphicon-import"></i>Downnload Format Excel</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="image">
+                            <img class="col-md3" src=<?=base_url('public/dist/img/ss_importexcels.png')?> width="100%" align="center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="loading" style="display:none">
+                <div class="row">
+                    <div class="modal-body">
+                        <div class="col-md-12" align="center">
+                            <img class="col-md3" src=<?=base_url('public/dist/img/loading.gif')?>  align="center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+              
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" id="btnUpload" onclick="upload_file()" >Upload File</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
 </body>
 </html>
