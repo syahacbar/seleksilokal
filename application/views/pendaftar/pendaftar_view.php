@@ -472,25 +472,23 @@ function upload_file()
                 $("#loading").css("display","block");
                 $('#btnUpload').text('Menyimpan...'); 
                 $('#btnUpload').attr('disabled',true); 
-                uploadFile();
+                var file = document.getElementById("fileku").files[0];
+                var formdata = new FormData();
+                formdata.append("datafile", file);
+                var ajax = new XMLHttpRequest();
+                ajax.open("POST", "<?php echo base_url('pendaftar/importexcel')?>", true);
+                ajax.send(formdata);
             },
-            success:function()
-            {    
-                $('#modal_import').modal('hide');
+            success:function(data)
+            {   if(data.status){
+                    $('#modal_import').modal('hide');
+                    location.reload();
+                }
                 location.reload();
             }
         });
 }
 
-function uploadFile() {
-    var file = document.getElementById("fileku").files[0];
-    var formdata = new FormData();
-    formdata.append("datafile", file);
-    var ajax = new XMLHttpRequest();
-    ajax.open("POST", "<?php echo base_url('pendaftar/importexcel')?>", true);
-    ajax.send(formdata);
-    
-}
 
 </script>
  

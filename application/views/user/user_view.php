@@ -35,7 +35,8 @@
                     <th>IP Address</th>
                     <th>Fakultas</th>
                     <th>Status</th>
-                    <th style="width:130px;">Aksi</th>
+                    <th>On/Off</th>
+                    <th style="width:200px;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -76,7 +77,7 @@ $(document).ready(function() {
         //Set column definition initialisation properties.
         "columnDefs": [
         { 
-            "targets": [0,-1,6], 
+            "targets": [0,-1,6,7], 
             "orderable": false, 
             "className": 'dt-center',
         },
@@ -85,7 +86,7 @@ $(document).ready(function() {
             "width": 200,
         },
         { 
-            "targets": [6], 
+            "targets": [6,7], 
             "width": 20,
         },
         ],
@@ -125,7 +126,7 @@ function edit_record(id)
     $("#error_firstname").html('');
     $("#error_lastname").html('');
     $("#error_idfakultas").html('');
-    $("#error_username").html('');
+    $("#error_username").html(''); 
     $("#error_email").html('');
     $("#error_password").html('');
     $("#error_confirmpassword").html('');
@@ -246,7 +247,26 @@ function delete_record(id)
  
     }
 }
- 
+
+
+function reset_login(id){
+        $.ajax({
+            url : "<?php echo base_url('user/reset_login')?>/"+ id,
+            type: "POST",
+            dataType: "JSON",
+            success: function(data)
+            {
+                reload_table();
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
+            }
+        });
+    
+}
+
+
 </script>
  
 <!-- Bootstrap modal -->

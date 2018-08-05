@@ -304,7 +304,9 @@ class Pendaftar extends MY_Controller {
                                                 NULL,
                                                 TRUE,
 												FALSE);
-												
+                
+              
+
                  $data = array(
                     "nopendaftar"=> $rowData[0][0],
                     "namapendaftar"=> strtoupper($rowData[0][1]),
@@ -333,9 +335,8 @@ class Pendaftar extends MY_Controller {
                 } else {
                     $insert = $this->db->insert("pendaftar",$data);       
                 }
-			}
-			//delete_files($media['file_path']);
-        redirect('pendaftar');
+            }
+            echo json_encode(array('status'=>TRUE));
     }
  
 }

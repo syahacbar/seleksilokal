@@ -131,6 +131,12 @@ class User_model extends CI_Model{
         return $this->db->affected_rows();
     }
 
+    public function update_session_id_by_admin($data,$userid)
+    {
+        $this->db->update('users_has_fakultas', $data, array('user_id'=>$userid));
+        return $this->db->affected_rows();
+    }
+
     public function get_session_id($username)
     {
         if($username!='admin'){

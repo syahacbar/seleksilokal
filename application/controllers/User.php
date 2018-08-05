@@ -8,6 +8,7 @@ class User extends MY_Controller {
         parent::__construct();
         $this->load->model('User_model','user');
         $this->load->model('Fakultas_model','fakultas');
+        $this->load->model('User_model','usermodel');
     }
  
     public function index()
@@ -26,6 +27,15 @@ class User extends MY_Controller {
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $result) {
+            
+        $session_id = $this->usermodel->get_session_id($result->username);
+        if($session_id != NULL){
+            $status = "Online";
+            $class = " ";
+        } else {
+            $status = "Offline";
+            $class = " disabled";
+        }
             $no++; 
             $row = array();
             $row[] = $no;
@@ -35,10 +45,13 @@ class User extends MY_Controller {
             $row[] = $result->ip_address;
             $row[] = $result->namafakultas;
             $row[] = $result->active=='1' ? 'Aktif' : 'Non Aktif';
- 
+            $row[] = $status;
+
             //add html for action
-            $row[] = '<a class="btn btn-xs btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_record('."'".$result->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
-                  <a class="btn btn-xs btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_record('."'".$result->id."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>';
+            $row[] = '
+            <a class="btn btn-xs btn-warning '.$class.'" href="javascript:void(0)" title="Reset" onclick="reset_login('."'".$result->id."'".')"><i class="glyphicon glyphicon-off"></i> Reset</a>
+            <a class="btn btn-xs btn-primary" href="javascript:void(0)" title="Edit" onclick="edit_record('."'".$result->id."'".')"><i class="glyphicon glyphicon-pencil"></i> Edit</a>
+            <a class="btn btn-xs btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_record('."'".$result->id."'".')"><i class="glyphicon glyphicon-trash"></i> Hapus</a>';
  
             $data[] = $row;
         }
@@ -214,6 +227,13 @@ class User extends MY_Controller {
         }
 
         echo json_encode($res);
+    }
+
+    public function reset_login($id)
+    {
+
+        $this->usermodel->update_session_id_by_admin(array('session_id'=> NULL),$id);
+        echo json_encode(array("status" => TRUE));
     }
 
     
