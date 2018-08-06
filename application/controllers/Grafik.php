@@ -16,15 +16,6 @@ class Grafik extends MY_Controller {
 
 	public function index()
 	{
-		$data = array(
-			'view' => 'grafik/g_rekap',
-		);
-
-        $this->load->view('layout',$data);
-    }
-
-    public function data_ajax()
-	{
         $totalkosong = ((int)$this->laporan->totaldayatampung()->dayatampung)-((int)$this->laporan->totalterima());
 		$totalterima = (int)$this->laporan->totalterima();
 		$kuotapenerimaan = $this->laporan->totaldayatampung();
@@ -48,6 +39,7 @@ class Grafik extends MY_Controller {
 			'jumlahjurusanslta' => $jumlahjurusanslta,
 		);
 
-        echo json_encode($data);
+        $this->load->view('layout',$data);
     }
+
 }
