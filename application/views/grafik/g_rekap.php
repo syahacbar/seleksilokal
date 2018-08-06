@@ -176,10 +176,6 @@
 <script src="<?php echo base_url('public/dist/js/demo.js');?>"></script>
 <!-- highcharts -->
 <script src="<?php echo base_url('public/chart/highcharts.js');?>"></script>
-<!-- Google Charts -->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="https://code.highcharts.com/modules/data.js"></script>
-<script src="https://code.highcharts.com/modules/drilldown.js"></script>
 <!-- page script -->
 <script>
 
