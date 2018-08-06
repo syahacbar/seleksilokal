@@ -26,10 +26,10 @@ class Grafik extends MY_Controller {
 		$jumlahtahunlulus = $this->grafik->get_jumlah_tahunlulus();
 		$jumlahjenjangslta = $this->grafik->get_jumlah_jenjangslta();
 		$jumlahjurusanslta = $this->grafik->get_jumlah_jurusanslta();
-		
+		*/
 		$data = array(
 			'view' => 'grafik/g_rekap',
-			'totalkosong' => $totalkosong,
+			/*'totalkosong' => $totalkosong,
 			'totalterima' => $totalterima,
 			'kuotapenerimaan' => $kuotapenerimaan->dayatampung,
 			'totalpendaftar' => $totalpendaftar,
@@ -37,10 +37,10 @@ class Grafik extends MY_Controller {
 			'jumlahsuku' => $jumlahsuku,
 			'jumlahtahunlulus' => $jumlahtahunlulus,
 			'jumlahjenjangslta' => $jumlahjenjangslta,
-			'jumlahjurusanslta' => $jumlahjurusanslta,
+			'jumlahjurusanslta' => $jumlahjurusanslta,*/
 		);
         */
-        $this->load->view('layout',array('view'=>'dashboard/index'));
+        $this->load->view('layout',$data);
     }
 
 }
