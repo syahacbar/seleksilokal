@@ -39,7 +39,7 @@ class Grafik extends MY_Controller {
 			'jumlahjenjangslta' => $jumlahjenjangslta,
 			'jumlahjurusanslta' => $jumlahjurusanslta,*/
 		);
-        */
+        
         $this->load->view('layout',$data);
     }
 
