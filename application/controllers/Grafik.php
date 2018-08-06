@@ -16,6 +16,7 @@ class Grafik extends MY_Controller {
 
 	public function index()
 	{
+        /*
         $totalkosong = ((int)$this->laporan->totaldayatampung()->dayatampung)-((int)$this->laporan->totalterima());
 		$totalterima = (int)$this->laporan->totalterima();
 		$kuotapenerimaan = $this->laporan->totaldayatampung();
@@ -38,8 +39,8 @@ class Grafik extends MY_Controller {
 			'jumlahjenjangslta' => $jumlahjenjangslta,
 			'jumlahjurusanslta' => $jumlahjurusanslta,
 		);
-
-        $this->load->view('layout',$data);
+        */
+        $this->load->view('layout',array('view'=>'dashboard/index'));
     }
 
 }
