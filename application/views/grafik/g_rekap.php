@@ -245,6 +245,233 @@
 
 
 
+            /* GRAFIK PEMINATAN BERDASARKAN JENJANG SLTA */
+              chart2 = new Highcharts.Chart(
+              {
+                  
+                 chart: {
+                    renderTo: 'mygraph2',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                 },   
+                 title: {
+                    text: 'Peminatan Berdasarkan Jenjang SLTA '
+                 },
+                 tooltip: {
+                    formatter: function() {
+                        return '<b>'+
+                        this.point.name +'</b>: '+ Highcharts.numberFormat(this.percentage, 2) +' % ';
+                    }
+                 },
+                 
+                
+                 plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: 'green',
+                            formatter: function() 
+                            {
+                                return '<b>' + this.point.name + '</b>: ' + Highcharts.numberFormat(this.percentage, 2) +' % ';
+                            }
+                        }
+                    }
+                 },
+       
+                    series: [{
+                    type: 'pie',
+                    name: 'Browser share',
+                    data: [
+                    <?php
+                        foreach($jumlahjenjangslta as $row) {
+                          $jenjangslta = $row->jenjangslta;
+                          $jumlah = $row->jumlah;
+                          ?>
+                            [ 
+                                '<?php echo $jenjangslta ?>', <?php echo $jumlah; ?>
+                            ],
+                            <?php
+                        }
+                        ?>
+             
+                    ]
+                }]
+              });
+
+              /* GRAFIK PEMINATAN BERDASARKAN JURUSAN SLTA */
+              chart3 = new Highcharts.Chart(
+              {
+                  
+                 chart: {
+                    renderTo: 'mygraph3',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                 },   
+                 title: {
+                    text: 'Peminatan Berdasarkan Jurusan SLTA'
+                 },
+                 tooltip: {
+                    formatter: function() {
+                        return '<b>'+
+                        this.point.name +'</b>: '+ Highcharts.numberFormat(this.percentage, 2) +' % ';
+                    }
+                 },
+                 
+                
+                 plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: 'green',
+                            formatter: function() 
+                            {
+                                return '<b>' + this.point.name + '</b>: ' + Highcharts.numberFormat(this.percentage, 2) +' % ';
+                            }
+                        }
+                    }
+                 },
+       
+                    series: [{
+                    type: 'pie',
+                    name: 'Browser share',
+                    data: [
+                    <?php
+                        foreach($jumlahjurusanslta as $row) {
+                          $jurusanslta = $row->jurusanslta;
+                          $jumlah = $row->jumlah;
+                          ?>
+                            [ 
+                                '<?php echo $jurusanslta ?>', <?php echo $jumlah; ?>
+                            ],
+                            <?php
+                        }
+                        ?>
+             
+                    ]
+                }]
+              });
+
+              /* GRAFIK PEMINATAN BERDASARKAN SUKU */
+              chart4 = new Highcharts.Chart(
+              {
+                  
+                 chart: {
+                    renderTo: 'mygraph4',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                 },   
+                 title: {
+                    text: 'Presentasi Jumlah Peminat Berdasarkan Suku'
+                 },
+                 tooltip: {
+                    formatter: function() {
+                        return '<b>'+
+                        this.point.name +'</b>: '+ Highcharts.numberFormat(this.percentage, 2) +' % ';
+                    }
+                 },
+                 
+                
+                 plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: 'green',
+                            formatter: function() 
+                            {
+                                return '<b>' + this.point.name + '</b>: ' + Highcharts.numberFormat(this.percentage, 2) +' % ';
+                            }
+                        }
+                    }
+                 },
+       
+                    series: [{
+                    type: 'pie',
+                    name: 'Browser share',
+                    data: [
+                    <?php
+                        foreach($jumlahsuku as $row) {
+                          $suku = $row->suku;
+                          $jumlah = $row->jumlah;
+                          ?>
+                            [ 
+                                '<?php echo $suku ?>', <?php echo $jumlah; ?>
+                            ],
+                            <?php
+                        }
+                        ?>
+             
+                    ]
+                }]
+              });
+
+              /* GRAFIK PEMINATAN BERDASARKAN TAHUN LULUS */
+              chart5 = new Highcharts.Chart(
+              {
+                  
+                 chart: {
+                    renderTo: 'mygraph5',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                 },   
+                 title: {
+                    text: 'Presentasi Jumlah Peminat Berdasarkan Tahun Lulus'
+                 },
+                 tooltip: {
+                    formatter: function() {
+                        return '<b>'+
+                        this.point.name +'</b>: '+ Highcharts.numberFormat(this.percentage, 2) +' % ';
+                    }
+                 },
+                 
+                
+                 plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: 'green',
+                            formatter: function() 
+                            {
+                                return '<b>' + this.point.name + '</b>: ' + Highcharts.numberFormat(this.percentage, 2) +' % ';
+                            }
+                        }
+                    }
+                 },
+       
+                    series: [{
+                    type: 'pie',
+                    name: 'Browser share',
+                    data: [
+                    <?php
+                        foreach($jumlahtahunlulus as $row) {
+                          $tahunlulus = $row->tahunlulus;
+                          $jumlah = $row->jumlah;
+                          ?>
+                            [ 
+                                '<?php echo $tahunlulus ?>', <?php echo $jumlah; ?>
+                            ],
+                            <?php
+                        }
+                        ?>
+             
+                    ]
+                }]
+              });
         }); 
 
 
