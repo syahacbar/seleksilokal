@@ -45,6 +45,7 @@ class Penerimaan extends MY_Controller {
             $row[] = $result->namaprodi;
             $row[] = $result->jenjang;
             $row[] = strtoupper($result->namafakultas);
+            $row[] = $result->tahunlulus;
             $row[] = '<a class="btn btn-xs btn-danger" href="javascript:void(0)" title="Batalkan" onclick="batalkan('."'".$result->nopendaftar."'".')"><i class="glyphicon glyphicon-trash"></i> Batalkan</a>';
            
             $data[] = $row;

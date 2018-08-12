@@ -195,7 +195,7 @@ $(document).ready(function() {
                     {
                         $('td', nRow).css('background-color', 'Red');
                     }
-                }
+            }
          
         });
         

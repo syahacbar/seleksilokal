@@ -45,6 +45,7 @@
                     <th>Program Studi</th>
                     <th>Jenjang</th>
                     <th>Fakultas</th>
+                    <th>Tahun Lulus</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -83,6 +84,12 @@ $(document).ready(function() {
             "processing":true,
             "serverSide":true,
             "order":[],
+            "ajax":{
+                url: "<?php echo site_url('penerimaan/ajax_list')?>",
+                type:"POST",
+                data:{is_prodi:is_prodi}
+            }, 
+            
             columnDefs: [
             { 
                 targets: [-1], //last column
@@ -94,7 +101,7 @@ $(document).ready(function() {
                 width: '20',
             },
             {
-                targets: [1,4],
+                targets: [1,4,6],
                 width: '70',
                 className: 'dt-center',
             },
@@ -103,11 +110,14 @@ $(document).ready(function() {
                 width: '200',
             },
             ],
-            "ajax":{
-                url: "<?php echo site_url('penerimaan/ajax_list')?>",
-                type:"POST",
-                data:{is_prodi:is_prodi}
-            }, 
+            
+            "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                    if ( aData[6] <= 2014 )
+                    {
+                        $('td', nRow).css('background-color', 'Red');
+                    }
+            },
+           
         });
        
     }
