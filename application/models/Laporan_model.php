@@ -161,7 +161,7 @@ class Laporan_model extends CI_Model {
 
     public function totalterima()
     {
-        $this->db->from('penerimaan');
+        $this->db->from('v_penerimaan');
         return $this->db->count_all_results();
     }
 
