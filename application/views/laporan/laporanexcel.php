@@ -30,7 +30,7 @@
                 <td><?php echo $row->namaprodi; ?></td>
                 <td><?php echo $row->jenjang; ?></td>
                 <td><?php echo $row->namafakultas; ?></td>
-                <td><?php echo $row->suku=="P"? "Papua" : "Non Papua"; ?></td>
+                <td><?php echo $row->suku ?></td>
                 <td><?php echo $row->asalslta; ?></td>
            </tr>
            <?php $i++; } ?>
