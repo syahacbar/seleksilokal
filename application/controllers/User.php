@@ -166,7 +166,7 @@ class User extends MY_Controller {
             $this->ion_auth->update($user->id, $datau);
 
             $datauf = array('fakultas_id' => $this->input->post('idfakultas'));
-            $this->user->editusershasfakultas(array('id' => $this->input->post('id')), $datauf);
+            $this->user->editusershasfakultas(array('user_id' => $this->input->post('id')), $datauf);
 
         } else {
             $res['hasil'] = 'gagal';

@@ -191,6 +191,7 @@ var optionsjenjangslta = {
         }
     }
 };
+
 $("#jenjangslta").easyAutocomplete(optionsjenjangslta);   
 $('div.easy-autocomplete').removeAttr('style');
 

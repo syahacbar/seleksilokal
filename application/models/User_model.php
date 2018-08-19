@@ -105,7 +105,7 @@ class User_model extends CI_Model{
     {
         $this->db->insert('users_has_fakultas', $data);
         return $this->db->insert_id();
-    }
+    } 
 
     public function editusershasfakultas($where, $data)
     {

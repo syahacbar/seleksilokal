@@ -266,7 +266,7 @@ function reset_login(id){
     
 }
 
-
+ 
 </script>
  
 <!-- Bootstrap modal -->

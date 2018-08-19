@@ -266,6 +266,31 @@ class Pendaftar extends MY_Controller {
         echo json_encode(array("status" => TRUE));
     }
 
+    public function jenjangslta()
+    {
+        $this->db->distinct();
+        $this->db->select('jenjangslta');
+        $query = $this->db->get('pendaftar')->result();
+        echo json_encode($query);
+    }
+
+    public function jurusanslta()
+    {
+        $this->db->distinct();
+        $this->db->select('jurusanslta');
+        $query = $this->db->get('pendaftar')->result();
+        echo json_encode($query);
+    }
+
+    public function asalslta()
+    {
+        $this->db->distinct();
+        $this->db->select('asalslta');
+        $query = $this->db->get('pendaftar')->result();
+        echo json_encode($query);
+    }
+
+
     public function importexcel()
     {
 		$this->load->library(array('PHPExcel','PHPExcel/IOFactory'));
