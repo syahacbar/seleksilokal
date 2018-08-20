@@ -100,7 +100,7 @@ class Seleksimanual_model extends CI_Model {
     }
  
     function count_filtered($sesi,$ta)
-    {
+    { 
         $this->_get_datatables_query($sesi,$ta);
         $query = $this->db->get();
         return $query->num_rows();
