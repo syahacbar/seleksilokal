@@ -29,7 +29,7 @@ class Seleksiotomatis extends MY_Controller {
                     'nopendaftar' => $data1res->nopendaftar,
                     'idprodi' => $this->prodi->get_by_prodiname($data1res->pilihan1)->idprodi,
                 );
-                //$this->db->insert('penerimaan', $data1resarray);
+                $this->db->insert('penerimaan', $data1resarray);
                 echo $no++.'. '.$data1res->namapendaftar.' | '.$data1res->nopendaftar.' | '.$data1res->ratarata.'<br>';
             }
             echo '<br>';
@@ -48,8 +48,8 @@ class Seleksiotomatis extends MY_Controller {
             $limit2 = $datares->dayatampung-$this->get_sisa_kuota_prodi($datares->namaprodi);
             $data2 = $this->get_pilihan2_sort_by_nilai($datares->namaprodi,$limit2);
             $no = 1;
-            //$dayatampung2 = $datares->dayatampung-$this->get_sisa_kuota_prodi($datares->namaprodi);
-            $dayatampung2 = $sisa1;
+            $dayatampung2 = $datares->dayatampung-$this->get_sisa_kuota_prodi($datares->namaprodi);
+            //$dayatampung2 = $sisa1;
             $peminat2 = count($data2);
             $terima2 = $peminat2 <= $dayatampung2 ? $peminat2 : $dayatampung2;
             $sisa2 = $dayatampung2-$terima2;
@@ -59,7 +59,7 @@ class Seleksiotomatis extends MY_Controller {
                     'nopendaftar' => $data2res->nopendaftar,
                     'idprodi' => $this->prodi->get_by_prodiname($data2res->pilihan2)->idprodi,
                 );
-                //$this->db->insert('penerimaan', $data2resarray);
+                $this->db->insert('penerimaan', $data2resarray);
                 echo $no++.'. '.$data2res->namapendaftar.' | '.$data2res->nopendaftar.' | '.$data2res->ratarata.'<br>';
             }
             echo '<br>';
@@ -84,8 +84,8 @@ class Seleksiotomatis extends MY_Controller {
             $limit3 = $datares->dayatampung-$this->get_sisa_kuota_prodi($datares->namaprodi);
             $data3 = $this->get_pilihan3_sort_by_nilai($datares->namaprodi,$limit3);
             $no = 1;
-            //$dayatampung2 = $datares->dayatampung-$this->get_sisa_kuota_prodi($datares->namaprodi);
-            $dayatampung3 = $sisa2;
+            $dayatampung3 = $datares->dayatampung-$this->get_sisa_kuota_prodi($datares->namaprodi);
+            //$dayatampung3 = $sisa2;
             $peminat3 = count($data3);
             $terima3 = $peminat3 <= $dayatampung3 ? $peminat3 : $dayatampung3;
             $sisa3 = $dayatampung3-$terima3;
@@ -95,7 +95,7 @@ class Seleksiotomatis extends MY_Controller {
                     'nopendaftar' => $data3res->nopendaftar,
                     'idprodi' => $this->prodi->get_by_prodiname($data3res->pilihan3)->idprodi,
                 );
-                //$this->db->insert('penerimaan', $data3resarray);
+                $this->db->insert('penerimaan', $data3resarray);
                 echo $no++.'. '.$data3res->namapendaftar.' | '.$data3res->nopendaftar.' | '.$data3res->ratarata.'<br>';
             }
             echo '<br>';
