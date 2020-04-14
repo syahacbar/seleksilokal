@@ -15,7 +15,7 @@ class Laporan extends MY_Controller {
 	{
         $tahunakademik = $this->pengaturan->gettahunakademik()->nilai;
         $tahun = substr($tahunakademik,0,4);
-        $title = 'PESERTA LULUS SELEKSI JALUR LOKAL UNIPA TAHUN '.$tahun;
+        $title = 'PESERTA LULUS SELEKSI JALUR SESAMA UNIPA TAHUN '.$tahun;
 		$data = array(
             'list' => $this->laporan->get_printall(),
             'tahunakademik' => $this->pengaturan->gettahunakademik()->nilai,

@@ -16,14 +16,14 @@
 	       <!-- Custom CSS -->
 		  <link rel="stylesheet" href="<?= base_url() ?>public/dist/css/style.css">
 		  <!-- AdminLTE Skins. Choose a skin from the css/skins. -->
-		  <link rel="stylesheet" href="<?= base_url() ?>public/dist/css/skins/skin-blue.min.css">
+		  <link rel="stylesheet" href="<?= base_url() ?>public/dist/css/skins/skin-purple.min.css">
 		   <!-- bootstrap datepicker 
  		  <link rel="stylesheet" href="<?= base_url() ?>public/dist/css/bootstrap-datepicker.min.css">-->
 		  <!-- jQuery 2.2.3 -->
 		  <script src="<?= base_url() ?>public/plugins/jQuery/jquery-2.2.3.min.js"></script>
 		  <!-- jQuery UI 1.11.4 --> 
 	</head>
-	<body class="hold-transition skin-blue sidebar-mini">
+	<body class="hold-transition skin-purple sidebar-mini">
 		<div class="wrapper" style="height: auto;">
 			 <?php if($this->session->flashdata('message') != ''): ?>
 			    <div class="alert alert-warning flash-msg alert-dismissible">

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
  
-class Seleksimanual extends MY_Controller {
+class Seleksi extends MY_Controller {
     var $column_search = array('nopendaftar','namapendaftar','tempatlahir','tanggallahir','jeniskelamin','suku','jenjangslta','jurusanslta','tahunlulus','asalslta'); //set column field database for datatable searchable just firstname , lastname , address are searchable
     
     public function __construct()
@@ -68,10 +68,9 @@ class Seleksimanual extends MY_Controller {
                 $row[] = $prodipilihan;
                 $row[] = $result->suku;
                 $row[] = $result->jurusanslta;
-                $row[] = $result->nbahasa;
-                $row[] = $result->nipa;
-                $row[] = $result->nips;
-                $row[] = $result->nverbal;
+                $row[] = $result->nsem3;
+                $row[] = $result->nsem4;
+                $row[] = $result->nsem5;
                 $row[] = $result->ratarata;
                 $row[] = $result->tahunlulus;
             

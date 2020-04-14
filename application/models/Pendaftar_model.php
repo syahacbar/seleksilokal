@@ -93,7 +93,7 @@ class Pendaftar_model extends CI_Model {
     public function get_by_id($id)
     {
         $this->db->select('*');
-        $this->db->from($this->table);
+        $this->db->from('v_pendaftar');
         $this->db->where($this->idtable,$id);
         $query = $this->db->get();
  

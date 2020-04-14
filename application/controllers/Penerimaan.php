@@ -40,7 +40,7 @@ class Penerimaan extends MY_Controller {
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $result->nopendaftar;
+            $row[] = $result->nopendaftar; 
             $row[] = $result->namapendaftar;
             $row[] = $result->namaprodi;
             $row[] = $result->jenjang;

@@ -23,7 +23,7 @@
   
   <div class="box"> 
     <div class="box-header">
-        <h3 class="box-title">Seleksi Calon Mahasiswa Baru Universitas Papua Jalur Seleksi Lokal TA. <?=$tahunakademik;?></h3>  
+        <h3 class="box-title">Seleksi Calon Mahasiswa Baru Universitas Papua Jalur Seleksi Sesama TA. <?=$tahunakademik;?></h3>  
         <div class="pull-right">
             <button type="submit" name="btnterimakolektif" id="btnterimakolektif" class="btn btn-sm btn-success">Terima Kolektif</button>
             <button id="btnreload" class="btn btn-sm btn-default" onclick="reload_table()"><i class="glyphicon glyphicon-refresh"></i> Reload</button>
@@ -35,7 +35,7 @@
         <div class="box-body table-responsive">
         <form action="#" id="form-filter" class="form-horizontal">
         <div class="form-group">
-        <table border="0" width="100%">
+        <table width="100%">
             <tr>
                 <td width="10%"><label style="font-size:13px;">Pilih Program Studi :</label></td>
                 <td width="1%"></td>
@@ -69,10 +69,9 @@
                     <th style="width: 30;">Pil. Ke</th>
                     <th style="width: 50;">Suku</th>
                     <th style="width: 80;">Jur. SLTA</th>
-                    <th style="width: 20;">N.Bhs</th>
-                    <th style="width: 20;">N.IPA</th>
-                    <th style="width: 20;">N.IPS</th>
-                    <th style="width: 20;">N.Ver</th>
+                    <th style="width: 20;">N.Sem-3</th>
+                    <th style="width: 20;">N.Sem-4</th>
+                    <th style="width: 20;">N.Sem-5</th>
                     <th style="width: 20;">N.Rata</th>
                     <th style="width: 20;">Thn. Lulus</th>
                     <th style="width: 100;">Aksi</th>
@@ -125,7 +124,7 @@ $(document).ready(function() {
             "serverSide":true,
             "order":[],
             "ajax":{
-                url: "<?php echo site_url('seleksimanual/ajax_list')?>",
+                url: "<?php echo site_url('seleksi/ajax_list')?>",
                 type:"POST",
                 data:{is_prodi:is_prodi,is_suku:is_suku}
             },
@@ -175,7 +174,7 @@ $(document).ready(function() {
             },
             
             {
-                targets: [6,7,8,9,11,12],
+                targets: [6,7,8,9,11],
                 width: '20',
                 className: 'dt-center',
             },
@@ -226,7 +225,7 @@ $(document).ready(function() {
         selectednopendaftar = selectednopendaftar.toString(); 
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('seleksimanual/terimakolektif')?>",
+            url: "<?php echo site_url('seleksi/terimakolektif')?>",
             dataType: 'JSON',
             data: {nopendaftar:selectednopendaftar, pilihprodi:prodi},
             success: function(data){
@@ -294,7 +293,7 @@ function getdayatampung(prodi)
     {
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('seleksimanual/getdayatampungprodi')?>",
+            url: "<?php echo site_url('seleksi/getdayatampungprodi')?>",
             dataType: 'JSON',
             data: {pilihprodi:prodi},
             success: function(data){
@@ -339,10 +338,10 @@ function detail_record(id)
             $('[name="jurusanslta"]').val(data.jurusanslta);        
             $('[name="asalslta"]').val(data.asalslta);        
             $('[name="tahunlulus"]').val(data.tahunlulus);
-            $('[name="nbahasa"]').val(data.nbahasa);
-            $('[name="nipa"]').val(data.nipa);
-            $('[name="nips"]').val(data.nips);
-            $('[name="nverbal"]').val(data.nverbal);
+            $('[name="nsem3"]').val(data.nsem3);
+            $('[name="nsem4"]').val(data.nsem4);
+            $('[name="nsem5"]').val(data.nsem5);
+            $('[name="ratarata"]').val(data.ratarata);
             $('[name="status"]').val(data.status);
             $('[name="tahunakademik"]').val(data.tahunakademik);
             $('.modal-title').text('Data Pendaftar'); // Set title to Bootstrap modal title
@@ -364,7 +363,7 @@ function terima(id){
         alert("Pilih program studi terlebih dahulu");
     } else {
         $.ajax({
-            url : "<?php echo base_url('seleksimanual/terima')?>/"+ id,
+            url : "<?php echo base_url('seleksi/terima')?>/"+ id,
             type: "POST",
             dataType: "JSON",
             data: {'pilihprodi': prodi,'status':status},
@@ -477,26 +476,26 @@ function reload_table(){
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 text-center">Nilai Bahasa</label>
-                            <label class="col-md-3 text-center">Nilai IPA</label>
-                            <label class="col-md-3 text-center">Nilai IPS</label>
-                            <label class="col-md-3 text-center">Nilai Verbal</label>
+                            <label class="col-md-3 text-center">Nilai Semester 3</label>
+                            <label class="col-md-3 text-center">Nilai Semester 4</label>
+                            <label class="col-md-3 text-center">Nilai Semester 5</label>
+                            <label class="col-md-3 text-center">Nilai Rata-Rata</label>
                         
                             <div class="col-md-3">
-                                <input name="nbahasa" readonly="readonly" class="form-control" type="number">
-                                <span class="text-danger" id="error_nbahasa"></span>
+                                <input name="nsem3" readonly="readonly" class="form-control" type="number">
+                                <span class="text-danger" id="error_nsem3"></span>
                             </div>
                             <div class="col-md-3">
-                                <input name="nipa" readonly="readonly" class="form-control" type="number">
-                                <span class="text-danger" id="error_nipa"></span>
+                                <input name="nsem4" readonly="readonly" class="form-control" type="number">
+                                <span class="text-danger" id="error_nsem4"></span>
                             </div>
                             <div class="col-md-3">
-                                <input name="nips" readonly="readonly" class="form-control" type="number">
-                                <span class="text-danger" id="error_nips"></span>
+                                <input name="nsem5" readonly="readonly" class="form-control" type="number">
+                                <span class="text-danger" id="error_nsem5"></span>
                             </div>
                             <div class="col-md-3">
-                                <input name="nverbal" readonly="readonly" class="form-control" type="number">
-                                <span class="text-danger" id="error_nverbal"></span>
+                                <input name="ratarata" readonly="readonly" class="form-control" type="number">
+                                <span class="text-danger" id="error_ratarata"></span>
                             </div>
                         </div>
                         

@@ -12,7 +12,7 @@ class Grafik_model extends CI_Model {
     {
          
         $this->db->select('*');
-        $this->db->from('v_rekap');
+        $this->db->from('v_rekapx');
         $query = $this->db->get();
         return $query->result();
     }

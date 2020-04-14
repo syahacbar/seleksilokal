@@ -14,7 +14,7 @@
 
   <div class="box">
    <div class="box-header">
-     <h3 class="box-title">Hasil Seleksi Jalur Lokal Universitas Papua <?=$tahun;?></h3>
+     <h3 class="box-title">Hasil Seleksi Jalur Sesama Universitas Papua <?=$tahun;?></h3>
      
      <div class="pull-right">
      <?php if($this->ion_auth->is_admin()){?>
@@ -79,7 +79,7 @@ $(document).ready(function() {
             },
     });
 
-    function load_data(is_prodi){
+    function load_data(is_prodi){ 
         var dataTable = $('#table').DataTable({
             "processing":true,
             "serverSide":true,

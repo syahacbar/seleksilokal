@@ -15,7 +15,7 @@ class Laporan_model extends CI_Model {
     function get_printall()
     {
         $this->db->select('*');
-        $this->db->from('v_penerimaan');
+        $this->db->from('v_penerimaanx');
         $query = $this->db->get();
         return $query->result();
     }
@@ -23,7 +23,7 @@ class Laporan_model extends CI_Model {
     function skpdf($prodi)
     {
         $this->db->select('*');
-        $this->db->from('v_penerimaan');
+        $this->db->from('v_penerimaanx');
         $this->db->where('namaprodi', $prodi);
         $query = $this->db->get();
         return $query->result();
@@ -32,7 +32,7 @@ class Laporan_model extends CI_Model {
     function cetakpdf($prodi)
     {
         $this->db->select('*');
-        $this->db->from('v_penerimaan');
+        $this->db->from('v_penerimaanx');
         $this->db->where('namaprodi', $prodi);
         $query = $this->db->get();
         return $query->result();
@@ -45,7 +45,7 @@ class Laporan_model extends CI_Model {
         if($idfakultas!=NULL){
             $this->db->where('idfakultas',$idfakultas);
         }
-        $this->db->from('v_penerimaan');
+        $this->db->from('v_penerimaanx');
         $this->db->order_by("namafakultas", "asc");
         $query = $this->db->get();
         return $query->result();
@@ -55,7 +55,7 @@ class Laporan_model extends CI_Model {
     {
         $this->db->distinct();
         $this->db->select('namafakultas,idfakultas');
-        $this->db->from('v_penerimaan');
+        $this->db->from('v_penerimaanx');
         $this->db->order_by("namafakultas", "asc");
         $query = $this->db->get();
         return $query->result();
@@ -65,7 +65,7 @@ class Laporan_model extends CI_Model {
     { 
         $this->db->distinct();
         $this->db->select('namaprodi,namafakultas');
-        $this->db->from('v_penerimaan');
+        $this->db->from('v_penerimaanx');
         $dd['x'] = '--PILIH SALAH SATU--';
         if($this->ion_auth->is_admin()){
             $dd['0'] = 'SEMUA PROGRAM STUDI';
@@ -88,7 +88,7 @@ class Laporan_model extends CI_Model {
     {
          
         $this->db->select('*');
-        $this->db->from('v_rekap');
+        $this->db->from('v_rekapx');
  
         $i = 0;
      
@@ -161,7 +161,7 @@ class Laporan_model extends CI_Model {
 
     public function totalterima()
     {
-        $this->db->from('v_penerimaan');
+        $this->db->from('v_penerimaanx');
         return $this->db->count_all_results();
     }
 
@@ -169,7 +169,7 @@ class Laporan_model extends CI_Model {
     public function getrekapexcel()
     {
         $this->db->select('*');
-        $this->db->from('v_rekap');
+        $this->db->from('v_rekapx');
         $query = $this->db->get();
         return $query->result();
     }

@@ -21,7 +21,7 @@
        
   <div class="box"> 
    <div class="box-header">
-     <h3 class="box-title">Data Pendaftar Universitas Papua Jalur Seleksi Lokal TA. <?=$tahunakademik;?></h3>
+     <h3 class="box-title">Data Pendaftar Universitas Papua Jalur Seleksi Sesama TA. <?=$tahunakademik;?></h3>
      <div class="pull-right">
          <?php  if($this->ion_auth->is_admin()){ ?> 
         <button class="btn btn-sm btn-success" onclick="add_record()"><i class="glyphicon glyphicon-plus"></i> Tambah Data</button>
@@ -247,7 +247,7 @@ function add_record()
     $("#error_nbahasa").html('');
     $("#error_nipa").html('');
     $("#error_nips").html('');
-    $("#error_nverbal").html('');
+    $("#error_nmat").html('');
 
 
      //Ajax Load data from ajax
@@ -300,7 +300,7 @@ function edit_record(id)
     $("#error_nbahasa").html('');
     $("#error_nipa").html('');
     $("#error_nips").html('');
-    $("#error_nverbal").html('');
+    $("#error_nmat").html('');
  
     //Ajax Load data from ajax
     $.ajax({
@@ -335,7 +335,7 @@ function edit_record(id)
             $('[name="nbahasa"]').val(data.nbahasa);
             $('[name="nipa"]').val(data.nipa);
             $('[name="nips"]').val(data.nips);
-            $('[name="nverbal"]').val(data.nverbal);
+            $('[name="nmat"]').val(data.nmat);
             $('[name="status"]').val(data.status);
             $('[name="tahunakademik"]').val(data.tahunakademik);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
@@ -596,27 +596,22 @@ function upload_file()
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 text-center">Nilai Bahasa</label>
-                            <label class="col-md-3 text-center">Nilai IPA</label>
-                            <label class="col-md-3 text-center">Nilai IPS</label>
-                            <label class="col-md-3 text-center">Nilai Verbal</label>
-                        
-                            <div class="col-md-3">
-                                <input name="nbahasa" placeholder="Nilai Bahasa Indonesia" class="form-control" type="number">
-                                <span class="text-danger" id="error_nbahasa"></span>
+                            <label class="col-md-4 text-center">Nilai Semester 3</label>
+                            <label class="col-md-4 text-center">Nilai Semester 4</label>
+                            <label class="col-md-4 text-center">Nilai Semester 5</label>
+                            
+                            <div class="col-md-4">
+                                <input name="nsem3" placeholder="Nilai Semester 3" class="form-control" type="number">
+                                <span class="text-danger" id="error_nsem3"></span>
                             </div>
-                            <div class="col-md-3">
-                                <input name="nipa" placeholder="Nilai IPA" class="form-control" type="number">
-                                <span class="text-danger" id="error_nipa"></span>
+                            <div class="col-md-4">
+                                <input name="nsem4" placeholder="Nilai Semester 4" class="form-control" type="number">
+                                <span class="text-danger" id="error_nsem4"></span>
                             </div>
-                            <div class="col-md-3">
-                                <input name="nips" placeholder="Nilai IPS" class="form-control" type="number">
-                                <span class="text-danger" id="error_nips"></span>
-                            </div>
-                            <div class="col-md-3">
-                                <input name="nverbal" placeholder="Nilai Verbal" class="form-control" type="number">
-                                <span class="text-danger" id="error_nverbal"></span>
-                            </div>
+                            <div class="col-md-4">
+                                <input name="nsem5" placeholder="Nilai Semester 5" class="form-control" type="number">
+                                <span class="text-danger" id="error_nsem5"></span>
+                            </div>                            
                         </div>
                         
                     </div>

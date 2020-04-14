@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
  
 class Penerimaan_model extends CI_Model {
-    var $table = 'v_penerimaan';
+    var $table = 'v_penerimaanx';
     var $column_order = array('','nopendaftar','namapendaftar','namaprodi','jenjang','namafakultas','tahunlulus'); //set column field database for datatable orderable
     var $column_search = array('nopendaftar','namapendaftar','namaprodi','namafakultas'); //set column field database for datatable searchable just firstname , lastname , address are searchable
     var $order = array('nopendaftar' => 'asc'); // default order 

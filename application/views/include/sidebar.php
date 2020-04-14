@@ -33,17 +33,9 @@ else {
             <li id="mnpendaftar"><a href="<?= site_url('pendaftar'); ?>"><i class="fa fa-graduation-cap"></i> Data Pendaftar</a></li>
           </ul>
         </li>
-        <li <?php if ($this->uri->segment(1)=='seleksimanual' || $this->uri->segment(1)=='seleksiotomatis' ) { echo 'class="active"'; } ?> class="treeview">
-          <a href="#">
-            <i class="fa fa-list-alt"></i> <span>Seleksi</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li id="mnseleksimanual"><a href="<?= site_url('seleksimanual'); ?>" ><i class="fa fa-check-square"></i> Seleksi Manual</a></li>
-          </ul>
-        </li>
+        
+        <li id="mnseleksimanual"><a href="<?= site_url('seleksi'); ?>" ><i class="fa fa-check-square"></i> <span>Seleksi SESAMA</span></a></li>
+        
         <li <?php if ($this->uri->segment(1)=='penerimaan' || $this->uri->segment(1)=='laporan' ) { echo 'class="active"'; } ?> class="treeview">
           <a href="#">
             <i class="fa  fa-file-text"></i> <span>Laporan</span>

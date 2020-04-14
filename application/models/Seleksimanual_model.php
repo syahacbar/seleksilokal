@@ -3,8 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  
 class Seleksimanual_model extends CI_Model {
     var $idtable = 'nopendaftar';
-    var $table = 'v_seleksi';
-    var $column_order = array('','nopendaftar','namapendaftar','','suku','jurusanslta','nbahasa','nipa','nips','nverbal','ratarata','tahunlulus','status'); //set column field database for datatable orderable
+    var $table = 'v_seleksix';
+    var $column_order = array('','nopendaftar','namapendaftar','','suku','jurusanslta','nsem3','nsem4','nsem5','ratarata','tahunlulus','status'); //set column field database for datatable orderable
     var $column_search = array('nopendaftar','namapendaftar');
     var $order = array('nopendaftar' => 'asc'); // default order 
  
@@ -18,7 +18,7 @@ class Seleksimanual_model extends CI_Model {
     private function _get_datatables_query($sesipilihan=NULL,$tahunakademik=NULL)
     {
         $this->db->select('*');
-        $this->db->from('v_seleksi');
+        $this->db->from('v_seleksix');
         $this->db->group_start();
         $this->db->where('tahunakademik',$tahunakademik);
         if(isset($_POST['is_prodi']) && $_POST['is_prodi'] != "0") 
@@ -108,7 +108,7 @@ class Seleksimanual_model extends CI_Model {
  
     public function count_all($ta)
     {
-        $this->db->from('v_seleksi');
+        $this->db->from('v_seleksix');
         $this->db->where('status','B');
         $this->db->where('tahunakademik',$ta);
         return $this->db->count_all_results();

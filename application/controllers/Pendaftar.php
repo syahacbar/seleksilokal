@@ -9,7 +9,7 @@ class Pendaftar extends MY_Controller {
         $this->load->model('Pendaftar_model','pendaftar');
         $this->load->model('Prodi_model','prodi');
         $this->load->model('Seleksimanual_model','seleksimanual');
-        $this->load->model('Pengaturan_model','pengaturan');
+        $this->load->model('Pengaturan_model','pengaturan'); 
     }
  
     public function index()
@@ -124,17 +124,14 @@ class Pendaftar extends MY_Controller {
         if ($this->input->post('tahunlulus') == '') {
             $res['error']['tahunlulus'] = '* Wajib Diisi';
         } 
-        if ($this->input->post('nbahasa') == '') {
-            $res['error']['nbahasa'] = '* Wajib Diisi';
+        if ($this->input->post('nsem3') == '') {
+            $res['error']['nsem3'] = '* Wajib Diisi';
         } 
-        if ($this->input->post('nipa') == '') {
-            $res['error']['nipa'] = '* Wajib Diisi';
+        if ($this->input->post('nsem4') == '') {
+            $res['error']['nsem4'] = '* Wajib Diisi';
         } 
-        if ($this->input->post('nips') == '') {
-            $res['error']['nips'] = '* Wajib Diisi';
-        } 
-        if ($this->input->post('nverbal') == '') {
-            $res['error']['nverbal'] = '* Wajib Diisi';
+        if ($this->input->post('nsem5') == '') {
+            $res['error']['nsem5'] = '* Wajib Diisi';
         } 
             
         if (empty($res['error'])) {
@@ -156,10 +153,9 @@ class Pendaftar extends MY_Controller {
                 'jurusanslta' => $this->input->post('jurusanslta'),
                 'tahunlulus' => $this->input->post('tahunlulus'),
                 'asalslta' => strtoupper($this->input->post('asalslta')),
-                'nbahasa' => $this->input->post('nbahasa'),
-                'nipa' => $this->input->post('nipa'),
-                'nips' => $this->input->post('nips'),
-                'nverbal' => $this->input->post('nverbal'),
+                'nsem3' => $this->input->post('nsem3'),
+                'nsem4' => $this->input->post('nsem4'),
+                'nsem5' => $this->input->post('nsem5'),
                 'status' => $this->input->post('status'),
                 'tahunakademik' => $this->input->post('tahunakademik'),
             );
@@ -210,18 +206,15 @@ class Pendaftar extends MY_Controller {
         } 
         if ($this->input->post('tahunlulus') == '') {
             $res['error']['tahunlulus'] = '* Wajib Diisi';
+        }  
+        if ($this->input->post('nsem3') == '') {
+            $res['error']['nsem3'] = '* Wajib Diisi';
         } 
-        if ($this->input->post('nbahasa') == '') {
-            $res['error']['nbahasa'] = '* Wajib Diisi';
+        if ($this->input->post('nsem4') == '') {
+            $res['error']['nsem4'] = '* Wajib Diisi';
         } 
-        if ($this->input->post('nipa') == '') {
-            $res['error']['nipa'] = '* Wajib Diisi';
-        } 
-        if ($this->input->post('nips') == '') {
-            $res['error']['nips'] = '* Wajib Diisi';
-        } 
-        if ($this->input->post('nverbal') == '') {
-            $res['error']['nverbal'] = '* Wajib Diisi';
+        if ($this->input->post('nsem5') == '') {
+            $res['error']['nsem5'] = '* Wajib Diisi';
         } 
             
         if (empty($res['error'])) {
@@ -243,10 +236,9 @@ class Pendaftar extends MY_Controller {
                 'jurusanslta' => $this->input->post('jurusanslta'),
                 'tahunlulus' => $this->input->post('tahunlulus'),
                 'asalslta' => strtoupper($this->input->post('asalslta')),
-                'nbahasa' => $this->input->post('nbahasa'),
-                'nipa' => $this->input->post('nipa'),
-                'nips' => $this->input->post('nips'),
-                'nverbal' => $this->input->post('nverbal'),
+                'nsem3' => $this->input->post('nsem3'),
+                'nsem4' => $this->input->post('nsem4'),
+                'nsem5' => $this->input->post('nsem5'),
                 'status' => $this->input->post('status'),
                 'tahunakademik' => $this->input->post('tahunakademik'),
             );
@@ -346,12 +338,11 @@ class Pendaftar extends MY_Controller {
                     "jurusanslta"=> strtoupper($rowData[0][10]),
                     "tahunlulus"=> $rowData[0][11],
                     "asalslta"=> strtoupper($rowData[0][12]),
-                    "nbahasa"=> $rowData[0][13],
-                    "nipa"=> $rowData[0][14],
-                    "nips"=> $rowData[0][15],
-                    "nverbal"=> $rowData[0][16],
+                    "nsem3"=> $rowData[0][13],
+                    "nsem4"=> $rowData[0][14],
+                    "nsem5"=> $rowData[0][15],
                     "status"=> "B",
-                    "tahunakademik"=> $rowData[0][17]
+                    "tahunakademik"=> $rowData[0][16]
                 );
                  
                 //sesuaikan nama dengan nama tabel
